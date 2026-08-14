@@ -1,11 +1,12 @@
 const mongodb = require('mongodb');
 const dns = require('dns');
+const externalUrl = require('../../../ThreadlyDatabaseUrl');
 
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 const MongoClient = mongodb.MongoClient;
 
-const URL = "mongodb+srv://fake1saurabh2001_db_user:root@saurabhmongodbserver.cdlf5rp.mongodb.net/?appName=SaurabhMongodbServer";
+const URL = externalUrl;
 
 let _db;
 const mongodbConnect = (callback) => {
