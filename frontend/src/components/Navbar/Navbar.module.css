@@ -1,0 +1,352 @@
+.container {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+  /* border: 1px solid red; */
+  position: relative;
+  flex: 1;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebarToggle {
+  /* border: 1px solid black; */
+  border-radius: 999px;
+  font-size: 24px;
+  margin-left: 10px;
+  
+  width: 40px;
+  aspect-ratio: 1;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+ 
+.sidebarToggle svg {
+  display: block;
+  transform: scalex(0.8);
+  transform-origin: center;
+}
+
+.sidebarToggle:hover {
+  background-color:#e5ebee;
+}
+
+.brand {
+  /* border: 1px solid black; */
+  margin-left: 20px;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brand img {
+  height: 25px;
+  width: auto;
+  display: block;
+  position: relative;
+  top: 3px;
+}
+
+.searchbarContainer {
+  /* border: 1px solid #FF5C00; */
+  flex: 1;
+  margin: auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+}
+.searchbar {
+  border: 1px solid #dc5101 ;
+  border-radius: 999px;
+  height: 96%;
+  width: 100%;
+  max-width: 600px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+}
+.searchbar:hover{
+  background-color: #e5ebee4f;
+}
+.searchbarLogo {
+  /* border: 1px solid black; */
+  border-radius: 999px;
+  height: 100%;
+  aspect-ratio: 1;
+
+  overflow: hidden;
+}
+.searchbarLogo img {
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+  object-fit: cover;
+}
+.searchbar input {
+  border-radius: 0 999px 999px 0;
+  border: none;
+  font-size: 14px;
+  flex: 1;
+  height: 100%;
+  font-family: var(--font-family);
+
+  background: transparent;
+}
+.searchbar input:focus {
+  outline: none;
+}
+
+/* =============================== Logged Out Button Group ============================== */
+
+.loggedOutbuttonGroup {
+  /* border: 1px solid rgb(238, 37, 71); */
+  margin-right: 10px;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.authButton {
+  border: none;
+  border-radius: 999px;
+  height: 96%;
+  width: 70px;
+  font-family: var(--font-family);
+  font-weight: 500;
+}
+
+.signupButton {
+  background-color:#e5ebee;
+  color: black;
+  width: 74px;
+}
+.signupButton:hover {
+  background-color:#dfe5e8;
+}
+
+.loginButton {
+  background-color: #FF5C00;
+  color: white;
+}
+.loginButton:hover {
+  background-color: #ed5801;
+}
+
+.moreButton {
+  /* border: 1px solid black; */
+  border-radius: 999px;
+  width: 40px;
+  aspect-ratio: 1;
+
+  font-size: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.moreButton:hover {
+  background-color:#e5ebee;
+}
+
+.ButtonMenu {
+    position: absolute;
+
+    top: 80%;
+    right: 0;
+    z-index: 99;
+
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+
+    min-width: 240px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+}
+
+.ButtonMenu ul{
+  /* border: 1px solid #ddd; */
+  margin: 6px;
+  padding: 6px;
+  list-style: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ButtonMenu li{
+  /* border: 1px solid #ddd; */
+  padding: 8px 0px;
+  margin-left: 10px;
+
+  font-size: 14px;
+  font-weight: 400;
+
+  cursor: pointer;
+}
+
+.ButtonMenu .dropdownLink {
+  /* border: 1px solid blue; */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #1c1c1c;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.ButtonMenu .dropdownLink:hover {
+  font-weight: 500;
+}
+
+.ButtonMenu .dropdownIcon {
+  font-size: 16px;
+}
+
+/* =============================== Logged In Button Group ============================== */
+
+.loggedInbuttonGroup {
+  /* border: 1px solid rgb(238, 37, 71); */
+  margin-right: 10px;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+}
+
+.notificationButton {
+  border: none;
+  border-radius: 999px;
+  height: 96%;
+  background: transparent;
+  aspect-ratio: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.notificationButtonIcon{
+  /* border: 1px solid red; */
+  font-family: var(--font-family);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.notificationButton:hover {
+  background-color:#e5ebee;
+}
+
+.createButton{
+
+  border:none;
+  /* border: 1px solid blue; */
+  border-radius:999px;
+
+  height: 96%;
+  padding:0 14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:8px;
+
+  background:#fff;
+
+  text-decoration: none;
+  font-size:14px;
+  line-height: 14px;
+  font-weight:400;
+
+  font-family:var(--font-family);
+
+  cursor:pointer;
+}
+
+.createButtonIcon {
+  /* border: 1px solid blue; */
+  font-size: 16px;
+}
+
+.createButton span {
+  position: relative;
+  bottom: 2%;
+}
+
+.createButton:hover {
+  background-color:#e5ebee;
+}
+
+
+.profileMenuArea {
+  /* border: 1px solid black; */
+  height: 100%;
+  
+  display: flex;
+  align-items: center;
+}
+
+.profileButton {
+  border: 1px solid rgb(152, 190, 202);
+  border-radius: 999px;
+  
+  height: 90%;
+  aspect-ratio: 1;
+  
+  margin-left: 8px;
+  cursor: pointer;
+
+  font-family: var(--font-family);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileButton:hover {
+  background-color: rgba(232, 241, 245, 0.411);
+}
+
+/* =============================== Media Queries ============================== */
+
+@media (max-width: 1199px) {
+  .sidebarToggle {
+    display: flex;
+  }
+
+  .brand {
+    margin-left: 10px;
+  }
+
+  .signupButton {
+    display: none;
+  }
+}
+
+@media (max-width: 959px) {
+  .brand {
+    display: none;
+  }
+}
+
+

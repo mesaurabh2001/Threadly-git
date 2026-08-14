@@ -1,0 +1,154 @@
+.container {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #1d3557, #457b9d, #0f172a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  padding: 2rem;
+}
+
+.card {
+  position: relative;
+  z-index: 10;
+  width: min(500px, 90%);
+  padding: 3rem;
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 24px;
+
+  box-shadow:
+      0 20px 50px rgba(0,0,0,.35);
+
+  animation: float 5s ease-in-out infinite;
+}
+
+.code {
+  font-size: clamp(5rem, 15vw, 9rem);
+  margin: 0;
+  line-height: 1;
+  font-weight: 800;
+  color: white;
+  text-shadow:
+      0 0 20px rgba(255,255,255,.25),
+      0 0 40px rgba(0,180,255,.4);
+}
+
+.title {
+  color: white;
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.description {
+  color: rgba(255,255,255,.8);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.button {
+  display: inline-block;
+  padding: .9rem 2rem;
+  border-radius: 50px;
+
+  background: white;
+  color: #1d3557;
+  text-decoration: none;
+  font-weight: 700;
+
+  transition: .3s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Decorative Blobs */
+
+.circleOne,
+.circleTwo {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: .4;
+}
+
+.circleOne {
+  width: 280px;
+  height: 280px;
+  background: #00d4ff;
+  top: -60px;
+  left: -80px;
+  animation: move1 2s ease-in-out infinite alternate;
+}
+
+.circleTwo {
+  width: 350px;
+  height: 350px;
+  background: #7b2ff7;
+  bottom: -100px;
+  right: -120px;
+  animation: move2 3s ease-in-out infinite alternate;
+}
+
+/* Animations */
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes move1 {
+  from {
+    transform: translate(0,0);
+  }
+
+  to {
+    transform: translate(40px,60px);
+  }
+}
+
+@keyframes move2 {
+  from {
+    transform: translate(0,0);
+  }
+
+  to {
+    transform: translate(-60px,-40px);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .card {
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .description {
+    font-size: .95rem;
+  }
+
+  .button {
+    width: 100%;
+  }
+}

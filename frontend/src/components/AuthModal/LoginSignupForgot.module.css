@@ -1,0 +1,150 @@
+.container {
+  position: relative;
+
+  width: 420px;
+  height: 550px;
+  margin: 20px 10px;
+  padding: 32px;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* border: 1px solid black; */
+}
+
+/* Header */
+.header {
+  text-align: center;
+}
+
+.header h2 {
+  margin-bottom: 8px;
+}
+
+.header p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.header span {
+  color: #0079d3;
+  cursor: pointer;
+}
+
+/* Social Buttons (Capsule) */
+.socialButton {
+  position: relative;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  height: 42px;
+  width: 100%;
+
+  border: 1px solid #ddd;
+  border-radius: 999px;
+
+  cursor: pointer;
+  background: #fff;
+
+  transition: background 0.2s ease;
+}
+
+.socialButton:hover {
+  background: #f6f7f8;
+}
+
+.socialButtonIcon {
+  position: absolute;
+  left: 10px;
+  width: 24px;
+  height: 24px;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #888;
+  font-size: 12px;
+}
+
+.divider hr {
+  flex: 1;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form input {
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  padding: 0 16px;
+
+  background: #f6f7f8;
+  font-size: 14px;
+
+  transition: background 0.2s ease;
+}
+
+.form input:hover {
+  background: #f1f2f3;
+}
+
+.form input:focus {
+  outline: 2px solid #0079d3;
+}
+
+/* Button */
+.formButton {
+  position: absolute;
+  bottom: 5px;
+  left: 32px;
+  right: 32px;
+
+  height: 48px;
+  /* width: 100%; */
+  border: none;
+  border-radius: 12px;
+
+  background: #e2e2e2;
+  color: #888;
+
+  font-weight: bold;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.footer {
+  font-size: 14px;
+}
+
+.footer a {
+  color: #0079d3;
+  text-decoration: none;
+}
+
+.footer span {
+  color: #0079d3;
+  cursor: pointer;
+}
+
+.footer p {
+  color: rgb(78, 78, 78);
+}

@@ -1,0 +1,20 @@
+.feedContainer {
+  /* border: 1px solid red; */
+  width: 100%;
+  flex: 1;
+  
+  display: flex;
+  flex-direction: column;
+  
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+}
+.feedContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.horizontalRule {
+  border: 0;
+  border-top: 1px solid #cccccc;
+}
