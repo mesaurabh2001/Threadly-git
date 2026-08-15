@@ -179,20 +179,24 @@
   justify-content: center;
 }
 
+/* /////////////////////////////////////////////////////////////////////////////////// */
+
 .widgetSection {
-  max-width: 316px;
+  max-width: 306px;
   width: 100%;
   flex-shrink: 0;
+
+  margin-top: 16px;
 }
 
 @media (max-width: 959px) {
 
-  .feedSection {
+  /* .feedSection {
     max-width: 900px;
     width: 100%;
-  }
+  } */
 
-  .widgetSection {
+  /* .widgetSection {
     display: none;
-  }
+  } */
 }

@@ -34,8 +34,7 @@ function Home() {
         <h1>Threadly</h1>
         <p>All discussions will appear here</p>
 
-        <Feed 
-          className={styles.feedbox} 
+        <Feed
           postList={posts} 
         />
       </section>

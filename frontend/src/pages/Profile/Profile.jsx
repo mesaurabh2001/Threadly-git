@@ -1,6 +1,6 @@
 import styles from "./Profile.module.css";
 import Feed from '../../components/Feed/Feed.jsx';
-import CommunitiesWidget from "../../components/CommunitiesWidget/CommunitiesWidget.jsx";
+import ProfileWidget from "./ProfileWidget.jsx";
 
 // local Modules
 import {getPosts} from '../../services/postService.js';
@@ -14,7 +14,7 @@ import { AiOutlineApartment } from "react-icons/ai";
 
 function Home() {
 
-  const imageUrl = "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHJhYmJpdHxlbnwwfHwwfHx8MA%3D%3D";
+  const avatarUrl = "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHJhYmJpdHxlbnwwfHwwfHx8MA%3D%3D";
 
   const [posts, setPosts] = useState([]);
 
@@ -43,7 +43,7 @@ function Home() {
             className={styles.avatar}
             onClick={(e) => e.stopPropagation()}
           >
-            <img src={`${imageUrl}`} alt="" />
+            <img src={`${avatarUrl}`} alt="" />
           </div>
 
           <div className={styles.infoName}>
@@ -115,7 +115,7 @@ function Home() {
       </section>
       
       <aside className={styles.widgetSection}>
-        <CommunitiesWidget communityList={[]}/>
+        <ProfileWidget />
       </aside>
 
     </div>

@@ -22,7 +22,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       // { index: true, element: <Home /> },
-      { index: true, element: <Profile /> },
+      // { index: true, element: <Profile /> },
+      { index: true, element: <Post /> },
       { path: "/popular", element: <Popular /> },
       { path: "/create-post", element: <CreatePost />},
       { path: "/posts/:id", element: <Post />}

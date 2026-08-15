@@ -28,60 +28,60 @@ function PostCard ({post}) {
   const dropdownMenuRef = useRef(null);
 
   useEffect(() => {
-        function handleClickOutside(event) {
-            if (
-                dropdownMenuRef.current &&
-                !dropdownMenuRef.current.contains(event.target)
-            ) {
-                setShowDropdownMenu(false);
-            }
-  
-        }
-  
-        document.addEventListener("mousedown", handleClickOutside);
-  
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-  
-    }, []);
+      function handleClickOutside(event) {
+          if (
+              dropdownMenuRef.current &&
+              !dropdownMenuRef.current.contains(event.target)
+          ) {
+              setShowDropdownMenu(false);
+          }
 
-    function getTimeAgo(createdAt) {
-      const seconds = Math.floor(
-          (Date.now() - new Date(createdAt).getTime()) / 1000
-      );
-
-      if (seconds < 60) {
-          return `${seconds} seconds ago`;
       }
 
-      const minutes = Math.floor(seconds / 60);
+      document.addEventListener("mousedown", handleClickOutside);
 
-      if (minutes < 60) {
-          return `${minutes} minutes ago`;
-      }
+      return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+      };
 
-      const hours = Math.floor(minutes / 60);
+  }, []);
 
-      if (hours < 24) {
-          return `${hours} hours ago`;
-      }
+  function getTimeAgo(createdAt) {
+    const seconds = Math.floor(
+        (Date.now() - new Date(createdAt).getTime()) / 1000
+    );
 
-      const days = Math.floor(hours / 24);
+    if (seconds < 60) {
+        return `${seconds} seconds ago`;
+    }
 
-      if (days < 30) {
-          return `${days} days ago`;
-      }
+    const minutes = Math.floor(seconds / 60);
 
-      const months = Math.floor(days / 30);
+    if (minutes < 60) {
+        return `${minutes} minutes ago`;
+    }
 
-      if (months < 12) {
-          return `${months} months ago`;
-      }
+    const hours = Math.floor(minutes / 60);
 
-      const years = Math.floor(months / 12);
+    if (hours < 24) {
+        return `${hours} hours ago`;
+    }
 
-      return `${years} years ago`;
+    const days = Math.floor(hours / 24);
+
+    if (days < 30) {
+        return `${days} days ago`;
+    }
+
+    const months = Math.floor(days / 30);
+
+    if (months < 12) {
+        return `${months} months ago`;
+    }
+
+    const years = Math.floor(months / 12);
+
+    return `${years} years ago`;
   }
 
   return (

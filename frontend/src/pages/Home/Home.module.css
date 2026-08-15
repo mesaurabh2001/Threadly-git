@@ -18,10 +18,6 @@
   flex-direction: column;
 }
 
-.feedbox {
-  flex: 1;
-}
-
 .widgetSection {
   max-width: 316px;
   width: 100%;
