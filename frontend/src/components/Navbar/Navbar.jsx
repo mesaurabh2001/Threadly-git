@@ -128,7 +128,6 @@ function Navbar({onAuthClick, onSidebarToggle}) {
             className={`${styles.createButton}`} 
           >
             <FaRegSquarePlus  className={`${styles.createButtonIcon}`}/>
-            <span>Create</span>
           </Link>
 
           <button className={`${styles.notificationButton}`} >

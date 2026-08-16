@@ -1,5 +1,5 @@
 import styles from './Post.module.css';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 
 // Local Module
@@ -63,7 +63,24 @@ Whether you’re drafting a novel, polishing a poem, or searching for the perfec
     followedBy: [],
     upvotes: [],
     downvotes: [],
-    comments: [],
+    comments: [
+      {
+        _id: 'comment1',
+        userId: '101',
+        content: 'This is a really interesting post.',
+        createdAt: '2026-08-13T10:30:00.000Z',
+        upvotes: [],
+        downvotes: []
+      },
+      {
+        _id: 'comment2',
+        userId: '102',
+        content: 'I completely agree with this.',
+        createdAt: '2026-08-13T11:15:00.000Z',
+        upvotes: [],
+        downvotes: []
+      }
+    ],
     createdAt: '2026-08-13T09:02:50.600Z',
     updatedAt: '2026-08-13T09:02:50.600Z',
   }
@@ -152,7 +169,7 @@ Whether you’re drafting a novel, polishing a poem, or searching for the perfec
                   className={styles.communityPicture}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  ss
+                  img
                 </Link>
 
                 <div className={styles.infoName}>
@@ -382,7 +399,6 @@ Whether you’re drafting a novel, polishing a poem, or searching for the perfec
           <div className={styles.comments}>
             
             <div className={styles.inputSection}>
-
               <div className={styles.commentInput}>
                 <input
                   className={styles.inputBox}
@@ -390,52 +406,54 @@ Whether you’re drafting a novel, polishing a poem, or searching for the perfec
                   placeholder="Join the conversation"
                   />
               </div>
-              
             </div>
+            
+            {post.comments.map(comment => (
 
+              <div className={styles.comment} key={comment._id}>
 
-            <div className={styles.comment}>
-
-              <div className={styles.commentInfo}>
-                <Link
-                  to={`/communities/${post.communityId}`}
-                  className={styles.userAvatar}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  ss
-                </Link>
-
-                <div className={styles.infoName}>
-                  
+                <div className={styles.commentInfo}>
                   <Link
-                    to={`/communities/${post.communityId}`}
-                    className={styles.userName}
+                    to={`/users/${comment.userId}`}
+                    className={styles.userAvatar}
                     onClick={(e) => e.stopPropagation()}
                   >
-                    deep_seek_guy
-
-                    <div className={styles.time}>
-                      • {getTimeAgo(post.createdAt)}
-                    </div>
-
+                    <img src="data:image/webp;base64,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" alt="" />
                   </Link>
 
-                  {/* <div
-                    className={styles.userNameSpace}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    &nbsp;
-                  </div> */}
+                  <div className={styles.infoName}>
+                    
+                    <Link
+                      to={`/communities/${post.communityId}`}
+                      className={styles.userName}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {comment.userId}
 
+                      <div className={styles.time}>
+                        • {getTimeAgo(comment.createdAt)}
+                      </div>
+
+                    </Link>
+
+                    {/* <div
+                      className={styles.userNameSpace}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      &nbsp;
+                    </div> */}
+
+                  </div>
+                  
                 </div>
-                
-              </div>
 
-              <div className={styles.commentContent}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam cupiditate ipsam inventore fuga sunt. Sunt odio ullam animi laborum dolor a doloribus?f
-              </div>
+                <div className={styles.commentContent}>
+                  {comment.content}
+                </div>
 
-            </div>
+              </div>
+            ))}
+            
           </div>
 
         </section>

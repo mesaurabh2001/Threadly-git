@@ -11,6 +11,7 @@ import {useState, useEffect} from 'react';
 // icons
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { AiOutlineApartment } from "react-icons/ai";
+import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 
 function Home() {
 
@@ -67,6 +68,9 @@ function Home() {
 
         <div className={styles.tabGroup}>
           <div className={styles.tabs}>
+            
+            {/* <div className={styles.scrollIndicatorLeft}><IoIosArrowDropleftCircle /></div> */}
+
             <button className={`${styles.tab}`}>
               Posts
             </button>
@@ -95,6 +99,8 @@ function Home() {
               Downvoted
             </button>
 
+            {/* <div className={styles.scrollIndicatorRight}><IoIosArrowDroprightCircle /></div> */}
+
           </div>
         </div>
 
@@ -108,8 +114,7 @@ function Home() {
           </button>
         </div> */}
 
-        <Feed 
-          className={styles.feedbox} 
+        <Feed
           postList={posts} 
         />
       </section>

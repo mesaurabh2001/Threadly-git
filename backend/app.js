@@ -6,6 +6,7 @@ const cors = require('cors');
 const {mongodbConnect} = require('./utils/database.js');
 const userRouter = require('./routes/userRouter.js');
 const postRouter = require('./routes/postRouter.js');
+const commentRouter = require('./routes/commentRouter.js');
 const communityRouter = require('./routes/communityRouter.js');
 
 const rootDir = require('./utils/pathUtil.js');
@@ -26,6 +27,7 @@ app.use(cors({
 // Main Routes - 
 app.use(userRouter);
 app.use(postRouter);
+app.use(commentRouter);
 app.use(communityRouter);
 
 // 404

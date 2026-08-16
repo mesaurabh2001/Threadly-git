@@ -2,7 +2,7 @@
 const {getDB} = require('../utils/database.js');
 
 // External Module
-const {ObjectId}  = require('monogdb');
+const {ObjectId}  = require('mongodb');
 
 module.exports = class User {
   
@@ -48,8 +48,8 @@ module.exports = class User {
         posts: this.posts,
         followedPosts: this.followedPosts,
         savedPosts: this.savedPosts,
-        upvotedPosts = this.upvotedPosts,
-        downvotedPosts = this.downvotedPosts,
+        upvotedPosts: this.upvotedPosts,
+        downvotedPosts: this.downvotedPosts,
         joinedCommunities: this.joinedCommunities,
       }
 

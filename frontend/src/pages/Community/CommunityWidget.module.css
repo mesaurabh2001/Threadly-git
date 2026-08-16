@@ -3,8 +3,6 @@
   width: 100%;
   height: 100%;
 
-  padding: 16px 0px;
-
   overflow: hidden;
   background-color: rgb(180, 113, 113);
 
@@ -19,7 +17,7 @@
   flex: 1;
   min-height: 0;
 
-  padding: 16px 0px;
+  padding: 18px 0px;
 
   overflow-y: scroll;
   scrollbar-width: thin;
@@ -38,66 +36,6 @@
   color: white;
 
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.communityName {
-  /* border: 1px solid blue; */
-  font-size: 18px;
-  font-weight: 700;
-
-  margin-bottom: 10px;
-  
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.buttonGroup {
-  /* border: 2px solid black; */
-  
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  position: relative
-}
-
-.buttonGroup .joinButton {
-  border: none;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight:600;
-  color: #3c3c3c;
-  background-color: #e5ebee;
-  cursor:pointer;
-
-  padding: 7px 16px;
-}
-
-.buttonGroup .joinButton:hover{
-    background:#d9dfe2;
-}
-.buttonGroup .joinButton:active{
-    background:#e5ebee;
-}
-
-.buttonGroup .joinedButton {
-  border: none;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight:600;
-  color: #f1f1f1;
-  background-color: #FF5C00;
-  cursor:pointer;
-
-  padding: 7px 16px;
-}
-
-.buttonGroup .joinedButton:hover{
-    background:rgb(233, 85, 0);
-}
-.buttonGroup .joinedButton:active{
-    background-color: #FF5C00;
 }
 
 .communityDescription {

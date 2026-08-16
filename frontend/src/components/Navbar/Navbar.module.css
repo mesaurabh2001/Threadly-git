@@ -274,7 +274,7 @@
   background:#fff;
 
   text-decoration: none;
-  font-size:14px;
+  font-size: 18px;
   line-height: 14px;
   font-weight:400;
 
@@ -285,7 +285,7 @@
 
 .createButtonIcon {
   /* border: 1px solid blue; */
-  font-size: 16px;
+  
 }
 
 .createButton span {

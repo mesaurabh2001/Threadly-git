@@ -1,4 +1,4 @@
-import styles from "./PostWidget.module.css";
+import styles from "./CommunityWidget.module.css";
 
 import CommunityCardSmall from '../../components/CommuntiyCardSmall/CommunityCardSmall';
 import { useState } from "react";
@@ -45,27 +45,6 @@ function PostWidget({communityList}) {
         <div className={styles.profileWidget}>
           
           <div className={styles.info}>
-            
-            <div className={styles.communityName}>
-              <span>Community Name</span>
-
-              <div className={styles.buttonGroup}>
-                {/* <button 
-                  className={styles.joinButton}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Join
-                </button> */}
-
-                <button
-                  className={styles.joinedButton}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Joined
-                </button>
-              </div>
-              
-            </div>
 
             <div className={styles.communityDescription}>
               <span>
@@ -100,6 +79,23 @@ function PostWidget({communityList}) {
             <div className={styles.tab}>
               <span>328</span>
               <span>communities</span>
+            </div>
+          </div>
+
+          <hr className={styles.horizontalRule}/>    {/* ///////////////////////////////// */}
+
+          <div className={styles.tagGroup}>
+            <div className={styles.heading}>
+              <span>COMMUNITY</span>
+              <span> TAGS</span>
+            </div>
+
+            <div className={styles.tags}>
+              {tags.map(tag => (
+                <div className={styles.tag}>
+                  <span>{tag}</span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -144,23 +140,6 @@ function PostWidget({communityList}) {
                 </div>
               ))}
 
-            </div>
-          </div>
-
-          <hr className={styles.horizontalRule}/>    {/* ///////////////////////////////// */}
-
-          <div className={styles.tagGroup}>
-            <div className={styles.heading}>
-              <span>COMMUNITY</span>
-              <span> TAGS</span>
-            </div>
-
-            <div className={styles.tags}>
-              {tags.map(tag => (
-                <div className={styles.tag}>
-                  <span>{tag}</span>
-                </div>
-              ))}
             </div>
           </div>
 

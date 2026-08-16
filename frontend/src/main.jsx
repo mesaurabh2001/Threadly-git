@@ -11,6 +11,7 @@ import Popular from "./pages/Popular/Popular.jsx";
 import CreatePost from "./pages/CreatePost/CreatePost.jsx";
 import PageNotFound from './pages/PageNotFound/PageNotFound.jsx';
 import Post from "./pages/Post/Post.jsx";
+import Community from "./pages/Community/Community.jsx"
 import Profile from './pages/Profile/Profile.jsx';
 
 
@@ -23,7 +24,8 @@ const router = createBrowserRouter([
     children: [
       // { index: true, element: <Home /> },
       // { index: true, element: <Profile /> },
-      { index: true, element: <Post /> },
+      // { index: true, element: <Post /> },
+      { index: true, element: <Community /> },
       { path: "/popular", element: <Popular /> },
       { path: "/create-post", element: <CreatePost />},
       { path: "/posts/:id", element: <Post />}

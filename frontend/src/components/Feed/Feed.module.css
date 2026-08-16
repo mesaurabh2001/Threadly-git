@@ -1,6 +1,8 @@
 .feedContainer {
   /* border: 1px solid red; */
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   flex: 1;
   
   display: flex;

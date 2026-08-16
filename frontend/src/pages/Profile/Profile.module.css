@@ -7,19 +7,19 @@
   display: flex;
   gap: 1.5rem;
   justify-content: center;
+
+  min-width: 0;
 }
 
 .profileContainer {
   /* border: 1px solid red; */
   max-width: 732px;
   width: 100%;
+  min-width: 0; /* important */
+  flex-shrink: 1;
 
   display: flex;
   flex-direction: column;
-}
-
-.feedbox {
-  flex: 1;
 }
 
 .info {
@@ -89,21 +89,69 @@
 }
 
 .tabGroup {
-  /* border: 2px solid rgb(80, 165, 80); */
-  /* padding: 16px 0px; */
+  /* border: 1px solid black; */
+  min-width: 0;
+  position: relative;
 }
 
 .tabs {
   /* border: 1px solid black; */
-  margin: 10px 0px;
-
-  overflow: scroll;
-  scrollbar-width:none;
+  margin: 10px 0;
 
   display: flex;
   align-items: center;
   gap: 12px;
+
+  min-width: 0;
+
+  overflow-x: auto;
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+
+  padding: 0 4px;
+
+  /* mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12px,
+    black calc(100% - 12px),
+    transparent
+  ); */
 }
+
+/* .scrollIndicatorLeft {
+  border: 2px solid red;
+  background-color: rgb(255, 255, 255);
+  height: 40px;
+  width: 30px;
+  font-size: 24px;
+
+  display: flex;
+  align-items: center;
+  
+  position: absolute;
+  left: 0px;
+  z-index: 1;  
+}
+
+.scrollIndicatorRight {
+  border: 2px solid red;
+  background-color: rgb(255, 255, 255);
+  height: 40px;
+  width: 30px;
+  font-size: 24px;
+
+  display: flex;
+  align-items: center;
+  
+  position: absolute;
+  right: 0px;
+  z-index: 1; 
+} */
 
 .tab {
   border: none;
@@ -120,6 +168,7 @@
   font-size: 14px;
   font-weight: 700;
 
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -189,14 +238,14 @@
   margin-top: 16px;
 }
 
-@media (max-width: 959px) {
+@media (max-width: 767px) {
 
   /* .feedSection {
     max-width: 900px;
     width: 100%;
   } */
 
-  /* .widgetSection {
+  .widgetSection {
     display: none;
-  } */
+  }
 }
