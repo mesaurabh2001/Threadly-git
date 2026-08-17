@@ -83,6 +83,15 @@ function CreatePost () {
           onChange={(e) => setImage(e.target.value)}
         />
 
+        <label htmlFor="genre">Choose a Genre</label>
+        <select name="genre" id="genre">
+          <option value="movies">movies</option>
+          <option value="gaming">gaming</option>
+          <option value="songs">songs</option>
+          <option value="tv-series">TV Series</option>
+        </select>
+        
+
         <button type="submit">
           Create Post
         </button>

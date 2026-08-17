@@ -16,39 +16,47 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import { IoIosNotificationsOutline } from "react-icons/io";
 
 
-function Navbar({onAuthClick, onSidebarToggle}) {
+function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
 
   const [showDropdownMenu, setShowDropdownMenu] = useState(false);
   const dropdownMenuRef = useRef(null);
 
   useEffect(() => {
-      function handleClickOutside(event) {
-          if (
-              dropdownMenuRef.current &&
-              !dropdownMenuRef.current.contains(event.target)
-          ) {
-              setShowDropdownMenu(false);
-          }
+    function handleClickOutside(event) {
 
+      // Close profile dropdown when clicking outside
+      if (
+          dropdownMenuRef.current &&
+          !dropdownMenuRef.current.contains(event.target)
+      ) {
+          setShowDropdownMenu(false);
       }
 
-      document.addEventListener("mousedown", handleClickOutside);
+    }
 
-      return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
-      };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
 
   }, []);
 
   return (
     <div className={styles.container}>
 
-      <nav className={`${styles.navbar}`}>
+      <nav
+        className={`${styles.navbar}`}
+        onClick={() => setIsSidebarOpen(false)}
+      >
 
         {/* Sidebar Toggle Hamburger============================ */}
         <div
           className={styles.sidebarToggle}
-          onClick={onSidebarToggle}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSidebarToggle();
+          }}
         >
           <RxHamburgerMenu />
         </div>
@@ -127,7 +135,7 @@ function Navbar({onAuthClick, onSidebarToggle}) {
             to='/create-post'
             className={`${styles.createButton}`} 
           >
-            <FaRegSquarePlus  className={`${styles.createButtonIcon}`}/>
+            <FaRegSquarePlus  className={`${styles.createButtonIcon}`}/> {/*========= createPost Icon =========*/}
           </Link>
 
           <button className={`${styles.notificationButton}`} >
@@ -136,15 +144,15 @@ function Navbar({onAuthClick, onSidebarToggle}) {
 
           <div className={styles.profileMenuArea} ref={dropdownMenuRef} >
 
-            <div
+            <button
               className={styles.profileButton}
               onClick={() => setShowDropdownMenu(prev => !prev)}
             >
               S
-            </div>
+            </button>
 
             {showDropdownMenu && (
-              <div className={styles.ButtonMenu}>
+              <div className={styles.buttonMenu}>
                 <ul>
                   <li>
                     <NavLink to="" className={styles.dropdownLink}>

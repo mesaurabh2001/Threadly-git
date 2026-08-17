@@ -1,4 +1,6 @@
 import styles from "./Sidebar.module.css";
+
+// React Icons -----------------------------
 import { CgHomeAlt } from "react-icons/cg";
 import { TbChartBarPopular } from "react-icons/tb";
 import { IoNewspaperOutline } from "react-icons/io5";
@@ -9,10 +11,11 @@ import { FiHelpCircle } from "react-icons/fi";
 import { RxRocket } from "react-icons/rx";
 import { BsGlobeAmericas } from "react-icons/bs";
 import { PiBookOpenTextLight } from "react-icons/pi";
+import { FiPlus } from "react-icons/fi";
 
 import { NavLink } from "react-router-dom";
 
-function Sidebar() {
+function Sidebar({setIsSidebarOpen}) {
 
 
   return (
@@ -21,9 +24,11 @@ function Sidebar() {
 
         {/* Main */}
         <div className={styles.section}>
+
           {/* item------------------ */}
           <NavLink
             to="/"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -35,6 +40,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/popular"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -46,6 +52,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/news"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -57,6 +64,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/explore"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -64,6 +72,19 @@ function Sidebar() {
             <RiNodeTree className={styles.icon} />
             <span>Explore</span>
           </NavLink>
+
+          {/* item------------------ */}
+          <NavLink
+            to="/create-community"
+            onClick={() => setIsSidebarOpen(false)}
+            className={({ isActive }) =>
+              isActive ? `${styles.item} ${styles.active}` : styles.item
+            }
+          >
+            <FiPlus className={styles.icon} />
+            <span>Start a community</span>
+          </NavLink>
+
         </div>
 
         <hr />
@@ -75,6 +96,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/about-threadly"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -86,6 +108,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/advertise"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -97,6 +120,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/help"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -108,6 +132,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/support-us"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -125,6 +150,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/#"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -136,6 +162,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/#"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -147,6 +174,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/#"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -165,6 +193,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/#"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -176,6 +205,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/#"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }
@@ -187,6 +217,7 @@ function Sidebar() {
           {/* item------------------ */}
           <NavLink
             to="/#"
+            onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
             }

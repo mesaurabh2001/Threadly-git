@@ -22,7 +22,8 @@ function App() {
         
         <Navbar
           onAuthClick={()=> setShowAuth(true)}
-          onSidebarToggle={toggleSidebar}  
+          onSidebarToggle={toggleSidebar} 
+          setIsSidebarOpen={setIsSidebarOpen}
         />
       </div>
       
@@ -35,7 +36,7 @@ function App() {
             ${isSidebarOpen ? styles.sidebarOpen : ""}
           `}
         >
-          <Sidebar />
+          <Sidebar setIsSidebarOpen={setIsSidebarOpen}/>
         </div>
 
         {isSidebarOpen && (

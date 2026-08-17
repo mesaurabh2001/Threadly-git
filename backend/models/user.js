@@ -16,7 +16,6 @@ module.exports = class User {
 
     this.genres = genres || [];
 
-  
     this.posts = [];
     this.followedPosts = [];
     this.savedPosts = [];
@@ -35,23 +34,23 @@ module.exports = class User {
     const db = getDB();
 
     if (this._id){ // Update Case
-      const updatedUser = {
-        name: this.name,
-        username: this.username,
-        email: this.email,
+      // const updatedUser = {
+      //   name: this.name,
+      //   username: this.username,
+      //   email: this.email,
         
-        avatar: this.avatar,
-        poster: this.poster,
+      //   avatar: this.avatar,
+      //   poster: this.poster,
 
-        genres: this.genres,
+      //   genres: this.genres,
         
-        posts: this.posts,
-        followedPosts: this.followedPosts,
-        savedPosts: this.savedPosts,
-        upvotedPosts: this.upvotedPosts,
-        downvotedPosts: this.downvotedPosts,
-        joinedCommunities: this.joinedCommunities,
-      }
+      //   posts: this.posts,
+      //   followedPosts: this.followedPosts,
+      //   savedPosts: this.savedPosts,
+      //   upvotedPosts: this.upvotedPosts,
+      //   downvotedPosts: this.downvotedPosts,
+      //   joinedCommunities: this.joinedCommunities,
+      // }
 
       return db.collection('users').updateOne(
         {_id: new ObjectId(this._id)},

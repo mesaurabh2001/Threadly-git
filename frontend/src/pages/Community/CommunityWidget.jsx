@@ -8,35 +8,17 @@ import { IoFolderOpenOutline } from "react-icons/io5";
 import { BsGlobe2 } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
-function PostWidget({communityList}) {
+function CommunityWidget({community}) {
 
   const [openRule, setOpenRule] = useState(null);
 
-  const rules = [
-    {
-      title: "Rule Title",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-    },
-    {
-      title: "Rule Title",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-    },
-    {
-      title: "Rule Title",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-    },
-    {
-      title: "Rule Title",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-    },
-  ];
+  const date = new Date(community.createdAt);
 
-  const tags = [
-    "Discussion", "Question", "Help", "News", "Announcement", "Meme", "Guide", "Tutorial", "Review", "Recommendation", "Advice", "Poll", "Showcase", "Achievement", "Event", "Resources", "Feedback", "Off-Topic", "Meta", "Debate", "Theory", "Opinion", "Story", "Update", "Important", ];
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
   
   return (
     <>
@@ -48,37 +30,37 @@ function PostWidget({communityList}) {
 
             <div className={styles.communityDescription}>
               <span>
-                Community Description title
+                {community.title}
               </span>
-              <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nesciunt delectus perspiciatis harum provident ipsam sunt ab, odio quae atque non quo?</span>
+              <span>{community.description}</span>
             </div>
 
             <div className={styles.createdDate}>
               <span><IoFolderOpenOutline /></span>
-              <span>Created Feb 28, 2012</span>
+              <span>Created {formattedDate}</span>
             </div>
 
             <div className={styles.communityType}>
               <span><BsGlobe2 /></span>
-              <span>Public</span>
+              <span>{community.type}</span>
             </div>
 
           </div>
 
           <div className={styles.tabGroup}>
             <div className={styles.tab}>
-              <span>298K</span>
+              <span>{community.members.length}</span>
               <span>Foodies</span>
             </div>
 
             <div className={styles.tab}>
-              <span>328</span>
+              <span>{community.posts.length}</span>
               <span>Posts</span>
             </div>
 
             <div className={styles.tab}>
-              <span>328</span>
-              <span>communities</span>
+              <span>{community.genre}</span>
+              <span>Genre</span>
             </div>
           </div>
 
@@ -91,7 +73,7 @@ function PostWidget({communityList}) {
             </div>
 
             <div className={styles.tags}>
-              {tags.map(tag => (
+              {community.tags.map(tag => (
                 <div className={styles.tag}>
                   <span>{tag}</span>
                 </div>
@@ -108,8 +90,7 @@ function PostWidget({communityList}) {
             </div>
             
             <div className={styles.rules}>
-
-              {rules.map((rule, index) => (
+              {community.rules.map((rule, index) => (
                 <div className={styles.ruleTab} key={index}>
                   <div
                     className={`${styles.ruleHead} ${openRule === index ? styles.open : ""}`}
@@ -139,7 +120,6 @@ function PostWidget({communityList}) {
 
                 </div>
               ))}
-
             </div>
           </div>
 
@@ -173,4 +153,4 @@ function PostWidget({communityList}) {
   );
 }
 
-export default PostWidget;
+export default CommunityWidget;

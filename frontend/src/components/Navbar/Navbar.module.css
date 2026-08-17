@@ -80,6 +80,7 @@
   align-items: center;
   gap: 10px;
   padding: 5px;
+  box-shadow: 0 0 6px rgba(255, 115, 2, 0.3);
 }
 .searchbar:hover{
   background-color: #e5ebee4f;
@@ -166,7 +167,7 @@
   background-color:#e5ebee;
 }
 
-.ButtonMenu {
+.buttonMenu {
     position: absolute;
 
     top: 80%;
@@ -182,7 +183,7 @@
     box-shadow: 0 8px 20px rgba(0,0,0,.10);
 }
 
-.ButtonMenu ul{
+.buttonMenu ul{
   /* border: 1px solid #ddd; */
   margin: 6px;
   padding: 6px;
@@ -190,7 +191,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.ButtonMenu li{
+.buttonMenu li{
   /* border: 1px solid #ddd; */
   padding: 8px 0px;
   margin-left: 10px;
@@ -201,7 +202,7 @@
   cursor: pointer;
 }
 
-.ButtonMenu .dropdownLink {
+.buttonMenu .dropdownLink {
   /* border: 1px solid blue; */
   display: flex;
   align-items: center;
@@ -214,11 +215,11 @@
   font-weight: 400;
 }
 
-.ButtonMenu .dropdownLink:hover {
+.buttonMenu .dropdownLink:hover {
   font-weight: 500;
 }
 
-.ButtonMenu .dropdownIcon {
+.buttonMenu .dropdownIcon {
   font-size: 16px;
 }
 
@@ -307,8 +308,9 @@
 }
 
 .profileButton {
-  border: 1px solid rgb(152, 190, 202);
+  border: 1px solid rgba(215, 223, 226, 0.911);
   border-radius: 999px;
+  background: none;
   
   height: 90%;
   aspect-ratio: 1;

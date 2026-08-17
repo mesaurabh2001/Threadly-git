@@ -63,6 +63,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  text-transform: capitalize;
 
   margin-top: 2px;
   font-size: 13px;
@@ -109,6 +110,7 @@
 
 .tab span:first-child {
   font-weight: 500;
+  text-transform: capitalize;
 }
 
 .tab span:last-child {

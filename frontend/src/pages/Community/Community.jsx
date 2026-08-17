@@ -13,26 +13,83 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import { AiOutlineApartment } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
 
-function Home() {
+function Community() {
 
-  const avatarUrl = "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHJhYmJpdHxlbnwwfHwwfHx8MA%3D%3D";
+  const community = {
+    "name": "IndianGaming",
+    "title": "Ah!! here we go again",
+    "avatar": "https://images.unsplash.com/photo-1519456264917-42d0aa2e0625?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "poster": "https://images.unsplash.com/photo-1683041133704-1de1c55d050c?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "admin": "34324324324324234324234",
+    "description": "This community is dedicated to the Indians and there gaming passion.",
+    "genre": "games",
+    "type": "public",
+    "members": [],
+    "posts": [],
+    "reportedPosts": [],
+    "markedDeletePosts": [],
+    "_id": "6a834932ed4c8498bf44fe55",
+    "rules": [
+      {
+        title: "Rule Title",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
+      },
+      {
+        title: "Rule Title",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
+      },
+      {
+        title: "Rule Title",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
+      },
+      {
+        title: "Rule Title",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
+      },
+    ],
+    "tags": [
+      "PC Gaming","Console Gaming","Mobile Gaming","Nintendo","PlayStation","Xbox","Steam","RPG","Action","Adventure","Strategy","Simulation","Sports Games","Racing","Fighting","Puzzle","Horror Games","Survival","Open World","FPS","MMO","Indie Games","Multiplayer","Single Player","Retro Games","Game Development","Esports"
+    ],
+    "createdAt": "2026-08-17T17:47:30.916+00:00",
+    "updatedAt": "2026-08-17T17:47:30.916+00:00",
+  }
+  
 
-  const [posts, setPosts] = useState([]);
+  // const [community, setCommunity] = useState([]);
 
-  useEffect(() => {
-      const getHomePosts = async () => {
-        try {
-          const data = await getPosts();
-          setPosts(data)
+  // useEffect( () => {
+  //   const getCommunityPage = async () => {
+  //     try {
+  //       const community = await getCommunityById(id);
+  //       setCommunity(community);
 
-        } catch (error) {
-          console.log(error.message);
-        }
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   }
+
+  //   getCommunityPage();
+  // }, [])
+
+    const [posts, setPosts] = useState([]);
+
+  useEffect( () => {
+    const getCommunityPosts = async () => {
+      try {
+        const community = await getPosts();
+        setPosts(community);
+
+      } catch (error) {
+        console.log(error.message);
       }
+    }
 
-      getHomePosts();
-
-  }, []);
+    getCommunityPosts();
+  }, [])
   
   return (
     <div className={styles.mainContainer}>
@@ -40,7 +97,7 @@ function Home() {
       <div className={styles.header}>
 
         <div className={styles.communityPoster}>
-          <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="billa" />
+          <img src={`${community.poster}?fm=jpg&fit=max&w=1072&q=40`} alt="poster" />
         </div>
 
         <div className={styles.headerContent}>
@@ -52,12 +109,12 @@ function Home() {
                 className={styles.communityAvatar}
                 onClick={(e) => e.stopPropagation()}
               >
-                <img src={`${avatarUrl}`} alt="" />
+                <img src={`${community.avatar}?fm=jpg&fit=max&w=1072&q=40`} alt={community.name.charAt(0).toUpperCase()} />
               </div>
             </div>
 
             <div className={styles.communityName} >
-              Medical-Medicine6686
+              t/{community.name}
             </div>
 
           </div>
@@ -123,7 +180,7 @@ function Home() {
         </section>
         
         <aside className={styles.widgetSection}>
-          <CommunityWidget />
+          <CommunityWidget community={community}/>
         </aside>
 
       </div>
@@ -131,4 +188,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Community;

@@ -1,0 +1,302 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 20px;
+  background: #f5f6f8;
+  overflow: scroll;
+}
+
+.form {
+width: 100%;
+max-width: 680px;
+padding: 32px;
+background: #ffffff;
+border: 1px solid #e5e7eb;
+border-radius: 18px;
+box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+
+display: flex;
+flex-direction: column;
+gap: 18px;
+
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+margin: 0 0 8px;
+color: #17181a;
+font-size: 28px;
+font-weight: 700;
+line-height: 1.2;
+}
+
+.subtitle {
+margin: -4px 0 8px;
+color: #6b7280;
+font-size: 14px;
+line-height: 1.5;
+}
+
+/* All inputs and textarea */
+
+.form input,
+.form textarea {
+width: 100%;
+box-sizing: border-box;
+
+border: 1px solid #d9dde3;
+border-radius: 10px;
+background: #ffffff;
+
+color: #17181a;
+font: inherit;
+font-size: 15px;
+
+outline: none;
+transition:
+border-color 0.15s ease,
+box-shadow 0.15s ease,
+background 0.15s ease;
+}
+
+/* Inputs */
+
+.form input {
+height: 48px;
+padding: 0 14px;
+}
+
+/* Description */
+
+.form textarea {
+min-height: 160px;
+padding: 14px;
+resize: vertical;
+line-height: 1.5;
+}
+
+/* Placeholder */
+
+.form input::placeholder,
+.form textarea::placeholder {
+color: #9ca3af;
+}
+
+/* Focus */
+
+.form input:focus,
+.form textarea:focus {
+border-color: #FE7402;
+box-shadow: 0 0 0 3px rgba(255, 115, 2, 0.12);
+}
+
+/* Genre */
+
+.genre {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.genreLabel {
+  /* border: 1px solid blue; */
+  color: #4c4c4c;
+}
+
+.genreOption input {
+  display: none;
+}
+.genreOption input:checked + .genreCapsule {
+  background-color: #222;
+  color: white;
+  border-color: #222;
+}
+
+.genreOptions {
+  /* border: 1px solid black; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.genreCapsule .genreIcon{
+  /* border: 1px solid black; */
+  display: flex;
+  align-items: center;
+}
+
+.genreCapsule {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  font-size: 12px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+.genreCapsule:hover {
+  background-color: #f2f2f2;
+}
+
+/* Warnings */
+
+.genreSelectWarning {
+  margin-top: 8px;
+  padding: 8px 12px;
+  color: #b42318;
+  background-color: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+/* Submit */
+
+.submitButton {
+width: 100%;
+height: 48px;
+margin-top: 4px;
+
+border: none;
+border-radius: 10px;
+
+background: #4f46e5;
+color: #ffffff;
+
+font: inherit;
+font-size: 15px;
+font-weight: 600;
+
+cursor: pointer;
+transition:
+background 0.15s ease,
+transform 0.1s ease,
+box-shadow 0.15s ease;
+}
+
+.submitButton:hover {
+background: #4338ca;
+box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.submitButton:active {
+transform: translateY(1px);
+}
+
+.submitButton:focus-visible {
+outline: none;
+box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* /////////////////////////  Rules   ////////////////////// */
+
+.rules {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rule {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.rule input,
+.rule textarea {
+  width: 100%;
+  padding: 7px 9px;
+
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+
+  background: white;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.rule input {
+  height: 32px;
+  font-weight: 500;
+}
+
+.rule textarea {
+  height: 48px;
+  min-height: 48px;
+  resize: vertical;
+}
+
+.rule input:focus,
+.rule textarea:focus {
+  border-color: #ff7302;
+  box-shadow: 0 0 0 2px rgba(255, 115, 2, 0.1);
+}
+
+.addRuleButton {
+  align-self: flex-start;
+
+  padding: 6px 11px;
+
+  border: 1px solid #ff7302;
+  border-radius: 5px;
+
+  background: transparent;
+  color: #ff7302;
+
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.addRuleButton:hover {
+  background: #ff7302;
+  color: white;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #ff7302;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ///////////////////////// Mobile ///////////////////////// */
+
+@media (max-width: 600px) {
+.container {
+padding: 24px 14px;
+}
+
+.form {
+padding: 22px 18px;
+border-radius: 14px;
+}
+
+.title {
+font-size: 24px;
+}
+}

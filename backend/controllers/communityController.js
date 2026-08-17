@@ -13,6 +13,17 @@ exports.getCommunities = async (req, res, next) => {
 }
 
 ////////////////////////////////////////////
+exports.getCommunitiesSummaries = async (req, res, next) => {
+  try {
+    const communities = await Community.fetchSummaries();
+    res.json(communities);
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+////////////////////////////////////////////
 exports.getCommunityById = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -33,8 +44,8 @@ exports.getCommunityById = async (req, res, next) => {
 ////////////////////////////////////////////
 exports.addCommunity = async (req, res, next) => {
   try {
-    const {name, avatar, poster, admin, genre} = req.body;
-    const community = new Community(name, avatar, poster, admin, genre);
+    const {name, title, avatar, poster, admin, description, tags, genre, rules} = req.body;
+    const community = new Community(name, title, avatar, poster, admin, description, tags, genre, rules);
 
     const response = await community.save();
     community._id = response.insertedId;
