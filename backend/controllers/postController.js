@@ -35,8 +35,8 @@ exports.getPostById = async (req, res, next) => {
 /////////////////////////////////////////////////
 exports.addPost = async (req, res, next) => {
   try {
-    const {communityId, userId, title, description, images} = req.body;
-    const post = new Post(communityId, userId, title, description, images);
+    const {communityId, userId, title, description, genre, tags, images} = req.body;
+    const post = new Post(communityId, userId, title, description, genre, tags, images);
     
     const response = await post.save();
     post._id = response.insertedId;

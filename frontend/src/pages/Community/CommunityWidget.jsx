@@ -42,7 +42,7 @@ function CommunityWidget({community}) {
 
             <div className={styles.communityType}>
               <span><BsGlobe2 /></span>
-              <span>{community.type}</span>
+              <span>Public</span>
             </div>
 
           </div>
@@ -130,17 +130,7 @@ function CommunityWidget({community}) {
               RELATED COMMUNITIES
             </div>
             <div className={styles.communityList}>
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
+              <CommunityCardSmall community={community}/>
             </div>
           </div>
 

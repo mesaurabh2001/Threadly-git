@@ -1,5 +1,6 @@
 .container {
   min-height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -10,7 +11,7 @@
 
 .form {
 width: 100%;
-max-width: 680px;
+max-width: 732px;
 padding: 32px;
 background: #ffffff;
 border: 1px solid #e5e7eb;

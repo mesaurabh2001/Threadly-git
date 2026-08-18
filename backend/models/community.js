@@ -73,8 +73,12 @@ module.exports = class Community {
         projection: {
           _id: 1,
           name: 1,
+          title: 1,
+          description: 1,
+          rules: 1,
           avatar: 1,
           genre: 1,
+          tags: 1,
           admin: 1,
           memberCount: {
             $size: '$members',

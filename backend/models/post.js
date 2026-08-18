@@ -8,14 +8,15 @@ const {ObjectId} = require('mongodb');
 
 class Post {
 
-  constructor (communityId, userId, title, description, images, genre, _id) {
+  constructor (communityId, userId, title, description, genre, tags, images, _id) {
 
     this.communityId = communityId;
     this.userId = userId;
     this.title = title;
     this.description = description;
-    this.images = images;
     this.genre = genre;
+    this.tags = tags;
+    this.images = images;
 
     this.followedBy = [];
     this.upvotes = [];

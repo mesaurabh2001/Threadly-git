@@ -1,5 +1,15 @@
 
 
+export const getCommunitiesSummaries = async () => {
+  const response = await fetch('http://localhost:3000/communities/summaries');
+
+  if(!response.ok){
+    throw new Error('Failed to fetch community summaries');
+  }
+  
+  return response.json();
+}
+
 export const addCommunity = async (communityObj) => {
   const response = await fetch('http://localhost:3000/communities', {
     method: 'POST',
