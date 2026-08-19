@@ -3,7 +3,9 @@ import Feed from '../../components/Feed/Feed.jsx';
 import CommunityWidget from "./CommunityWidget.jsx";
 
 // local Modules
+import {getCommunityPosts} from '../../services/communityService.js'
 import {getPosts} from '../../services/postService.js';
+import {getCommunityById} from '../../services/communityService.js';
 
 ////
 import {useState, useEffect} from 'react';
@@ -12,87 +14,55 @@ import {useState, useEffect} from 'react';
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { AiOutlineApartment } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
+import { useParams } from "react-router-dom";
 
 function Community() {
 
-  const community = {
-    "name": "IndianGaming",
-    "title": "Ah!! here we go again",
-    "avatar": "https://images.unsplash.com/photo-1519456264917-42d0aa2e0625?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "poster": "https://images.unsplash.com/photo-1683041133704-1de1c55d050c?q=80&w=1375&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "admin": "34324324324324234324234",
-    "description": "This community is dedicated to the Indians and there gaming passion.",
-    "genre": "games",
-    "type": "public",
-    "members": [],
-    "posts": [],
-    "reportedPosts": [],
-    "markedDeletePosts": [],
-    "_id": "6a834932ed4c8498bf44fe55",
-    "rules": [
-      {
-        title: "Rule Title",
-        description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-      },
-      {
-        title: "Rule Title",
-        description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-      },
-      {
-        title: "Rule Title",
-        description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-      },
-      {
-        title: "Rule Title",
-        description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-      },
-    ],
-    "tags": [
-      "PC Gaming","Console Gaming","Mobile Gaming","Nintendo","PlayStation","Xbox","Steam","RPG","Action","Adventure","Strategy","Simulation","Sports Games","Racing","Fighting","Puzzle","Horror Games","Survival","Open World","FPS","MMO","Indie Games","Multiplayer","Single Player","Retro Games","Game Development","Esports"
-    ],
-    "createdAt": "2026-08-17T17:47:30.916+00:00",
-    "updatedAt": "2026-08-17T17:47:30.916+00:00",
-  }
-  
 
-  // const [community, setCommunity] = useState([]);
-
-  // useEffect( () => {
-  //   const getCommunityPage = async () => {
-  //     try {
-  //       const community = await getCommunityById(id);
-  //       setCommunity(community);
-
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   }
-
-  //   getCommunityPage();
-  // }, [])
-
-    const [posts, setPosts] = useState([]);
+  const {id} = useParams();
+  const [community, setCommunity] = useState(null);
 
   useEffect( () => {
-    const getCommunityPosts = async () => {
+    const getCommunityPage = async () => {
       try {
-        const community = await getPosts();
-        setPosts(community);
+        const community = await getCommunityById(id);
+        setCommunity(community);
 
       } catch (error) {
         console.log(error.message);
       }
     }
 
-    getCommunityPosts();
-  }, [])
+    getCommunityPage();
+  }, [id])
+
+  const [posts, setPosts] = useState([]);
+
+  useEffect( () => {
+    const loadCommunityPosts = async () => {
+      try {
+        const posts = await getCommunityPosts(id);
+        // const posts = await getPosts();
+        setPosts(posts);
+
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    loadCommunityPosts();
+  }, [id]);
+
+  if(!community) {
+    return (
+      <div> Loading... </div>
+    );
+  }
   
   return (
     <div className={styles.mainContainer}>
+
+
 
       <div className={styles.header}>
 
@@ -109,7 +79,7 @@ function Community() {
                 className={styles.communityAvatar}
                 onClick={(e) => e.stopPropagation()}
               >
-                <img src={`${community.avatar}?fm=jpg&fit=max&w=1072&q=40`} alt={community.name.charAt(0).toUpperCase()} />
+                <img src={`${community.avatar}?fm=jpg&fit=max&w=1072&q=40`} alt='' />
               </div>
             </div>
 
@@ -146,7 +116,7 @@ function Community() {
 
       </div>
 
-{/* ////////////////////////////////////////////////////////////////////////////////// */}
+{/* //////////////////////////////////////////////////////////////////////////////////////////// */}
 
       <div className={styles.community}>
 
@@ -177,13 +147,20 @@ function Community() {
           <Feed
             postList={posts} 
           />
+          
         </section>
         
+        {community && (
+
         <aside className={styles.widgetSection}>
           <CommunityWidget community={community}/>
         </aside>
 
+        )}
+
       </div>
+
+
     </div>
   );
 }

@@ -1,5 +1,6 @@
 // Local Module
 const Community = require('../models/community.js');
+const Post = require('../models/post.js');
 
 ////////////////////////////////////////////
 exports.getCommunities = async (req, res, next) => {
@@ -35,6 +36,18 @@ exports.getCommunityById = async (req, res, next) => {
       })
     }
     res.json(community);
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+////////////////////////////////////////////
+exports.getCommunityPosts = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const posts = await Post.fetchByCommunityId(id);
+    res.json(posts);
 
   } catch (error) {
     next(error);

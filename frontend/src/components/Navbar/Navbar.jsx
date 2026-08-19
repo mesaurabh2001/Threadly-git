@@ -76,8 +76,10 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
             <input type="text" placeholder="Find Anything" />
           </div>
         </div>
+        
+        {false && (
 
-        {/* <div className={styles.loggedOutbuttonGroup}>
+        <div className={styles.loggedOutbuttonGroup}>
           <button 
             className={`${styles.authButton} ${styles.signupButton}`}
             onClick={onAuthClick}>
@@ -100,7 +102,7 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
             </div>
 
             {showDropdownMenu && (
-              <div className={styles.ButtonMenu}>
+              <div className={styles.buttonMenu}>
                 <ul>
                   <li onClick={onAuthClick}>
                     <NavLink to="" className={styles.dropdownLink}>
@@ -127,7 +129,11 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
             )}
           </div>
 
-        </div> */}
+        </div>
+
+        )}
+
+        {true && (
 
         <div className={styles.loggedInbuttonGroup}>
 
@@ -180,8 +186,7 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
           </div>
 
         </div>
-
-        
+        )}
 
 
       </nav>

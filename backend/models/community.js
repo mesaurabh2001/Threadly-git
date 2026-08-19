@@ -99,3 +99,6 @@ module.exports = class Community {
     return db.collection('communities').deleteOne({_id : new ObjectId(id)});
   }
 }
+
+
+

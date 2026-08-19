@@ -60,13 +60,13 @@ function CreatePost () {
 
     console.log(postObj);
 
-    // try{
-    //   const response = await addPost(postObj);
-    //   navigate('/');
+    try{
+      const response = await addPost(postObj);
+      navigate('/');
 
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
+    } catch (error) {
+      console.log(error.message);
+    }
     
   }
 
@@ -172,11 +172,11 @@ function CreatePost () {
 
       </form>
 
-      <aside className={styles.widgetSection}>
       {selectedCommunity && (
+        <aside className={styles.widgetSection}>
           <CreatePostWidget community={selectedCommunity}/>
+        </aside>
       )}
-      </aside>
 
       
     </div>

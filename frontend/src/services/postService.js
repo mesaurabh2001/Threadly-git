@@ -6,8 +6,9 @@ export const getPosts =  async () => {
     const errorData = await response.json();
     throw new Error(errorData.message);
   }
-
-  return response.json();
+  
+  const data = await response.json();
+  return data;
 }
 
 export const getPostById = async (id) => {
@@ -18,7 +19,8 @@ export const getPostById = async (id) => {
       throw new Error(errorData.message);
     }
 
-    return response.json();
+    const data = await response.json();
+    return data;
 }
 
 export const addPost = async (post) => {

@@ -1,7 +1,10 @@
 import styles from "./CommunityWidget.module.css";
 
 import CommunityCardSmall from '../../components/CommuntiyCardSmall/CommunityCardSmall';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { getCommunitiesSummaries } from "../../services/communityService";
 
 // React Icons - 
 import { IoFolderOpenOutline } from "react-icons/io5";
@@ -9,6 +12,8 @@ import { BsGlobe2 } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
 function CommunityWidget({community}) {
+
+  const navigate = useNavigate();
 
   const [openRule, setOpenRule] = useState(null);
 
@@ -19,6 +24,22 @@ function CommunityWidget({community}) {
     day: "numeric",
     year: "numeric",
   });
+
+  const [communities, setCommunities] = useState([]);
+  
+  useEffect(() => {
+    const loadCommunities = async () => {
+      try{
+        const communities = await getCommunitiesSummaries();
+        setCommunities(communities);
+
+      } catch (error){
+        console.log(error.message);
+      }
+    }
+
+    loadCommunities();
+  }, []);
   
   return (
     <>
@@ -73,8 +94,8 @@ function CommunityWidget({community}) {
             </div>
 
             <div className={styles.tags}>
-              {community.tags.map(tag => (
-                <div className={styles.tag}>
+              {community.tags.map((tag, index) => (
+                <div className={styles.tag} key={index}>
                   <span>{tag}</span>
                 </div>
               ))}
@@ -130,7 +151,14 @@ function CommunityWidget({community}) {
               RELATED COMMUNITIES
             </div>
             <div className={styles.communityList}>
-              <CommunityCardSmall community={community}/>
+              {communities.map((community, index) => (
+                <div 
+                  className={styles.communityWrapper}
+                  onClick={() => navigate(`/communities/${community._id}`)}
+                >
+                  <CommunityCardSmall community={community} key={community._id}/>
+                </div>
+              ))}
             </div>
           </div>
 

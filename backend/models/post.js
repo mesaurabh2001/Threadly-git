@@ -10,8 +10,8 @@ class Post {
 
   constructor (communityId, userId, title, description, genre, tags, images, _id) {
 
-    this.communityId = communityId;
-    this.userId = userId;
+    this.communityId = new ObjectId(communityId);
+    this.userId = new ObjectId(userId);
     this.title = title;
     this.description = description;
     this.genre = genre;
@@ -50,24 +50,180 @@ class Post {
         {$set: updatedPost}
       );
       
-    } else {
-      return db.collection('posts').insertOne({
-        ...this,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      });
     }
+    
+    return db.collection('posts').insertOne({
+      ...this,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
     
   }
 
   static fetchAll () {
     const db = getDB()
-    return db.collection('posts').find().toArray();
+    return db.collection('posts').aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $lookup: {
+          from : 'communities',
+          localField: 'communityId',
+          foreignField: '_id',
+          as : 'community'
+        }
+      },
+      {
+        $unwind: '$community'
+      },
+      {
+        $sort: {
+          createdAt: -1
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          description: 1,
+          images: 1,
+          upvotedCount: {
+            $size: '$upvotes',
+          },
+          downvotedCount: {
+            $size: '$downvotes'
+          },
+          createdAt: 1,
+          updatedAt: 1,
+
+          "user._id": 1,
+          "user.username": 1,
+          
+          'community._id': 1,
+          'community.name': 1,
+          'community.avatar': 1
+        }
+      }
+    ]).toArray();
   }
 
-  static fetchById (id) {
+  static fetchById(id) {
     const db = getDB();
-    return db.collection('posts').find({_id : new ObjectId(id)}).next();
+
+    return db.collection('posts').aggregate([
+      {
+        $match: {
+          _id: new ObjectId(id)
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $lookup: {
+          from: 'communities',
+          localField: 'communityId',
+          foreignField: '_id',
+          as: 'community'
+        }
+      },
+      {
+        $unwind: '$community'
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          description: 1,
+          genre: 1,
+          tags: 1,
+          images: 1,
+          createdAt: 1,
+          updatedAt: 1,
+
+          // User fields
+          'user._id': 1,
+          'user.username': 1,
+
+          // Community fields
+          'community._id': 1,
+          'community.name': 1,
+          'community.avatar': 1
+        }
+      }
+    ]).next();
+  }
+
+  static fetchByCommunityId (communityId) {
+    const db = getDB();
+    return db.collection('posts').aggregate([
+      {
+        $match: {
+          communityId: new ObjectId(communityId)
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $lookup: {
+          from: 'communities',
+          localField: 'communityId',
+          foreignField: '_id',
+          as: 'community'
+        }
+      },
+      {
+        $unwind: '$community'
+      },
+      {
+        $sort: {
+          createdAt: -1
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          description: 1,
+          images: 1,
+          createdAt: 1,
+          updatedAt: 1,
+
+          "user._id": 1,
+          "user.username": 1,
+          
+          'community._id': 1,
+          'community.name': 1,
+          'community.avatar': 1
+        }
+      }
+    ]).toArray();
   }
 
   static deleteById (id) {
@@ -75,26 +231,5 @@ class Post {
     return db.collection('posts').deleteOne({_id: new ObjectId(id)});
   }
 }
-
-// setTimeout( async () => {
-//   try {
-//     for(const post of dummyPosts) {
-//       const newPost = new Post(
-//         post.communityId,
-//         post.userId,
-//         post.title,
-//         post.description,
-//         post.images
-//       );
-
-//       await newPost.save();
-//     }
-
-//     console.log('Posts Added Successfully');
-
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }, 3000)
 
 module.exports = Post;

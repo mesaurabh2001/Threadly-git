@@ -103,7 +103,7 @@ function PostCard ({post}) {
                 className={styles.communityPicture}
                 onClick={(e) => e.stopPropagation()}
               >
-                ss
+                <img src={`${post.community.avatar}?fm=jpg&fit=max&w=40&q=75`} alt="" />
               </Link>
 
               <div className={styles.infoName}>
@@ -112,8 +112,7 @@ function PostCard ({post}) {
                   className={styles.communityName}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  t/hiking
-                  community-{post.communityId}
+                  t/{post.community.name}
                 </Link>
 
                 <Link 
@@ -121,8 +120,7 @@ function PostCard ({post}) {
                   className={styles.userName}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  deep_seek_guy
-                  user-{post.userId}
+                  {post.user.username}
                 </Link>
               </div>
 
@@ -220,14 +218,16 @@ function PostCard ({post}) {
                 {post.title}
             </Link>
 
-            <Link
-              to={`/posts/${post._id}`}
-              className={styles.description}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {post.description}
-              <div className={styles.descriptionContentHide}></div>
-            </Link>
+            {post.description && (
+              <Link
+                to={`/posts/${post._id}`}
+                className={styles.description}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {post.description}
+                <div className={styles.descriptionContentHide}></div>
+              </Link>
+            )}
 
             <div 
               className={`${styles.media} ${imageDimension === 'portrait' ? styles.portrait : ''}`}
@@ -241,10 +241,10 @@ function PostCard ({post}) {
                 alt=""
               />
 
-              <a href={`${currentImage}?fm=jpg&fit=max&w=1200&q=75`} target="_blank" rel="noopener noreferrer">
+              <a href={`${currentImage}?fm=jpg&fit=max&w=600&h=600&q=75`} target="_blank" rel="noopener noreferrer">
                 <img
                   className={styles.foregroundImage}
-                  src={`${currentImage}?fm=jpg&fit=max&w=800&q=75`}
+                  src={`${currentImage}?fm=jpg&fit=max&w=600&h=600&q=75`}
                   alt={post.title}
                   loading="lazy"
                 />
@@ -311,7 +311,7 @@ function PostCard ({post}) {
               </button>
 
               <span className={`${styles.voteCount} `}>
-                {post.upvotes.length - post.downvotes.length}
+                0
               </span>
 
               <button className={ `${styles.voteButton}`}>
@@ -323,7 +323,7 @@ function PostCard ({post}) {
               className={ `${styles.commentCount} ${styles.footerButton}`}
               onClick={(e) => e.stopPropagation()}
             >
-              <BsChat className={styles.commentIcon}/>{post.comments.length}
+              <BsChat className={styles.commentIcon}/>{127}
             </div>
 
             <div 

@@ -262,7 +262,7 @@
 
 .widgetSection {
   /* border: 2px solid red; */
-  border-radius: 10px;
+  border-radius: 8px;
   max-width: 306px;
   width: 100%;
   flex-shrink: 0;

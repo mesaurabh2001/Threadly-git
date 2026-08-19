@@ -20,7 +20,7 @@
 }
 
 .postContainer {
-  border:2px solid #5080c7;
+  /* border:2px solid #5080c7; */
   background:#fff;
   width: 100%;
   height: 100%;
@@ -79,6 +79,8 @@
   height: 36px;
   aspect-ratio: 1;
 
+  overflow: hidden;
+
   font-size:14px;
   font-weight:700;
   color: white;
@@ -88,6 +90,13 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.info .communityPicture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
 }
 
 .info .infoName {

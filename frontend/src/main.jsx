@@ -14,6 +14,7 @@ import PageNotFound from './pages/PageNotFound/PageNotFound.jsx';
 import Post from "./pages/Post/Post.jsx";
 import Community from "./pages/Community/Community.jsx"
 import Profile from './pages/Profile/Profile.jsx';
+import Explore from './pages/Explore/Explore.jsx';
 
 
 const router = createBrowserRouter([
@@ -21,14 +22,18 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      // { index: true, element: <Home /> },
+      { index: true, element: <Home /> },
       // { index: true, element: <Profile /> },
       // { index: true, element: <Post /> },
-      { index: true, element: <Community /> },
+      // { index: true, element: <Community /> },
       { path: "/popular", element: <Popular /> },
+      { path: "/explore", element: <Explore /> },
       { path: "/create-post", element: <CreatePost />},
       { path: "create-community", element: <CreateCommunity />},
-      { path: "/posts/:id", element: <Post />}
+      { path: "/posts/:id", element: <Post />},
+      { path: '/communities/:id', element: <Community />},
+
+      { path: '/profile', element: <Profile />}
     ],
   },
   {

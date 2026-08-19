@@ -16,7 +16,6 @@ module.exports = class User {
 
     this.genres = genres || [];
 
-    this.posts = [];
     this.followedPosts = [];
     this.savedPosts = [];
     this.upvotedPosts = [];
@@ -44,7 +43,6 @@ module.exports = class User {
 
       //   genres: this.genres,
         
-      //   posts: this.posts,
       //   followedPosts: this.followedPosts,
       //   savedPosts: this.savedPosts,
       //   upvotedPosts: this.upvotedPosts,

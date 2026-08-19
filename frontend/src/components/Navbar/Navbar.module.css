@@ -168,19 +168,20 @@
 }
 
 .buttonMenu {
-    position: absolute;
+  border: 1px solid red;
+  position: absolute;
 
-    top: 80%;
-    right: 0;
-    z-index: 99;
+  top: 80%;
+  right: 0;
+  z-index: 99;
 
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
 
-    min-width: 240px;
+  min-width: 240px;
 
-    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+  box-shadow: 0 8px 20px rgba(0,0,0,.10);
 }
 
 .buttonMenu ul{

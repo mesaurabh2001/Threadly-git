@@ -17,7 +17,7 @@
   flex: 1;
   min-height: 0;
 
-  padding: 18px 0px;
+  padding: 20px 0px;
 
   overflow-y: scroll;
   scrollbar-width: thin;
@@ -36,24 +36,24 @@
   color: white;
 
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .communityDescription {
   font-size: 0.875rem;
   font-weight: 400;
-  margin-bottom: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .communityDescription span:first-child {
   font-weight: 500;
   display: block;
-}
-
-.communityDescription span:last-child {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
 }
 
 .createdDate,
@@ -64,9 +64,6 @@
   align-items: center;
   gap: 8px;
   text-transform: capitalize;
-
-  margin-top: 2px;
-  font-size: 13px;
 }
 .createdDate span:first-child,
 .communityType span:first-child {
@@ -297,13 +294,18 @@
   width: 100%;
   padding: 0px 6px;
   flex: 1;
-  /* max-height: 400px; */
+  max-height: 400px;
+
 
   overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+  /* scrollbar-color: rgba(255, 255, 255, 0.5) transparent; */
 }
 
-.relatedCommunities:hover {
-  /* background: rgba(169, 169, 169, 0.596); */
+.communityWrapper {
+  /* border: 1px solid blue; */
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
 }
