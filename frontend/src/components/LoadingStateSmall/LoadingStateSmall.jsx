@@ -1,4 +1,4 @@
-import "./LoadingStateBig.css";
+import "./LoadingStateSmall.css";
 
 import {
   useEffect,
@@ -117,59 +117,6 @@ const TICKER_MESSAGES = [
 
 
 /* =========================================================
-   BACKGROUND COMMUNITY ACTIVITY
-   ========================================================= */
-
-const NETWORK_MESSAGES = [
-  "someone joined the conversation",
-  "new reply",
-  "someone is typing...",
-  "🔥 24 people reacted",
-  "new post discovered",
-  "u/nightowl is here",
-  "someone shared this",
-  "3 people are reading",
-  "new connection",
-  "that post is blowing up",
-  "someone just upvoted",
-  "👀 people are watching",
-  "new comment",
-  "someone found this",
-  "u/quietfox42 joined",
-  "💬 conversation growing",
-];
-
-const NETWORK_EMOJIS = [
-  "🔥",
-  "😂",
-  "👀",
-  "💬",
-  "❤️",
-  "😭",
-  "🚀",
-  "✨",
-  "📈",
-  "🍕",
-  "🎧",
-  "🐱",
-  "💀",
-  "👏",
-];
-
-const NETWORK_COLORS = [
-  "#ff5700",
-  "#ff7043",
-  "#6d78d8",
-  "#8f7bea",
-  "#22c7a9",
-  "#42a5f5",
-  "#f2c94c",
-  "#e76f9b",
-  "#72d572",
-];
-
-
-/* =========================================================
    HELPERS
    ========================================================= */
 
@@ -245,152 +192,14 @@ export default function LivingRedditLoader({
   const [finished, setFinished] =
     useState(false);
 
-  const [networkActivity, setNetworkActivity] =
-    useState([]);
-
   const popCounter =
     useRef(0);
-
-  const networkCounter =
-    useRef(0);
-
-
-  /* =======================================================
-     BACKGROUND COMMUNITY ACTIVITY
-     ======================================================= */
-
-  useEffect(() => {
-    if (phase !== "reading") return;
-
-    const createActivity = () => {
-      const id = ++networkCounter.current;
-
-      const side =
-        Math.random() > 0.5
-          ? "left"
-          : "right";
-
-      const top =
-        8 + Math.random() * 84;
-
-      const horizontal =
-        3 + Math.random() * 31;
-
-      const color =
-        NETWORK_COLORS[
-          Math.floor(
-            Math.random() *
-              NETWORK_COLORS.length
-          )
-        ];
-
-      const emoji =
-        NETWORK_EMOJIS[
-          Math.floor(
-            Math.random() *
-              NETWORK_EMOJIS.length
-          )
-        ];
-
-      const message =
-        NETWORK_MESSAGES[
-          Math.floor(
-            Math.random() *
-              NETWORK_MESSAGES.length
-          )
-        ];
-
-      const type =
-        Math.random() > 0.42
-          ? "message"
-          : "node";
-
-      const activity = {
-        id,
-        side,
-        top,
-        horizontal,
-        color,
-        emoji,
-        message,
-        type,
-      };
-
-      setNetworkActivity((prev) => [
-        ...prev.slice(-11),
-        activity,
-      ]);
-
-      setTimeout(() => {
-        setNetworkActivity((prev) =>
-          prev.filter(
-            (item) =>
-              item.id !== id
-          )
-        );
-      }, 3600);
-    };
-
-    const initial = [];
-
-    for (let i = 0; i < 7; i++) {
-      const id = ++networkCounter.current;
-
-      initial.push({
-        id,
-        side:
-          i % 2 === 0
-            ? "left"
-            : "right",
-        top:
-          5 +
-          Math.random() * 88,
-        horizontal:
-          4 +
-          Math.random() * 30,
-        color:
-          NETWORK_COLORS[
-            Math.floor(
-              Math.random() *
-                NETWORK_COLORS.length
-            )
-          ],
-        emoji:
-          NETWORK_EMOJIS[
-            Math.floor(
-              Math.random() *
-                NETWORK_EMOJIS.length
-            )
-          ],
-        message:
-          NETWORK_MESSAGES[
-            Math.floor(
-              Math.random() *
-                NETWORK_MESSAGES.length
-            )
-          ],
-        type:
-          Math.random() > 0.45
-            ? "message"
-            : "node",
-      });
-    }
-
-    setNetworkActivity(initial);
-
-    const timer = setInterval(
-      createActivity,
-      650
-    );
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [phase]);
 
 
   /* =======================================================
      READER
+
+     The reading cursor continuously moves through the feed.
      ======================================================= */
 
   useEffect(() => {
@@ -410,6 +219,7 @@ export default function LivingRedditLoader({
           ) +
           3
       );
+
     }, 1400);
 
     return () =>
@@ -420,6 +230,8 @@ export default function LivingRedditLoader({
 
   /* =======================================================
      VOTES
+
+     The feed is changing while we read it.
      ======================================================= */
 
   useEffect(() => {
@@ -459,6 +271,7 @@ export default function LivingRedditLoader({
         },
       }));
 
+
       setTimeout(() => {
 
         setVotePop((prev) => {
@@ -476,9 +289,11 @@ export default function LivingRedditLoader({
           delete next[post.id];
 
           return next;
+
         });
 
       }, 850);
+
 
       setTimeout(() => {
 
@@ -491,7 +306,7 @@ export default function LivingRedditLoader({
 
       }, 400);
 
-    }, 500);
+    }, 850);
 
     return () =>
       clearInterval(timer);
@@ -501,6 +316,8 @@ export default function LivingRedditLoader({
 
   /* =======================================================
      COMMENTS
+
+     Comments independently grow.
      ======================================================= */
 
   useEffect(() => {
@@ -527,6 +344,7 @@ export default function LivingRedditLoader({
       }));
 
       setCommentFlash(post.id);
+
 
       setTimeout(() => {
 
@@ -620,6 +438,11 @@ export default function LivingRedditLoader({
 
   /* =======================================================
      RANKED POSTS
+
+     THIS is the important combination.
+
+     The reader moves through posts while their positions
+     can change because their scores are changing.
      ======================================================= */
 
   const ranked = useMemo(() => {
@@ -642,6 +465,9 @@ export default function LivingRedditLoader({
 
   /* =======================================================
      CURRENT POST
+
+     The reading cursor follows the currently selected
+     piece of content.
      ======================================================= */
 
   const currentPost =
@@ -662,6 +488,8 @@ export default function LivingRedditLoader({
 
   /* =======================================================
      EXIT
+
+     Parent can still tell it when the real app is ready.
      ======================================================= */
 
   useEffect(() => {
@@ -722,128 +550,12 @@ export default function LivingRedditLoader({
       }`}
     >
 
-      {/* =================================================
-          COMMUNITY NETWORK BACKGROUND
-          Completely independent from the feed.
-          ================================================= */}
-
-      <div
-        className="community-network"
-        aria-hidden="true"
-      >
-
-        <div className="network-grid" />
-
-        <div className="network-glow glow-orange" />
-        <div className="network-glow glow-purple" />
-        <div className="network-glow glow-blue" />
-
-        {networkActivity.map(
-          (activity, index) => {
-
-            if (
-              activity.type ===
-              "node"
-            ) {
-              return (
-                <div
-                  key={activity.id}
-                  className={`network-node network-${activity.side}`}
-                  style={{
-                    top:
-                      `${activity.top}%`,
-                    [activity.side ===
-                    "left"
-                      ? "left"
-                      : "right"]:
-                      `${activity.horizontal}%`,
-                    "--node-color":
-                      activity.color,
-                    "--delay":
-                      `${(index % 5) * 0.12}s`,
-                  }}
-                >
-                  <span className="node-core" />
-
-                  <span className="node-ring" />
-
-                  <span className="node-emoji">
-                    {activity.emoji}
-                  </span>
-                </div>
-              );
-            }
-
-            return (
-              <div
-                key={activity.id}
-                className={`network-message network-${activity.side}`}
-                style={{
-                  top:
-                    `${activity.top}%`,
-                  [activity.side ===
-                  "left"
-                    ? "left"
-                    : "right"]:
-                    `${activity.horizontal}%`,
-                  "--message-color":
-                    activity.color,
-                  "--delay":
-                    `${(index % 5) * 0.12}s`,
-                }}
-              >
-                <span className="network-avatar">
-                  <span />
-                </span>
-
-                <span className="network-message-text">
-                  {activity.message}
-                </span>
-
-                <span className="network-message-emoji">
-                  {activity.emoji}
-                </span>
-              </div>
-            );
-          }
-        )}
-
-        {/* Static ambient people */}
-
-        <div className="ambient-person person-one">
-          <span />
-        </div>
-
-        <div className="ambient-person person-two">
-          <span />
-        </div>
-
-        <div className="ambient-person person-three">
-          <span />
-        </div>
-
-        <div className="ambient-person person-four">
-          <span />
-        </div>
-
-        {/* Connection paths */}
-
-        <div className="connection connection-one" />
-        <div className="connection connection-two" />
-        <div className="connection connection-three" />
-        <div className="connection connection-four" />
-
-      </div>
-
-
-      {/* =================================================
-          EXISTING CONTENT
-          ================================================= */}
-
       <div className="living-content">
 
 
-        {/* COMMUNITY */}
+        {/* =================================================
+            COMMUNITY
+            ================================================= */}
 
         <div className="living-community">
 
@@ -856,7 +568,11 @@ export default function LivingRedditLoader({
         </div>
 
 
-        {/* LIVE COMMUNITY PULSE */}
+        {/* =================================================
+            LIVE COMMUNITY PULSE
+
+            Directly from loader #2.
+            ================================================= */}
 
         <div className="living-pulse">
 
@@ -891,12 +607,20 @@ export default function LivingRedditLoader({
         </div>
 
 
-        {/* READING WINDOW */}
+        {/* =================================================
+            READING WINDOW
+
+            Directly preserves loader #1's concept.
+            ================================================= */}
 
         <div className="reading-window">
 
           <div className="reading-line top" />
 
+
+          {/* -----------------------------------------------
+              SCROLLING FEED
+              ----------------------------------------------- */}
 
           <div
             className="feed-scroll"
@@ -943,6 +667,8 @@ export default function LivingRedditLoader({
                     className={`reading-post ${state}`}
                   >
 
+                    {/* SUBREDDIT */}
+
                     <div className="post-sub">
 
                       <span
@@ -955,10 +681,12 @@ export default function LivingRedditLoader({
                         }}
                       />
 
-                      {post.subthread}
+                      {post.subreddit}
 
                     </div>
 
+
+                    {/* TITLE */}
 
                     <div className="reading-title">
 
@@ -966,6 +694,8 @@ export default function LivingRedditLoader({
 
                     </div>
 
+
+                    {/* META */}
 
                     <div className="reading-meta">
 
@@ -996,6 +726,8 @@ export default function LivingRedditLoader({
                         {post.comments}
                       </span>
 
+
+                      {/* +VOTES */}
 
                       {votePop[
                         post.id
@@ -1034,7 +766,9 @@ export default function LivingRedditLoader({
         </div>
 
 
-        {/* STATUS */}
+        {/* =================================================
+            STATUS
+            ================================================= */}
 
         <div className="living-status">
 
@@ -1078,7 +812,9 @@ export default function LivingRedditLoader({
         </div>
 
 
-        {/* FOOTER */}
+        {/* =================================================
+            FOOTER
+            ================================================= */}
 
         <div className="living-meta">
 
@@ -1095,7 +831,11 @@ export default function LivingRedditLoader({
         </div>
 
 
-        {/* RANKING META */}
+        {/* =================================================
+            RANKING META
+
+            Directly from loader #2.
+            ================================================= */}
 
         <div className="ranking-meta">
 

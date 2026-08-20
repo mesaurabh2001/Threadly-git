@@ -1,6 +1,5 @@
 // Local Modules
 const {getDB} = require('../utils/database.js');
-const dummyPosts = require('../utils/dummyPosts.js');
 
 // External Module
 const {ObjectId} = require('mongodb');

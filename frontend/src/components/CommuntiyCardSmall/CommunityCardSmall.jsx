@@ -3,8 +3,8 @@ import styles from "./CommunityCardSmall.module.css";
 function CommunityCardSmall ({community}) {
   return (
     <>
-      <div 
-        className={styles.communityCardSmall} >
+      <div className={styles.communityCardSmall} >
+        
         <div
           className={styles.avatar}
         >

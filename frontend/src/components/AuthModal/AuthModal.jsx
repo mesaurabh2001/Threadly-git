@@ -13,7 +13,7 @@ function AuthModal({ showAuth, hideAuth }) {
     <div className={styles.overlay} onClick={hideAuth}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
 
-        {authPage == 'login' && <Login setAuthPage={setAuthPage}/>}
+        {authPage == 'login' && <Login setAuthPage={setAuthPage} hideAuth={hideAuth}/>}
         {authPage == 'signup' && <Signup setAuthPage={setAuthPage}/>}
         {authPage == 'forgot-password' && <ForgotPassword setAuthPage={setAuthPage}/>}
         {/* {isLogin ? (<Login setIsLogin={setIsLogin} />) : (<Signup setIsLogin={setIsLogin} />) } */}

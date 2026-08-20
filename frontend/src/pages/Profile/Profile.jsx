@@ -4,9 +4,11 @@ import ProfileWidget from "./ProfileWidget.jsx";
 
 // local Modules
 import {getPosts} from '../../services/postService.js';
+import { getUser } from "../../services/userService.js";
 
 ////
 import {useState, useEffect} from 'react';
+import { useAuth } from "../../context/AuthContext.jsx";
 
 // icons
 import { FaRegSquarePlus } from "react-icons/fa6";
@@ -15,12 +17,29 @@ import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons
 
 function Home() {
 
-  const avatarUrl = "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHJhYmJpdHxlbnwwfHwwfHx8MA%3D%3D";
+  const {userId} = useAuth();
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+      const loadUser = async () => {
+        try {
+          const data = await getUser(userId);
+          setUser(data)
+
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+
+      loadUser();
+
+  }, []);
 
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-      const getHomePosts = async () => {
+      const loadPosts = async () => {
         try {
           const data = await getPosts();
           setPosts(data)
@@ -30,9 +49,13 @@ function Home() {
         }
       }
 
-      getHomePosts();
+      loadPosts();
 
   }, []);
+
+  if(!user) {
+    return <div>Loading...</div>
+  }
   
   return (
     <div className={styles.mainContainer}>
@@ -44,7 +67,7 @@ function Home() {
             className={styles.avatar}
             onClick={(e) => e.stopPropagation()}
           >
-            <img src={`${avatarUrl}`} alt="" />
+            <img src={`${user.avatar}?auto=format&fit=max&w=600&h=600&q=75`} alt="" />
           </div>
 
           <div className={styles.infoName}>
@@ -53,14 +76,14 @@ function Home() {
               className={styles.profileName}
               onClick={(e) => e.stopPropagation()}
             >
-              Medical-Medicine6686
+              {user.name}
             </div>
 
             <div
               className={styles.userName}
               onClick={(e) => e.stopPropagation()}
             >
-              u/Medical-Medicine6686
+              u/{user.username}
             </div>
           </div>
 
@@ -117,11 +140,18 @@ function Home() {
         <Feed
           postList={posts} 
         />
+
       </section>
-      
+
+      {user && (
+
       <aside className={styles.widgetSection}>
-        <ProfileWidget />
-      </aside>
+        <div className={styles.widget}>
+          <ProfileWidget user={user}/>
+        </div>
+      </aside> 
+
+      )}
 
     </div>
   );

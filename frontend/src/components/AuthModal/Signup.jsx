@@ -6,6 +6,10 @@ import { FcGoogle } from "react-icons/fc";
 //
 
 function Signup({setAuthPage}) {
+
+  const signupSubmitHandler = (e) => {
+    e.preventDefault();
+  }
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -35,20 +39,27 @@ function Signup({setAuthPage}) {
       </div>
 
       {/* Inputs */}
-      <div className={styles.form}>
-        <input type="email" placeholder="Email *" />
-        {/* <input type="password" placeholder="Password *" /> */}
-        {/* <button>Continue</button> */}
-      </div>
+      <form
+        onSubmit={signupSubmitHandler}
+        className={styles.form}
+      >
 
-      <div className={styles.footer}>
-        <p>
-          Already a Threadly? 
-          <span onClick={()=> setAuthPage('login')}> Log in</span>
-        </p>
-      </div>
+        <div className={styles.inputContainer}>
+          <input type="email" placeholder="Email *" />
+          {/* <input type="password" placeholder="Password *" /> */}
+          {/* <button>Continue</button> */}
+        </div>
 
-      <button className={styles.formButton}>Continue</button>
+        <div className={styles.footer}>
+          <p>
+            Already a Threadly? 
+            <span onClick={()=> setAuthPage('login')}> Log in</span>
+          </p>
+        </div>
+
+        <button className={styles.formButton}>Continue</button>
+
+      </form>
     </div>
   );
 }

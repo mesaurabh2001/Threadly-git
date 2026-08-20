@@ -1,9 +1,7 @@
 .mainContainer {
   border-radius: 16px;
   width: 100%;
-  height: 100%;
-
-  overflow: hidden;
+  height: fit-content;
   background-color: rgb(180, 113, 113);
 
   display: flex;
@@ -17,26 +15,16 @@
 }
 
 .profileWidget {
-  border: 1px solid red;
+  /* border: 2px solid rgb(19, 68, 228); */
 
   width: 100%;
   flex: 1;
   min-height: 0;
 
   padding: 10px;
-  padding-right: 2px;
   margin-bottom: 10px;
-
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
 }
 
-
-/* Show the thumb when mainContainer is hovered */
-.mainContainer:hover .profileWidget {
-  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
-}
 
 .poster img {
   width: 100%;
@@ -83,7 +71,7 @@
 }
 
 .ownedCommunities, .joinedCommunities {
-  border: 1px solid white;
+  /* border: 1px solid white; */
   border-radius: 10px;
   padding: 6px;
   max-height: 300px;
@@ -97,7 +85,7 @@
 
 }
 .communityList {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 100%;
   flex: 1;
   /* max-height: 400px; */
@@ -105,16 +93,15 @@
   overflow: scroll;
   scrollbar-width: none;
 }
+.communityWrapper:hover {
+  /* border: 1px solid red; */
+  background: rgba(208, 223, 228, 0.212)
+}
 
 .ownedCommunities .heading,
 .joinedCommunities .heading 
 {
   margin-bottom: 16px;
-}
-
-.ownedCommunities:hover, 
-.joinedCommunities:hover {
-  background: darkgray;
 }
 
 .horizontalRule {

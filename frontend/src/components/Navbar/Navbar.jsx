@@ -1,6 +1,8 @@
 import styles from "./Navbar.module.css";
 import { Link, NavLink } from "react-router-dom";
 import {useState, useRef, useEffect} from 'react';
+import { useAuth } from "../../context/AuthContext";
+
 import ThreadlyLogo from '../../assets/ThreadlyLogo.png';
 import ThreadlyBrand from '../../assets/ThreadlyBrand.png';
 import { BsThreeDots } from "react-icons/bs";
@@ -17,6 +19,8 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 
 
 function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
+
+  const {isLoggedIn} = useAuth();
 
   const [showDropdownMenu, setShowDropdownMenu] = useState(false);
   const dropdownMenuRef = useRef(null);
@@ -77,7 +81,7 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
           </div>
         </div>
         
-        {false && (
+        {isLoggedIn === false && (
 
         <div className={styles.loggedOutbuttonGroup}>
           <button 
@@ -105,24 +109,24 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
               <div className={styles.buttonMenu}>
                 <ul>
                   <li onClick={onAuthClick}>
-                    <NavLink to="" className={styles.dropdownLink}>
+                    <button className={styles.dropdownLink}>
                       <RiLoginCircleLine className={styles.dropdownIcon}/>
                       <span>Log In / Sign Up</span>
-                    </NavLink>
+                    </button>
                   </li>
 
                   <li>
-                    <NavLink to="" className={styles.dropdownLink}>
+                    <button type="button" className={styles.dropdownLink}>
                       <BiAtom className={styles.dropdownIcon}/>
                       <span>Help</span>
-                    </NavLink>
+                    </button>
                   </li>
 
                   <li>
-                    <NavLink to="" className={styles.dropdownLink}>
+                    <button type="button" className={styles.dropdownLink}>
                       <FiHelpCircle className={styles.dropdownIcon}/>
                       <span>About Threadly</span>
-                    </NavLink>
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -133,7 +137,7 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
 
         )}
 
-        {true && (
+        {isLoggedIn === true && (
 
         <div className={styles.loggedInbuttonGroup}>
 
@@ -161,24 +165,24 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
               <div className={styles.buttonMenu}>
                 <ul>
                   <li>
-                    <NavLink to="" className={styles.dropdownLink}>
+                    <NavLink to="/profile" className={styles.dropdownLink}>
                       <RiLoginCircleLine className={styles.dropdownIcon}/>
                       <span>Profile</span>
                     </NavLink>
                   </li>
 
                   <li>
-                    <NavLink to="" className={styles.dropdownLink}>
+                    <button type='button' className={styles.dropdownLink}>
                       <BiAtom className={styles.dropdownIcon}/>
                       <span>Settings</span>
-                    </NavLink>
+                    </button>
                   </li>
 
                   <li>
-                    <NavLink to="" className={styles.dropdownLink}>
+                    <button type='button' className={styles.dropdownLink}>
                       <FiHelpCircle className={styles.dropdownIcon}/>
                       <span>Log out</span>
-                    </NavLink>
+                    </button>
                   </li>
                 </ul>
               </div>

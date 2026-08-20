@@ -1,9 +1,9 @@
-import LoadingStateBig from "../../components/LoadingStateBig/LoadingStateBig";
+import LoadingStateSmall from "../../components/LoadingStateSmall/LoadingStateSmall";
 
 function Popular () {
   return (
     <div>
-      <LoadingStateBig></LoadingStateBig>
+      <LoadingStateSmall></LoadingStateSmall>
     </div>
   );
 }

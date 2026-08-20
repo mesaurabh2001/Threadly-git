@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 import { PiAlignCenterHorizontalLight } from "react-icons/pi";
 
@@ -23,9 +24,9 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Home /> },
-      // { index: true, element: <Profile /> },
-      // { index: true, element: <Post /> },
-      // { index: true, element: <Community /> },
+      // { index: true, element: <Profile /> }, //testing
+      // { index: true, element: <Post /> }, //testing
+      // { index: true, element: <Community /> }, //testing
       { path: "/popular", element: <Popular /> },
       { path: "/explore", element: <Explore /> },
       { path: "/create-post", element: <CreatePost />},
@@ -44,6 +45,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );

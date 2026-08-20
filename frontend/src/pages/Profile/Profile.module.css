@@ -231,11 +231,23 @@
 /* /////////////////////////////////////////////////////////////////////////////////// */
 
 .widgetSection {
-  max-width: 306px;
+  border: 2px solid black;
+  max-width: 316px;
   width: 100%;
   flex-shrink: 0;
+  height: 100%;
 
   margin-top: 16px;
+
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.widget {
+  background-color: pink;
+  border-radius: 16px;
+  width: 100%;
+  height: fit-content;
 }
 
 @media (max-width: 767px) {

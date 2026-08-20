@@ -108,7 +108,7 @@ function PostCard ({post}) {
 
               <div className={styles.infoName}>
                 <Link
-                  to={`/communities/${post.communityId}`}
+                  to={`/communities/${post.community._id}`}
                   className={styles.communityName}
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -116,7 +116,7 @@ function PostCard ({post}) {
                 </Link>
 
                 <Link 
-                  to={`/users/${post.userId}`}
+                  to={`/users/${post.user._id}`}
                   className={styles.userName}
                   onClick={(e) => e.stopPropagation()}
                 >

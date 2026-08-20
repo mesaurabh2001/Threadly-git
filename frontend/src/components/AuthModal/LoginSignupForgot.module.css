@@ -3,7 +3,6 @@
 
   width: 420px;
   height: 550px;
-  margin: 20px 10px;
   padding: 32px;
 
   background: #ffffff;
@@ -19,10 +18,12 @@
 
 /* Header */
 .header {
+  /* border: 1px solid black; */
   text-align: center;
 }
 
 .header h2 {
+  /* border: 1px solid black; */
   margin-bottom: 8px;
 }
 
@@ -33,6 +34,7 @@
 }
 
 .header span {
+  /* border: 1px solid black; */
   color: #0079d3;
   cursor: pointer;
 }
@@ -50,6 +52,7 @@
   width: 100%;
 
   border: 1px solid #ddd;
+  /* border: 1px solid black; */
   border-radius: 999px;
 
   cursor: pointer;
@@ -84,8 +87,24 @@
   border-top: 1px solid #ddd;
 }
 
+.warning {
+  margin-top: 8px;
+  padding: 8px 12px;
+  color: #b42318;
+  background-color: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 /* Form */
+
 .form {
+  /* border: 1px solid black; */
+}
+
+.inputContainer {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -123,11 +142,11 @@
   border: none;
   border-radius: 12px;
 
-  background: #e2e2e2;
-  color: #888;
+  background: #FF5C00;
+  color: #f0efef;
 
   font-weight: bold;
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
 }
 
 /* Footer */

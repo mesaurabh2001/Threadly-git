@@ -155,8 +155,9 @@ function CommunityWidget({community}) {
                 <div 
                   className={styles.communityWrapper}
                   onClick={() => navigate(`/communities/${community._id}`)}
+                  key={community._id}
                 >
-                  <CommunityCardSmall community={community} key={community._id}/>
+                  <CommunityCardSmall community={community} />
                 </div>
               ))}
             </div>

@@ -205,6 +205,8 @@
 
 .buttonMenu .dropdownLink {
   /* border: 1px solid blue; */
+  border: none;
+  background: none;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -217,7 +219,7 @@
 }
 
 .buttonMenu .dropdownLink:hover {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .buttonMenu .dropdownIcon {

@@ -3,9 +3,34 @@ import styles from "./LoginSignupForgot.module.css";
 // icons
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 //
 
-function Login({setAuthPage}) {
+function Login({setAuthPage, hideAuth}) {
+
+  const {login} = useAuth();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showWarning, setShowWarning] = useState(false);
+
+
+  const loginSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      await login(username, password);
+      hideAuth();
+
+    } catch (error) {
+      console.log(error);
+      setShowWarning(true);
+    }   
+
+  }
+    
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -37,22 +62,50 @@ function Login({setAuthPage}) {
       </div>
 
       {/* Inputs */}
-      <div className={styles.form}>
-        <input type="email" placeholder="Email or username *" />
-        <input type="password" placeholder="Password *" />
+      <form
+        onSubmit={loginSubmitHandler}
+        className={styles.form}
+      >
         
-      </div>
+        <div className={styles.inputContainer}>
+          <input 
+            type="username" 
+            placeholder="Email or username *" 
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
-      <div className={styles.footer}>
-        <span onClick={()=> setAuthPage('forgot-password')}>Forgot Password?</span>
-        <br /><br />
-        <p>
-          New to Threadly? 
-          <span onClick={()=> setAuthPage('signup')}> Sign Up</span>
-        </p>
-      </div>
+          <input 
+            type="password" 
+            placeholder="Password *" 
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          
+        </div>
 
-      <button className={styles.formButton}>Log In</button>
+        {showWarning && (
+          <div className={styles.warning}>
+            Incorrect Username or Password
+          </div>
+        )}
+
+        <div className={styles.footer}>
+          <span onClick={()=> setAuthPage('forgot-password')}>Forgot Password?</span>
+          <br /><br />
+          <p>
+            New to Threadly? 
+            <span onClick={()=> setAuthPage('signup')}> Sign Up</span>
+          </p>
+        </div>
+
+        
+
+        <button className={styles.formButton}> Log In </button>
+
+      </form>
     </div>
   );
 }
