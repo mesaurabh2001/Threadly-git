@@ -10,8 +10,6 @@ import { IoIosArrowDown } from "react-icons/io";
 
 function CreatePostWidget({community}) {
 
-  console.log(community);
-
   const [openRule, setOpenRule] = useState(null);
   
   return (

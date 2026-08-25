@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getCommunitiesSummaries } from "../../services/communityService";
 import { useNavigate } from "react-router-dom";
 
-function ProfileWidget({user}) {
+function ProfileWidget({profileUser}) {
 
   const navigate = useNavigate();
 
@@ -83,7 +83,7 @@ function ProfileWidget({user}) {
       <div className={`${styles.mainContainer}`}>
 
         <div className={styles.poster}>
-          <img src={`${user.poster}?auto=format&fit=max&h=200&q=75`} alt="" />
+          <img src={`${profileUser.poster}?auto=format&fit=max&h=200&q=75`} alt="" />
         </div>
 
         <div className={styles.profileWidget}>
@@ -91,7 +91,7 @@ function ProfileWidget({user}) {
           <div className={styles.info}>
             
             <div className={styles.name}>
-              <span>{user.name}</span>
+              <span>{profileUser.name}</span>
             </div>
 
           </div>
@@ -100,7 +100,7 @@ function ProfileWidget({user}) {
 
           <div className={styles.tabGroup}>
             <div className={styles.tab}>
-              <span>{getTimeAgo(user.createdAt)}</span>
+              <span>{getTimeAgo(profileUser.createdAt)}</span>
               <span>Threadly Age</span>
             </div>
 

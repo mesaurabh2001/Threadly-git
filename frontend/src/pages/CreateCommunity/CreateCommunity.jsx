@@ -13,7 +13,8 @@ function CreatePost () {
   const [showRulesError, setShowRulesError] = useState(false);
   
 
-  const genreList = ["Anime & Cosplay","Art","Business & Finance","Collectibles & Other Hobbies","Education & Career","Fashion & Beauty","Food & Drinks","Games","Health","Home & Garden","Humanities & Law","Identity & Relationships","Internet Culture","Movies & TV","Music","Nature & Outdoors","News & Politics","Places & Travel","Celebrities & Fandoms","Q&As & Stories","Reading & Writing","Sciences","Horror & creepy","Sports","Technology","Vehicles","Wellness","Adult Content","Mature Topics","Memes"]
+  const genreList = ["Anime & Cosplay","Art","Business & Finance","Collectibles & Other Hobbies","Education & Career","Fashion & Beauty","Food & Drinks","Games","Health","Home & Garden","Humanities & Law","Identity & Relationships","Internet Culture","Movies & TV","Music","Nature & Outdoors","Animals","News & Politics","Places & Travel","Celebrities & Fandoms","Q&As & Stories","Reading & Writing","Sciences","Horror & creepy","Sports","Technology","Vehicles","Wellness","Adult Content","Mature Topics","Memes"];
+
   const [communityName, setCommunityName] = useState("");
   const [communityTitle, setCommunityTitle] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -69,18 +70,14 @@ function CreatePost () {
       title: communityTitle,
       avatar: avatarUrl,
       poster: posterUrl,
-      admin: adminId,
       description: description,
       tags: tags.split(' '),
       genre: genre,
       rules: cleanedRules,
     }
 
-    console.log(communityObj);
-
     try{
       const response = await addCommunity(communityObj);
-      console.log(response);
       navigate('/');
 
     } catch (error) {
@@ -127,13 +124,6 @@ function CreatePost () {
           placeholder="Poster Url"
           value={posterUrl}
           onChange={(e) => setPosterUrl(e.target.value)}
-        />
-
-        <input
-          type="text"
-          placeholder="Admin Id"
-          value={adminId}
-          onChange={(e) => setAdminId(e.target.value)}
         />
 
         <textarea

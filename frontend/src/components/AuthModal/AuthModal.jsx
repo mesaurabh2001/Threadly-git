@@ -2,10 +2,10 @@ import styles from './AuthModal.module.css';
 import { useState } from "react";
 import Signup from "./Signup.jsx";
 import Login from "./Login.jsx";
+import Logout from "./Logout.jsx";
 import ForgotPassword from './ForgotPassword.jsx';
 
-function AuthModal({ showAuth, hideAuth }) {
-  const [authPage, setAuthPage] = useState('login');
+function AuthModal({ showAuth, authPage, setAuthPage, hideAuth }) {
 
   if (!showAuth) return null;
 
@@ -14,9 +14,9 @@ function AuthModal({ showAuth, hideAuth }) {
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
 
         {authPage == 'login' && <Login setAuthPage={setAuthPage} hideAuth={hideAuth}/>}
-        {authPage == 'signup' && <Signup setAuthPage={setAuthPage}/>}
+        {authPage == 'logout' && <Logout hideAuth={hideAuth}/>}
+        {authPage == 'signup' && <Signup setAuthPage={setAuthPage} hideAuth={hideAuth} />}
         {authPage == 'forgot-password' && <ForgotPassword setAuthPage={setAuthPage}/>}
-        {/* {isLogin ? (<Login setIsLogin={setIsLogin} />) : (<Signup setIsLogin={setIsLogin} />) } */}
 
         <span className={styles.close} onClick={hideAuth}>
           ✖

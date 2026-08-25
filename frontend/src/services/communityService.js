@@ -41,6 +41,7 @@ export const getCommunityPosts = async (id) => {
 export const addCommunity = async (communityObj) => {
   const response = await fetch('http://localhost:3000/communities', {
     method: 'POST',
+    credentials:'include',
     headers: {
       'Content-Type': 'application/json',
     },

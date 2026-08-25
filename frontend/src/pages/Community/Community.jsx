@@ -67,7 +67,7 @@ function Community() {
       <div className={styles.header}>
 
         <div className={styles.communityPoster}>
-          <img src={`${community.poster}?fm=jpg&fit=max&w=1072&q=40`} alt="poster" />
+          <img src={`${community.poster}?auto=format&fit=max&w=1072&q=40`} alt="poster" />
         </div>
 
         <div className={styles.headerContent}>
@@ -79,7 +79,7 @@ function Community() {
                 className={styles.communityAvatar}
                 onClick={(e) => e.stopPropagation()}
               >
-                <img src={`${community.avatar}?fm=jpg&fit=max&w=1072&q=40`} alt='' />
+                <img src={`${community.avatar}?auto=format&fit=max&w=100&h=100&q=40`} alt='' />
               </div>
             </div>
 

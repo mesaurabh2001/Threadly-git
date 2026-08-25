@@ -1,26 +1,56 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
-import { loginUser } from "../services/authService";
+import { findInitialUser, loginUser, logoutUser, signupUser } from "../services/authService";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const userObj = await findInitialUser();
+
+        if (userObj) {
+          setUser(userObj);
+        }
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUser();
+  }, []);
+
 
   const login = async (username, password) => {
-    const data = await loginUser(username, password);
-    
-    setIsLoggedIn(true);
-    setUserId(data.userId);
+    const response = await loginUser(username, password);
+    setUser(response.user);
   }
+  const logout = async () => {
+    await logoutUser();
+    setUser(null);
+  }
+
+  const signup = async (dataObj) => {
+    const response = await signupUser(dataObj);
+    setUser(response.user);
+  }
+
 
   return (
     <AuthContext.Provider
       value={{
         login,
-        userId,
-        isLoggedIn,
+        logout,
+        signup,
+        user,
+        loading,
       }}
     >
       {children}

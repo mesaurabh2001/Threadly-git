@@ -56,8 +56,15 @@ exports.getCommunityPosts = async (req, res, next) => {
 
 ////////////////////////////////////////////
 exports.addCommunity = async (req, res, next) => {
+  if (!req.session.userId) {
+    return res.status(401).json({
+      message: 'You must be logged in to create a community'
+    })
+  }
+
   try {
-    const {name, title, avatar, poster, admin, description, tags, genre, rules} = req.body;
+    const {name, title, avatar, poster, description, tags, genre, rules} = req.body;
+    const admin = req.session.userId;
     const community = new Community(name, title, avatar, poster, admin, description, tags, genre, rules);
 
     const response = await community.save();

@@ -1,4 +1,4 @@
-import "./LoadingStateBig.css";
+import styles from "./LoadingStateBig.module.css";
 
 import {
   useEffect,
@@ -6,7 +6,6 @@ import {
   useRef,
   useState,
 } from "react";
-
 
 /* =========================================================
    POSTS
@@ -85,7 +84,6 @@ const POSTS = [
   },
 ];
 
-
 /* =========================================================
    STATUS
    ========================================================= */
@@ -98,7 +96,6 @@ const STATUS_MESSAGES = [
   "loading comments",
   "ranking is shifting",
 ];
-
 
 /* =========================================================
    COMMUNITY TICKER
@@ -114,7 +111,6 @@ const TICKER_MESSAGES = [
   "someone just upvoted this",
   "new reply in the thread",
 ];
-
 
 /* =========================================================
    BACKGROUND COMMUNITY ACTIVITY
@@ -168,7 +164,6 @@ const NETWORK_COLORS = [
   "#72d572",
 ];
 
-
 /* =========================================================
    HELPERS
    ========================================================= */
@@ -177,16 +172,13 @@ function formatScore(score) {
   if (score >= 1000) {
     const k = score / 1000;
 
-    return `${
-      k % 1 === 0
-        ? k.toFixed(0)
-        : k.toFixed(1)
-    }k`;
+    return k % 1 === 0
+      ? k.toFixed(0) + "k"
+      : k.toFixed(1) + "k";
   }
 
   return String(score);
 }
-
 
 /* =========================================================
    COMPONENT
@@ -198,62 +190,31 @@ export default function LivingRedditLoader({
 }) {
   const [scores, setScores] = useState(() =>
     Object.fromEntries(
-      POSTS.map((p) => [
-        p.id,
-        p.score,
-      ])
+      POSTS.map((post) => [post.id, post.score])
     )
   );
 
-  const [comments, setComments] =
-    useState(() =>
-      Object.fromEntries(
-        POSTS.map((p) => [
-          p.id,
-          p.comments,
-        ])
-      )
-    );
+  const [comments, setComments] = useState(() =>
+    Object.fromEntries(
+      POSTS.map((post) => [post.id, post.comments])
+    )
+  );
 
-  const [position, setPosition] =
-    useState(0);
+  const [position, setPosition] = useState(0);
+  const [statusIndex, setStatusIndex] = useState(0);
+  const [tickerIndex, setTickerIndex] = useState(0);
+  const [reading, setReading] = useState(128);
+  const [scanned, setScanned] = useState(1400);
 
-  const [statusIndex, setStatusIndex] =
-    useState(0);
+  const [voteFlash, setVoteFlash] = useState(null);
+  const [commentFlash, setCommentFlash] = useState(null);
+  const [votePop, setVotePop] = useState({});
+  const [phase, setPhase] = useState("reading");
+  const [finished, setFinished] = useState(false);
+  const [networkActivity, setNetworkActivity] = useState([]);
 
-  const [tickerIndex, setTickerIndex] =
-    useState(0);
-
-  const [reading, setReading] =
-    useState(128);
-
-  const [scanned, setScanned] =
-    useState(1400);
-
-  const [voteFlash, setVoteFlash] =
-    useState(null);
-
-  const [commentFlash, setCommentFlash] =
-    useState(null);
-
-  const [votePop, setVotePop] =
-    useState({});
-
-  const [phase, setPhase] =
-    useState("reading");
-
-  const [finished, setFinished] =
-    useState(false);
-
-  const [networkActivity, setNetworkActivity] =
-    useState([]);
-
-  const popCounter =
-    useRef(0);
-
-  const networkCounter =
-    useRef(0);
-
+  const popCounter = useRef(0);
+  const networkCounter = useRef(0);
 
   /* =======================================================
      BACKGROUND COMMUNITY ACTIVITY
@@ -265,45 +226,27 @@ export default function LivingRedditLoader({
     const createActivity = () => {
       const id = ++networkCounter.current;
 
-      const side =
-        Math.random() > 0.5
-          ? "left"
-          : "right";
+      const side = Math.random() > 0.5 ? "left" : "right";
 
-      const top =
-        8 + Math.random() * 84;
-
-      const horizontal =
-        3 + Math.random() * 31;
+      const top = 8 + Math.random() * 84;
+      const horizontal = 3 + Math.random() * 31;
 
       const color =
         NETWORK_COLORS[
-          Math.floor(
-            Math.random() *
-              NETWORK_COLORS.length
-          )
+          Math.floor(Math.random() * NETWORK_COLORS.length)
         ];
 
       const emoji =
         NETWORK_EMOJIS[
-          Math.floor(
-            Math.random() *
-              NETWORK_EMOJIS.length
-          )
+          Math.floor(Math.random() * NETWORK_EMOJIS.length)
         ];
 
       const message =
         NETWORK_MESSAGES[
-          Math.floor(
-            Math.random() *
-              NETWORK_MESSAGES.length
-          )
+          Math.floor(Math.random() * NETWORK_MESSAGES.length)
         ];
 
-      const type =
-        Math.random() > 0.42
-          ? "message"
-          : "node";
+      const type = Math.random() > 0.42 ? "message" : "node";
 
       const activity = {
         id,
@@ -323,10 +266,7 @@ export default function LivingRedditLoader({
 
       setTimeout(() => {
         setNetworkActivity((prev) =>
-          prev.filter(
-            (item) =>
-              item.id !== id
-          )
+          prev.filter((item) => item.id !== id)
         );
       }, 3600);
     };
@@ -338,56 +278,31 @@ export default function LivingRedditLoader({
 
       initial.push({
         id,
-        side:
-          i % 2 === 0
-            ? "left"
-            : "right",
-        top:
-          5 +
-          Math.random() * 88,
-        horizontal:
-          4 +
-          Math.random() * 30,
+        side: i % 2 === 0 ? "left" : "right",
+        top: 5 + Math.random() * 88,
+        horizontal: 4 + Math.random() * 30,
         color:
           NETWORK_COLORS[
-            Math.floor(
-              Math.random() *
-                NETWORK_COLORS.length
-            )
+            Math.floor(Math.random() * NETWORK_COLORS.length)
           ],
         emoji:
           NETWORK_EMOJIS[
-            Math.floor(
-              Math.random() *
-                NETWORK_EMOJIS.length
-            )
+            Math.floor(Math.random() * NETWORK_EMOJIS.length)
           ],
         message:
           NETWORK_MESSAGES[
-            Math.floor(
-              Math.random() *
-                NETWORK_MESSAGES.length
-            )
+            Math.floor(Math.random() * NETWORK_MESSAGES.length)
           ],
-        type:
-          Math.random() > 0.45
-            ? "message"
-            : "node",
+        type: Math.random() > 0.45 ? "message" : "node",
       });
     }
 
     setNetworkActivity(initial);
 
-    const timer = setInterval(
-      createActivity,
-      650
-    );
+    const timer = setInterval(createActivity, 650);
 
-    return () => {
-      clearInterval(timer);
-    };
+    return () => clearInterval(timer);
   }, [phase]);
-
 
   /* =======================================================
      READER
@@ -397,26 +312,15 @@ export default function LivingRedditLoader({
     if (phase !== "reading") return;
 
     const timer = setInterval(() => {
-      setPosition(
-        (p) =>
-          (p + 1) % POSTS.length
-      );
+      setPosition((p) => (p + 1) % POSTS.length);
 
       setScanned(
-        (s) =>
-          s +
-          Math.floor(
-            Math.random() * 10
-          ) +
-          3
+        (s) => s + Math.floor(Math.random() * 10) + 3
       );
     }, 1400);
 
-    return () =>
-      clearInterval(timer);
-
+    return () => clearInterval(timer);
   }, [phase]);
-
 
   /* =======================================================
      VOTES
@@ -426,27 +330,15 @@ export default function LivingRedditLoader({
     if (phase !== "reading") return;
 
     const timer = setInterval(() => {
-
       const post =
-        POSTS[
-          Math.floor(
-            Math.random() *
-              POSTS.length
-          )
-        ];
+        POSTS[Math.floor(Math.random() * POSTS.length)];
 
-      const amount =
-        Math.floor(
-          Math.random() * 35
-        ) + 3;
-
-      const uid =
-        ++popCounter.current;
+      const amount = Math.floor(Math.random() * 35) + 3;
+      const uid = ++popCounter.current;
 
       setScores((prev) => ({
         ...prev,
-        [post.id]:
-          prev[post.id] + amount,
+        [post.id]: prev[post.id] + amount,
       }));
 
       setVoteFlash(post.id);
@@ -460,44 +352,27 @@ export default function LivingRedditLoader({
       }));
 
       setTimeout(() => {
-
         setVotePop((prev) => {
-
-          if (
-            prev[post.id]?.uid !== uid
-          ) {
+          if (prev[post.id]?.uid !== uid) {
             return prev;
           }
 
-          const next = {
-            ...prev,
-          };
-
+          const next = { ...prev };
           delete next[post.id];
 
           return next;
         });
-
       }, 850);
 
       setTimeout(() => {
-
-        setVoteFlash(
-          (current) =>
-            current === post.id
-              ? null
-              : current
+        setVoteFlash((current) =>
+          current === post.id ? null : current
         );
-
       }, 400);
-
     }, 500);
 
-    return () =>
-      clearInterval(timer);
-
+    return () => clearInterval(timer);
   }, [phase]);
-
 
   /* =======================================================
      COMMENTS
@@ -507,45 +382,28 @@ export default function LivingRedditLoader({
     if (phase !== "reading") return;
 
     const timer = setInterval(() => {
-
       const post =
-        POSTS[
-          Math.floor(
-            Math.random() *
-              POSTS.length
-          )
-        ];
+        POSTS[Math.floor(Math.random() * POSTS.length)];
 
       setComments((prev) => ({
         ...prev,
         [post.id]:
           prev[post.id] +
-          Math.floor(
-            Math.random() * 3
-          ) +
+          Math.floor(Math.random() * 3) +
           1,
       }));
 
       setCommentFlash(post.id);
 
       setTimeout(() => {
-
-        setCommentFlash(
-          (current) =>
-            current === post.id
-              ? null
-              : current
+        setCommentFlash((current) =>
+          current === post.id ? null : current
         );
-
       }, 500);
-
     }, 1400);
 
-    return () =>
-      clearInterval(timer);
-
+    return () => clearInterval(timer);
   }, [phase]);
-
 
   /* =======================================================
      PEOPLE READING
@@ -555,22 +413,13 @@ export default function LivingRedditLoader({
     if (phase !== "reading") return;
 
     const timer = setInterval(() => {
-
       setReading(
-        (r) =>
-          r +
-          Math.floor(
-            Math.random() * 3
-          )
+        (r) => r + Math.floor(Math.random() * 3)
       );
-
     }, 1000);
 
-    return () =>
-      clearInterval(timer);
-
+    return () => clearInterval(timer);
   }, [phase]);
-
 
   /* =======================================================
      STATUS
@@ -580,20 +429,13 @@ export default function LivingRedditLoader({
     if (phase !== "reading") return;
 
     const timer = setInterval(() => {
-
       setStatusIndex(
-        (i) =>
-          (i + 1) %
-          STATUS_MESSAGES.length
+        (i) => (i + 1) % STATUS_MESSAGES.length
       );
-
     }, 2400);
 
-    return () =>
-      clearInterval(timer);
-
+    return () => clearInterval(timer);
   }, [phase]);
-
 
   /* =======================================================
      TICKER
@@ -603,111 +445,72 @@ export default function LivingRedditLoader({
     if (phase !== "reading") return;
 
     const timer = setInterval(() => {
-
       setTickerIndex(
-        (i) =>
-          (i + 1) %
-          TICKER_MESSAGES.length
+        (i) => (i + 1) % TICKER_MESSAGES.length
       );
-
     }, 2200);
 
-    return () =>
-      clearInterval(timer);
-
+    return () => clearInterval(timer);
   }, [phase]);
-
 
   /* =======================================================
      RANKED POSTS
      ======================================================= */
 
   const ranked = useMemo(() => {
-
     return POSTS
       .map((post) => ({
         ...post,
-        score:
-          scores[post.id],
-        comments:
-          comments[post.id],
+        score: scores[post.id],
+        comments: comments[post.id],
       }))
-      .sort(
-        (a, b) =>
-          b.score - a.score
-      );
-
+      .sort((a, b) => b.score - a.score);
   }, [scores, comments]);
-
 
   /* =======================================================
      CURRENT POST
      ======================================================= */
 
-  const currentPost =
-    POSTS[position];
-
+  const currentPost = POSTS[position];
 
   /* =======================================================
      TOTAL KARMA
      ======================================================= */
 
-  const totalKarma =
-    Object.values(scores).reduce(
-      (sum, score) =>
-        sum + score,
-      0
-    );
-
+  const totalKarma = Object.values(scores).reduce(
+    (sum, score) => sum + score,
+    0
+  );
 
   /* =======================================================
      EXIT
      ======================================================= */
 
   useEffect(() => {
-
-    if (
-      !ready ||
-      phase !== "reading"
-    ) {
+    if (!ready || phase !== "reading") {
       return;
     }
 
     setPhase("pause");
 
     const t1 = setTimeout(() => {
-
       setPhase("welcome");
 
-      const t2 =
-        setTimeout(() => {
+      const t2 = setTimeout(() => {
+        setFinished(true);
 
-          setFinished(true);
+        const t3 = setTimeout(() => {
+          onComplete?.();
+        }, 500);
 
-          const t3 =
-            setTimeout(() => {
-              onComplete?.();
-            }, 500);
+        return () => clearTimeout(t3);
+      }, 750);
 
-          return () =>
-            clearTimeout(t3);
-
-        }, 750);
-
-      return () =>
-        clearTimeout(t2);
-
+      return () => clearTimeout(t2);
     }, 500);
 
-    return () =>
-      clearTimeout(t1);
-
-  }, [
-    ready,
-    phase,
-    onComplete,
-  ]);
-
+    return () => clearTimeout(t1);
+  }, [ready, phase, onComplete]);
 
   /* =======================================================
      RENDER
@@ -715,404 +518,325 @@ export default function LivingRedditLoader({
 
   return (
     <div
-      className={`living-loader ${
-        finished
-          ? "finished"
-          : ""
+      className={`${styles.livingLoader} ${
+        finished ? styles.finished : ""
       }`}
     >
-
       {/* =================================================
           COMMUNITY NETWORK BACKGROUND
-          Completely independent from the feed.
           ================================================= */}
 
       <div
-        className="community-network"
+        className={styles.communityNetwork}
         aria-hidden="true"
       >
+        <div className={styles.networkGrid} />
 
-        <div className="network-grid" />
+        <div
+          className={`${styles.networkGlow} ${styles.glowOrange}`}
+        />
 
-        <div className="network-glow glow-orange" />
-        <div className="network-glow glow-purple" />
-        <div className="network-glow glow-blue" />
+        <div
+          className={`${styles.networkGlow} ${styles.glowPurple}`}
+        />
 
-        {networkActivity.map(
-          (activity, index) => {
+        <div
+          className={`${styles.networkGlow} ${styles.glowBlue}`}
+        />
 
-            if (
-              activity.type ===
-              "node"
-            ) {
-              return (
-                <div
-                  key={activity.id}
-                  className={`network-node network-${activity.side}`}
-                  style={{
-                    top:
-                      `${activity.top}%`,
-                    [activity.side ===
-                    "left"
-                      ? "left"
-                      : "right"]:
-                      `${activity.horizontal}%`,
-                    "--node-color":
-                      activity.color,
-                    "--delay":
-                      `${(index % 5) * 0.12}s`,
-                  }}
-                >
-                  <span className="node-core" />
-
-                  <span className="node-ring" />
-
-                  <span className="node-emoji">
-                    {activity.emoji}
-                  </span>
-                </div>
-              );
-            }
-
+        {networkActivity.map((activity, index) => {
+          if (activity.type === "node") {
             return (
               <div
                 key={activity.id}
-                className={`network-message network-${activity.side}`}
+                className={`${styles.networkNode} ${
+                  activity.side === "left"
+                    ? styles.networkLeft
+                    : styles.networkRight
+                }`}
                 style={{
-                  top:
-                    `${activity.top}%`,
-                  [activity.side ===
-                  "left"
+                  top: `${activity.top}%`,
+                  [activity.side === "left"
                     ? "left"
-                    : "right"]:
-                    `${activity.horizontal}%`,
-                  "--message-color":
-                    activity.color,
-                  "--delay":
-                    `${(index % 5) * 0.12}s`,
+                    : "right"]: `${activity.horizontal}%`,
+                  "--node-color": activity.color,
+                  "--delay": `${(index % 5) * 0.12}s`,
                 }}
               >
-                <span className="network-avatar">
-                  <span />
-                </span>
+                <span className={styles.nodeCore} />
 
-                <span className="network-message-text">
-                  {activity.message}
-                </span>
+                <span className={styles.nodeRing} />
 
-                <span className="network-message-emoji">
+                <span className={styles.nodeEmoji}>
                   {activity.emoji}
                 </span>
               </div>
             );
           }
-        )}
+
+          return (
+            <div
+              key={activity.id}
+              className={`${styles.networkMessage} ${
+                activity.side === "left"
+                  ? styles.networkLeft
+                  : styles.networkRight
+              }`}
+              style={{
+                top: `${activity.top}%`,
+                [activity.side === "left"
+                  ? "left"
+                  : "right"]: `${activity.horizontal}%`,
+                "--message-color": activity.color,
+                "--delay": `${(index % 5) * 0.12}s`,
+              }}
+            >
+              <span className={styles.networkAvatar}>
+                <span />
+              </span>
+
+              <span className={styles.networkMessageText}>
+                {activity.message}
+              </span>
+
+              <span
+                className={styles.networkMessageEmoji}
+              >
+                {activity.emoji}
+              </span>
+            </div>
+          );
+        })}
 
         {/* Static ambient people */}
 
-        <div className="ambient-person person-one">
+        <div
+          className={`${styles.ambientPerson} ${styles.personOne}`}
+        >
           <span />
         </div>
 
-        <div className="ambient-person person-two">
+        <div
+          className={`${styles.ambientPerson} ${styles.personTwo}`}
+        >
           <span />
         </div>
 
-        <div className="ambient-person person-three">
+        <div
+          className={`${styles.ambientPerson} ${styles.personThree}`}
+        >
           <span />
         </div>
 
-        <div className="ambient-person person-four">
+        <div
+          className={`${styles.ambientPerson} ${styles.personFour}`}
+        >
           <span />
         </div>
 
         {/* Connection paths */}
 
-        <div className="connection connection-one" />
-        <div className="connection connection-two" />
-        <div className="connection connection-three" />
-        <div className="connection connection-four" />
+        <div
+          className={`${styles.connection} ${styles.connectionOne}`}
+        />
 
+        <div
+          className={`${styles.connection} ${styles.connectionTwo}`}
+        />
+
+        <div
+          className={`${styles.connection} ${styles.connectionThree}`}
+        />
+
+        <div
+          className={`${styles.connection} ${styles.connectionFour}`}
+        />
       </div>
-
 
       {/* =================================================
           EXISTING CONTENT
           ================================================= */}
 
-      <div className="living-content">
-
-
+      <div className={styles.livingContent}>
         {/* COMMUNITY */}
 
-        <div className="living-community">
+        <div className={styles.livingCommunity}>
+          <span className={styles.communityMark} />
 
-          <span className="community-mark" />
-
-          <span>
-            THE COMMUNITY
-          </span>
-
+          <span>THE COMMUNITY</span>
         </div>
-
 
         {/* LIVE COMMUNITY PULSE */}
 
-        <div className="living-pulse">
-
-          <div className="pulse-avatars">
-
+        <div className={styles.livingPulse}>
+          <div className={styles.pulseAvatars}>
             <span />
             <span />
             <span />
             <span />
-
           </div>
 
-          <span className="reading-count">
-            {reading.toLocaleString()}
-            {" "}
-            reading now
+          <span className={styles.readingCount}>
+            {reading.toLocaleString()} reading now
           </span>
 
-          <span className="pulse-divider" />
+          <span className={styles.pulseDivider} />
 
           <span
             key={tickerIndex}
-            className="ticker"
+            className={styles.ticker}
           >
-            {
-              TICKER_MESSAGES[
-                tickerIndex
-              ]
-            }
+            {TICKER_MESSAGES[tickerIndex]}
           </span>
-
         </div>
-
 
         {/* READING WINDOW */}
 
-        <div className="reading-window">
-
-          <div className="reading-line top" />
-
+        <div className={styles.readingWindow}>
+          <div
+            className={`${styles.readingLine} ${styles.top}`}
+          />
 
           <div
-            className="feed-scroll"
+            className={styles.feedScroll}
             style={{
-              transform:
-                `translateY(-${
-                  position * 0
-                }px)`,
+              transform: `translateY(-${position * 0}px)`,
             }}
           >
-
-            {ranked.map(
-              (post, index) => {
-
-                const distance =
-                  index -
-                  (
-                    ranked.findIndex(
-                      (p) =>
-                        p.id ===
-                        currentPost.id
-                    )
-                  );
-
-                let state =
-                  "future";
-
-                if (
-                  post.id ===
-                  currentPost.id
-                ) {
-                  state =
-                    "current";
-                } else if (
-                  distance < 0
-                ) {
-                  state =
-                    "past";
-                }
-
-                return (
-                  <div
-                    key={post.id}
-                    className={`reading-post ${state}`}
-                  >
-
-                    <div className="post-sub">
-
-                      <span
-                        className="post-avatar"
-                        style={{
-                          background:
-                            post.id % 2
-                              ? "#ff5700"
-                              : "#6d78d8",
-                        }}
-                      />
-
-                      {post.subthread}
-
-                    </div>
-
-
-                    <div className="reading-title">
-
-                      {post.text}
-
-                    </div>
-
-
-                    <div className="reading-meta">
-
-                      <span
-                        className={
-                          voteFlash ===
-                          post.id
-                            ? "vote-active"
-                            : ""
-                        }
-                      >
-                        ↑{" "}
-                        {formatScore(
-                          post.score
-                        )}
-                      </span>
-
-
-                      <span
-                        className={
-                          commentFlash ===
-                          post.id
-                            ? "comment-active"
-                            : ""
-                        }
-                      >
-                        💬{" "}
-                        {post.comments}
-                      </span>
-
-
-                      {votePop[
-                        post.id
-                      ] && (
-
-                        <span
-                          key={
-                            votePop[
-                              post.id
-                            ].uid
-                          }
-                          className="vote-pop"
-                        >
-                          +
-                          {
-                            votePop[
-                              post.id
-                            ].amount
-                          }
-                        </span>
-
-                      )}
-
-                    </div>
-
-                  </div>
+            {ranked.map((post, index) => {
+              const currentIndex =
+                ranked.findIndex(
+                  (p) => p.id === currentPost.id
                 );
-              }
-            )}
 
+              const distance = index - currentIndex;
+
+              let state = "future";
+
+              if (post.id === currentPost.id) {
+                state = "current";
+              } else if (distance < 0) {
+                state = "past";
+              }
+
+              const stateClass =
+                state === "current"
+                  ? styles.current
+                  : state === "past"
+                    ? styles.past
+                    : styles.future;
+
+              const avatarClass =
+                post.id % 2
+                  ? styles.avatarOrange
+                  : styles.avatarPurple;
+
+              const voteClass =
+                voteFlash === post.id
+                  ? styles.voteActive
+                  : "";
+
+              const commentClass =
+                commentFlash === post.id
+                  ? styles.commentActive
+                  : "";
+
+              return (
+                <div
+                  key={post.id}
+                  className={`${styles.readingPost} ${stateClass}`}
+                >
+                  <div className={styles.postSub}>
+                    <span
+                      className={`${styles.postAvatar} ${avatarClass}`}
+                    />
+
+                    {post.subthread}
+                  </div>
+
+                  <div className={styles.readingTitle}>
+                    {post.text}
+                  </div>
+
+                  <div className={styles.readingMeta}>
+                    <span className={voteClass}>
+                      ↑ {formatScore(post.score)}
+                    </span>
+
+                    <span className={commentClass}>
+                      💬 {post.comments}
+                    </span>
+
+                    {votePop[post.id] && (
+                      <span
+                        key={votePop[post.id].uid}
+                        className={styles.votePop}
+                      >
+                        +{votePop[post.id].amount}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-
-          <div className="reading-line bottom" />
-
+          <div
+            className={`${styles.readingLine} ${styles.bottom}`}
+          />
         </div>
-
 
         {/* STATUS */}
 
-        <div className="living-status">
-
-          {phase ===
-            "reading" && (
+        <div className={styles.livingStatus}>
+          {phase === "reading" && (
             <>
-              <span className="status-pulse" />
+              <span className={styles.statusPulse} />
 
               <span
                 key={statusIndex}
-                className="status-text"
+                className={styles.statusText}
               >
-                {
-                  STATUS_MESSAGES[
-                    statusIndex
-                  ]
-                }
+                {STATUS_MESSAGES[statusIndex]}
               </span>
             </>
           )}
-
 
           {phase === "pause" && (
             <>
-              <span className="status-pulse" />
+              <span className={styles.statusPulse} />
 
-              <span>
-                found something
-              </span>
+              <span>found something</span>
             </>
           )}
 
-
-          {phase ===
-            "welcome" && (
-            <span className="welcome">
+          {phase === "welcome" && (
+            <span className={styles.welcome}>
               welcome back.
             </span>
           )}
-
         </div>
-
 
         {/* FOOTER */}
 
-        <div className="living-meta">
+        <div className={styles.livingMeta}>
+          <span>LISTENING TO THE INTERNET</span>
 
           <span>
-            LISTENING TO THE INTERNET
+            {scanned.toLocaleString()} read
           </span>
-
-          <span>
-            {scanned.toLocaleString()}
-            {" "}
-            read
-          </span>
-
         </div>
-
 
         {/* RANKING META */}
 
-        <div className="ranking-meta">
+        <div className={styles.rankingMeta}>
+          <span>RANKING THE FRONT PAGE</span>
 
           <span>
-            RANKING THE FRONT PAGE
+            {totalKarma.toLocaleString()} karma
           </span>
-
-          <span>
-            {totalKarma.toLocaleString()}
-            {" "}
-            karma
-          </span>
-
         </div>
-
       </div>
-
     </div>
   );
 }

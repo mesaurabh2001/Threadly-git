@@ -8,6 +8,7 @@ import AuthModal from './components/AuthModal/AuthModal.jsx';
 function App() {
 
   const [showAuth, setShowAuth] = useState();
+  const [authPage, setAuthPage] = useState('login');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -21,7 +22,10 @@ function App() {
       <div className={`${styles.navbarContainer}`}>
         
         <Navbar
-          onAuthClick={()=> setShowAuth(true)}
+          onAuthClick={(page)=> {
+            setShowAuth(true);
+            setAuthPage(page);
+          }}
           onSidebarToggle={toggleSidebar} 
           setIsSidebarOpen={setIsSidebarOpen}
         />
@@ -53,7 +57,7 @@ function App() {
         
       </div>
 
-      <AuthModal showAuth={showAuth} hideAuth={()=> setShowAuth(false)} />
+      <AuthModal showAuth={showAuth} authPage={authPage} setAuthPage={setAuthPage} hideAuth={()=> setShowAuth(false)} />
     </div>
   );
 }

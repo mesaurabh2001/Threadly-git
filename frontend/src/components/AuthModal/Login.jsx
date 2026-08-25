@@ -24,7 +24,7 @@ function Login({setAuthPage, hideAuth}) {
       hideAuth();
 
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       setShowWarning(true);
     }   
 
@@ -32,7 +32,7 @@ function Login({setAuthPage, hideAuth}) {
     
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.loginContainer}`}>
       <div className={styles.header}>
         <h2>Log In</h2>
         <p>
@@ -94,14 +94,11 @@ function Login({setAuthPage, hideAuth}) {
 
         <div className={styles.footer}>
           <span onClick={()=> setAuthPage('forgot-password')}>Forgot Password?</span>
-          <br /><br />
           <p>
             New to Threadly? 
             <span onClick={()=> setAuthPage('signup')}> Sign Up</span>
           </p>
         </div>
-
-        
 
         <button className={styles.formButton}> Log In </button>
 

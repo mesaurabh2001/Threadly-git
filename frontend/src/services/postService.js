@@ -26,6 +26,7 @@ export const getPostById = async (id) => {
 export const addPost = async (post) => {
   const response = await fetch('http://localhost:3000/posts', {
     method: 'POST',
+    credentials: "include",
     headers: {
       'Content-Type': 'application/json',
     },
@@ -34,7 +35,7 @@ export const addPost = async (post) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error (error.message);
+    throw new Error (errorData.message);
   }
 
   return response.json();

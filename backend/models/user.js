@@ -6,15 +6,16 @@ const {ObjectId}  = require('mongodb');
 
 module.exports = class User {
   
-  constructor (name, username, email, avatar, poster, genres, _id) {
+  constructor (name, username, email, password, avatar, poster, genres, _id) {
     this.name = name;
     this.username = username;
     this.email = email;
+    this.password = password;
 
     this.avatar = avatar;
     this.poster = poster;
 
-    this.genres = genres || [];
+    this.genres = genres;
 
     this.followedPosts = [];
     this.savedPosts = [];
@@ -37,6 +38,7 @@ module.exports = class User {
       //   name: this.name,
       //   username: this.username,
       //   email: this.email,
+      //   password: this.password,
         
       //   avatar: this.avatar,
       //   poster: this.poster,
@@ -67,12 +69,66 @@ module.exports = class User {
 
   static fetchAll () {
     const db = getDB();
-    return db.collection('users').find().toArray();
+    return db.collection('users').aggregate([
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          username: 1,
+          email: 1,
+          avatar: 1,
+          poster: 1,
+          createdAt: 1,
+          updatedAt: 1
+        }
+      }
+    ]).toArray();
   }
 
   static fetchById (id) {
     const db = getDB();
-    return db.collection('users').find({_id: new ObjectId(id)}).next();
+    return db.collection('users').aggregate([
+      {
+        $match: {
+          _id: new ObjectId(id)
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          username: 1,
+          email: 1,
+          avatar: 1,
+          poster: 1,
+          createdAt: 1,
+          updatedAt: 1
+        }
+      }
+    ]).next();
+  }
+  
+  static fetchByUsername (username) {
+    const db = getDB();
+    return db.collection('users').aggregate([
+      {
+        $match: {
+          username: username
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          username: 1,
+          email: 1,
+          avatar: 1,
+          poster: 1,
+          createdAt: 1,
+          updatedAt: 1
+        }
+      }
+    ]).next();
   }
 
   static deleteById (id) {

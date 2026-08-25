@@ -3,8 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";
-
-import { PiAlignCenterHorizontalLight } from "react-icons/pi";
+import ProtectedRoute from "./components/ProtectedRoute/ProtedtedRoute.jsx";
 
 import App from "./App.jsx";
 import Home from "./pages/Home/Home.jsx";
@@ -29,12 +28,18 @@ const router = createBrowserRouter([
       // { index: true, element: <Community /> }, //testing
       { path: "/popular", element: <Popular /> },
       { path: "/explore", element: <Explore /> },
-      { path: "/create-post", element: <CreatePost />},
-      { path: "create-community", element: <CreateCommunity />},
       { path: "/posts/:id", element: <Post />},
       { path: '/communities/:id', element: <Community />},
+      { path: '/users/:id', element: <Profile /> },
 
-      { path: '/profile', element: <Profile />}
+      {
+        element: <ProtectedRoute />,
+        children: [
+          { path: "/profile", element: <Profile /> },
+          { path: "/create-post", element: <CreatePost /> },
+          { path: "/create-community", element: <CreateCommunity /> },
+        ],
+      },
     ],
   },
   {
@@ -44,9 +49,9 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
-  </StrictMode>
+  // </StrictMode>
 );

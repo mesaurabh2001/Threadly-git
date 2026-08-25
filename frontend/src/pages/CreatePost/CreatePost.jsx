@@ -21,7 +21,6 @@ function CreatePost () {
   const [showCommunities, setShowCommunities] = useState(false);
 
 // FORM DATA STATES
-  const [userId, setUserId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
@@ -39,7 +38,7 @@ function CreatePost () {
     };
 
     fetchCommunities();
-  }, []);
+  }, [selectedCommunity]);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +46,6 @@ function CreatePost () {
     let postObj = {
       communityName: selectedCommunity.name,
       communityId: selectedCommunity._id,
-      userId: userId,
       title: title,
       description: description,
       genre: selectedCommunity.genre,
@@ -57,8 +55,6 @@ function CreatePost () {
         images: [image]
       }
     }
-
-    console.log(postObj);
 
     try{
       const response = await addPost(postObj);
@@ -130,13 +126,6 @@ function CreatePost () {
           )}
 
         </div>
-
-        <input
-          type="text"
-          placeholder="User ID"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-        />
 
         <input
           type="text"

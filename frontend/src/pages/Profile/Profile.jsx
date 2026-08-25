@@ -9,6 +9,8 @@ import { getUser } from "../../services/userService.js";
 ////
 import {useState, useEffect} from 'react';
 import { useAuth } from "../../context/AuthContext.jsx";
+import { useParams } from "react-router-dom";
+
 
 // icons
 import { FaRegSquarePlus } from "react-icons/fa6";
@@ -17,26 +19,32 @@ import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons
 
 function Home() {
 
-  const {userId} = useAuth();
+  const {id} = useParams();
+  const {user} = useAuth();
 
-  const [user, setUser] = useState(null);
+  const [profileUser, setProfileUser] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-      const loadUser = async () => {
-        try {
-          const data = await getUser(userId);
-          setUser(data)
-
-        } catch (error) {
-          console.log(error.message);
+    const loadProfileUser = async () => {
+      try {
+        if (id) {
+          // /users/:id
+          const data = await getUser(id);
+          setProfileUser(data);
+        } else {
+          // /profile
+          setProfileUser(user);
         }
+      } catch (error) {
+        console.log(error.message);
       }
+    };
 
-      loadUser();
+    loadProfileUser();
+  }, [id, user]);
 
-  }, []);
-
-  const [posts, setPosts] = useState([]);
+  const isAuthUser = user?._id === profileUser?._id;
 
   useEffect(() => {
       const loadPosts = async () => {
@@ -53,7 +61,7 @@ function Home() {
 
   }, []);
 
-  if(!user) {
+  if(!profileUser) {
     return <div>Loading...</div>
   }
   
@@ -67,7 +75,7 @@ function Home() {
             className={styles.avatar}
             onClick={(e) => e.stopPropagation()}
           >
-            <img src={`${user.avatar}?auto=format&fit=max&w=600&h=600&q=75`} alt="" />
+            <img src={`${profileUser.avatar}?auto=format&fit=max&w=150&h=150&q=75`} alt="" />
           </div>
 
           <div className={styles.infoName}>
@@ -76,14 +84,14 @@ function Home() {
               className={styles.profileName}
               onClick={(e) => e.stopPropagation()}
             >
-              {user.name}
+              {profileUser.name}
             </div>
 
             <div
               className={styles.userName}
               onClick={(e) => e.stopPropagation()}
             >
-              u/{user.username}
+              u/{profileUser.username}
             </div>
           </div>
 
@@ -143,11 +151,11 @@ function Home() {
 
       </section>
 
-      {user && (
+      {profileUser && (
 
       <aside className={styles.widgetSection}>
         <div className={styles.widget}>
-          <ProfileWidget user={user}/>
+          <ProfileWidget profileUser={profileUser}/>
         </div>
       </aside> 
 

@@ -34,8 +34,15 @@ exports.getPostById = async (req, res, next) => {
 
 /////////////////////////////////////////////////
 exports.addPost = async (req, res, next) => {
+  if (!req.session.userId) {
+    return res.status(401).json({
+      message: 'You must be logged in to create a post'
+    });
+  }
+
   try {
-    const {communityId, userId, title, description, genre, tags, images} = req.body;
+    const {communityId, title, description, genre, tags, images} = req.body;
+    const userId = req.session.userId;
     const post = new Post(communityId, userId, title, description, genre, tags, images);
     
     const response = await post.save();

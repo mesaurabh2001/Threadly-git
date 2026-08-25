@@ -1,6 +1,8 @@
 // External Modules
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 // Local Modules
 const {mongodbConnect} = require('./utils/database.js');
@@ -11,11 +13,21 @@ const commentRouter = require('./routes/commentRouter.js');
 const communityRouter = require('./routes/communityRouter.js');
 
 const rootDir = require('./utils/pathUtil.js');
+const externalUrl = require('../../ThreadlyDatabaseUrl.js');
 
 // Core Modules
 const path = require('path');
 
 const app = express(); // returns an app object
+const store = new MongoDBStore({
+  uri: externalUrl,
+  collection: 'sessions',
+  databaseName: 'threadly'
+})
+
+store.on('error', (error) => {
+  console.log('Session store error: ', error);
+})
 
 // Utility Routes - 
 app.use(express.static(path.join(rootDir, 'public')));
@@ -26,11 +38,15 @@ app.use(cors({
   credentials: true
 }));
 
+app.use(session({
+  secret: 'Saurabh Sharma',
+  resave: true,
+  saveUninitialized: false,
+  store: store,
+}));
+
 // Main Routes - 
-app.use((req, res, next) => {
-  console.log("Cookie check middleware: ", req.get('cookie'));
-  next();
-})
+
 app.use(authRouter);
 app.use(userRouter);
 app.use(postRouter);

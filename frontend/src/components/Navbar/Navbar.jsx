@@ -20,7 +20,7 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 
 function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
 
-  const {isLoggedIn} = useAuth();
+  const {user, logout} = useAuth();
 
   const [showDropdownMenu, setShowDropdownMenu] = useState(false);
   const dropdownMenuRef = useRef(null);
@@ -81,18 +81,18 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
           </div>
         </div>
         
-        {isLoggedIn === false && (
+        {!user && (
 
         <div className={styles.loggedOutbuttonGroup}>
           <button 
             className={`${styles.authButton} ${styles.signupButton}`}
-            onClick={onAuthClick}>
+            onClick={() => onAuthClick('signup')}>
             Sign Up
           </button>
 
           <button
             className={`${styles.authButton} ${styles.loginButton}`}
-            onClick={onAuthClick}>
+            onClick={() => onAuthClick('login')}>
             Log In
           </button>
 
@@ -108,7 +108,7 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
             {showDropdownMenu && (
               <div className={styles.buttonMenu}>
                 <ul>
-                  <li onClick={onAuthClick}>
+                  <li onClick={() => onAuthClick('login')}>
                     <button className={styles.dropdownLink}>
                       <RiLoginCircleLine className={styles.dropdownIcon}/>
                       <span>Log In / Sign Up</span>
@@ -137,7 +137,7 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
 
         )}
 
-        {isLoggedIn === true && (
+        {user && (
 
         <div className={styles.loggedInbuttonGroup}>
 
@@ -158,14 +158,14 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
               className={styles.profileButton}
               onClick={() => setShowDropdownMenu(prev => !prev)}
             >
-              S
+              <img src={`${user.avatar}?auto=format&fit=max&w=40&q=75`} alt="" />
             </button>
 
             {showDropdownMenu && (
               <div className={styles.buttonMenu}>
                 <ul>
                   <li>
-                    <NavLink to="/profile" className={styles.dropdownLink}>
+                    <NavLink to="/profile" onClick={() => setShowDropdownMenu(false)} className={styles.dropdownLink}>
                       <RiLoginCircleLine className={styles.dropdownIcon}/>
                       <span>Profile</span>
                     </NavLink>
@@ -178,7 +178,7 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
                     </button>
                   </li>
 
-                  <li>
+                  <li  onClick={() => onAuthClick('logout')}>
                     <button type='button' className={styles.dropdownLink}>
                       <FiHelpCircle className={styles.dropdownIcon}/>
                       <span>Log out</span>
