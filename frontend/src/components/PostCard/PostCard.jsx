@@ -5,7 +5,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 // Icons import
 import { BsThreeDots } from "react-icons/bs";
 import { IoArrowRedoOutline } from "react-icons/io5";
-import { FaLongArrowAltUp, FaLongArrowAltDown } from "react-icons/fa";
+import { TbArrowBigDown, TbArrowBigUp  } from "react-icons/tb";
 import { BsChat } from "react-icons/bs";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
@@ -15,7 +15,7 @@ import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
 import { BiHide, BiSolidHide } from "react-icons/bi";
 import { RiFlagLine, RiFlagFill } from "react-icons/ri";
 
-function PostCard ({post}) {
+function PostCard ({post, currentPage}) {
 
   const navigate = useNavigate();
 
@@ -28,21 +28,23 @@ function PostCard ({post}) {
   const dropdownMenuRef = useRef(null);
 
   useEffect(() => {
-      function handleClickOutside(event) {
-          if (
-              dropdownMenuRef.current &&
-              !dropdownMenuRef.current.contains(event.target)
-          ) {
-              setShowDropdownMenu(false);
-          }
+    function handleClickOutside(event) {
 
+      // Close profile dropdown when clicking outside
+      if (
+          dropdownMenuRef.current &&
+          !dropdownMenuRef.current.contains(event.target)
+      ) {
+          setShowDropdownMenu(false);
       }
 
-      document.addEventListener("mousedown", handleClickOutside);
+    }
 
-      return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
-      };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
 
   }, []);
 
@@ -52,19 +54,19 @@ function PostCard ({post}) {
     );
 
     if (seconds < 60) {
-        return `${seconds} seconds ago`;
+        return `${seconds} sec. ago`;
     }
 
     const minutes = Math.floor(seconds / 60);
 
     if (minutes < 60) {
-        return `${minutes} minutes ago`;
+        return `${minutes} min. ago`;
     }
 
     const hours = Math.floor(minutes / 60);
 
     if (hours < 24) {
-        return `${hours} hours ago`;
+        return `${hours} hr. ago`;
     }
 
     const days = Math.floor(hours / 24);
@@ -99,32 +101,47 @@ function PostCard ({post}) {
 
             <div className={styles.info}>
               <Link
-                to={`/communities/${post.communityId}`}
+                to={currentPage==='community' ? `/users/${post.user._id}`:`/communities/${post.community._id}`}
                 className={styles.communityPicture}
                 onClick={(e) => e.stopPropagation()}
               >
-                <img src={`${post.community.avatar}?fm=jpg&fit=max&w=40&q=75`} alt="" />
+                {currentPage === 'community' ? (
+                  <img src={`${post.user.avatar}?fm=jpg&fit=max&w=40&q=75`} alt="" />
+                  ) : (
+                  <img src={`${post.community.avatar}?fm=jpg&fit=max&w=40&q=75`} alt="" />
+                  )
+                }
+                  
               </Link>
 
               <div className={styles.infoName}>
                 <Link
-                  to={`/communities/${post.community._id}`}
+                  to={currentPage==='community' ? `/users/${post.user._id}`:`/communities/${post.community._id}`}
                   className={styles.communityName}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  t/{post.community.name}
+                  {currentPage === 'community' ? (
+                    <span>u/{post.user.username}</span>
+                    ) : (
+                      <span>t/{post.community.name}</span>
+                    )
+                  }
+                  
                 </Link>
+                
+                {currentPage !== 'community' && (
+                  <Link 
+                    to={`/users/${post.user._id}`}
+                    className={styles.userName}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {post.user.username}
+                  </Link>
+                )}
 
-                <Link 
-                  to={`/users/${post.user._id}`}
-                  className={styles.userName}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {post.user.username}
-                </Link>
               </div>
 
-              <div className={styles.time}>
+              <div className={`${styles.time} ${currentPage === 'community' ? '': styles.shiftTime}`}>
                 • {getTimeAgo(post.createdAt)}
               </div>
             </div>
@@ -145,65 +162,68 @@ function PostCard ({post}) {
                 Joined
               </button>
 
-              <button 
-                type='button'
-                className={styles.moreOptions} ref={dropdownMenuRef}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowDropdownMenu(prev => !prev);
-                }}
-              > 
-                <BsThreeDots />
-              </button>
+              <div className={styles.moreMenuArea} ref={dropdownMenuRef} >
+              
+                <button 
+                  type='button'
+                  className={styles.moreMenu}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowDropdownMenu(prev => !prev);
+                  }}
+                > 
+                  <BsThreeDots />
+                </button>
 
-              {showDropdownMenu && (
-                <div 
-                  className={styles.ButtonMenu}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <ul>
-                    <li>
-                      <NavLink to="" className={styles.dropdownLink}>
-                        <PiBellLight className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
-                        <span>Follow post</span>
+                {showDropdownMenu && (
+                  <div 
+                    className={styles.ButtonMenu}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <ul>
+                      <li>
+                        <NavLink to="" className={styles.dropdownLink}>
+                          <PiBellLight className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
+                          <span>Follow post</span>
 
-                        <PiBellFill className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
-                        <span>Following</span>
-                      </NavLink>
-                    </li>
+                          {/* <PiBellFill className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
+                          <span>Following</span> */}
+                        </NavLink>
+                      </li>
 
-                    <li>
-                      <NavLink to="" className={styles.dropdownLink}>
-                        <IoBookmarkOutline  className={styles.dropdownIcon}/>
-                        <span>Save</span>
+                      <li>
+                        <NavLink to="" className={styles.dropdownLink}>
+                          <IoBookmarkOutline  className={styles.dropdownIcon}/>
+                          <span>Save</span>
 
-                        <IoBookmark className={styles.dropdownIcon}/>
-                        <span>Saved</span>
-                      </NavLink>
-                    </li>
+                          {/* <IoBookmark className={styles.dropdownIcon}/>
+                          <span>Saved</span> */}
+                        </NavLink>
+                      </li>
 
-                    <li>
-                      <NavLink to="" className={styles.dropdownLink}>
-                        <BiHide className={styles.dropdownIcon}/>
-                        <span>Hide</span>
+                      <li>
+                        <NavLink to="" className={styles.dropdownLink}>
+                          <BiHide className={styles.dropdownIcon}/>
+                          <span>Hide</span>
 
-                        <BiSolidHide className={styles.dropdownIcon}/>
-                        <span>Hidden</span>
-                      </NavLink>
-                    </li>
+                          {/* <BiSolidHide className={styles.dropdownIcon}/>
+                          <span>Hidden</span> */}
+                        </NavLink>
+                      </li>
 
-                    <li>
-                      <NavLink to="" className={styles.dropdownLink}>
-                        <RiFlagLine className={styles.dropdownIcon}/>
-                        <span>Report</span>
+                      <li>
+                        <NavLink to="" className={styles.dropdownLink}>
+                          <RiFlagLine className={styles.dropdownIcon}/>
+                          <span>Report</span>
 
-                        <RiFlagFill  className={styles.dropdownIcon}/>
-                        <span>Reported</span>
-                      </NavLink>
-                    </li>
-                  </ul>
-                </div>
-              )}
+                          {/* <RiFlagFill  className={styles.dropdownIcon}/>
+                          <span>Reported</span> */}
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
 
           </header>
@@ -225,7 +245,6 @@ function PostCard ({post}) {
                 onClick={(e) => e.stopPropagation()}
               >
                 {post.description}
-                <div className={styles.descriptionContentHide}></div>
               </Link>
             )}
 
@@ -307,15 +326,15 @@ function PostCard ({post}) {
               onClick={(e) => e.stopPropagation()}
             >
               <button className={`${styles.voteButton}`}>
-                <FaLongArrowAltUp className={styles.voteButtonIcon}/>
+                <TbArrowBigUp className={styles.voteButtonIcon}/>
               </button>
 
               <span className={`${styles.voteCount} `}>
-                0
+                532
               </span>
 
               <button className={ `${styles.voteButton}`}>
-                <FaLongArrowAltDown className={styles.voteButtonIcon}/>
+                <TbArrowBigDown className={styles.voteButtonIcon}/>
               </button>
             </div>
 
@@ -323,7 +342,7 @@ function PostCard ({post}) {
               className={ `${styles.commentCount} ${styles.footerButton}`}
               onClick={(e) => e.stopPropagation()}
             >
-              <BsChat className={styles.commentIcon}/>{127}
+              <BsChat className={styles.commentIcon}/> 127
             </div>
 
             <div 

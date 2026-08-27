@@ -1,82 +1,93 @@
-import styles from "./PostWidget.module.css";
+import styles from "./CommunityWidget.module.css";
 
-import CommunityCardSmall from '../../components/CommuntiyCardSmall/CommunityCardSmall';
-import { useState } from "react";
+import CommunityCardSmall from '../CommuntiyCardSmall/CommunityCardSmall';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getCommunitiesSummaries } from "../../services/communityService";
 
 // React Icons - 
 import { IoFolderOpenOutline } from "react-icons/io5";
 import { BsGlobe2 } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
-function PostWidget({communityList}) {
+function PostWidget({community, currentPage}) {
 
   const [openRule, setOpenRule] = useState(null);
+  const [relatedCommunities, setRelatedCommunities] = useState([]);
 
-  const rules = [
-    {
-      title: "Rule Title",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-    },
-    {
-      title: "Rule Title",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-    },
-    {
-      title: "Rule Title",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-    },
-    {
-      title: "Rule Title",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, quod.",
-    },
-  ];
+  const navigate = useNavigate();
 
-  const tags = [
-    "Discussion", "Question", "Help", "News", "Announcement", "Meme", "Guide", "Tutorial", "Review", "Recommendation", "Advice", "Poll", "Showcase", "Achievement", "Event", "Resources", "Feedback", "Off-Topic", "Meta", "Debate", "Theory", "Opinion", "Story", "Update", "Important", ];
+  const date = new Date(community.createdAt);
+
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
   
+  useEffect(() => {
+    const loadCommunities = async () => {
+      try{
+        const data = await getCommunitiesSummaries();
+        setRelatedCommunities(data);
+
+      } catch (error){
+        console.log(error.message);
+      }
+    }
+
+    loadCommunities();
+  }, []);
+
+
+  // return (
+  //   <>
+  //     <div>loading...</div>
+  //   </>
+  // )
+
   return (
     <>
-      <div className={`${styles.mainContainer}`}>
+      <div className={`${styles.mainContainer} ${currentPage === 'community' && styles.mainContainerCommunity}`}>
 
         <div className={styles.profileWidget}>
           
           <div className={styles.info}>
             
+            {currentPage !== 'community' && (
+
             <div className={styles.communityName}>
-              <span>Community Name</span>
+              <span>t/{community.name}</span>
 
               <div className={styles.buttonGroup}>
-                {/* <button 
+                <button 
                   className={styles.joinButton}
                   onClick={(e) => e.stopPropagation()}
                 >
                   Join
-                </button> */}
+                </button>
 
-                <button
+                {/* <button
                   className={styles.joinedButton}
                   onClick={(e) => e.stopPropagation()}
                 >
                   Joined
-                </button>
+                </button> */}
               </div>
               
             </div>
+            )}
 
             <div className={styles.communityDescription}>
               <span>
-                Community Description title
+                {community.title}
               </span>
               <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nesciunt delectus perspiciatis harum provident ipsam sunt ab, odio quae atque non quo?</span>
             </div>
 
             <div className={styles.createdDate}>
               <span><IoFolderOpenOutline /></span>
-              <span>Created Feb 28, 2012</span>
+              <span>Created {formattedDate}</span>
             </div>
 
             <div className={styles.communityType}>
@@ -89,17 +100,17 @@ function PostWidget({communityList}) {
           <div className={styles.tabGroup}>
             <div className={styles.tab}>
               <span>298K</span>
-              <span>Foodies</span>
+              <span>Weekly visitors</span>
+            </div>
+
+            <div className={styles.tab}>
+              <span>328</span>
+              <span>Weekly contributions</span>
             </div>
 
             <div className={styles.tab}>
               <span>328</span>
               <span>Posts</span>
-            </div>
-
-            <div className={styles.tab}>
-              <span>328</span>
-              <span>communities</span>
             </div>
           </div>
 
@@ -107,13 +118,12 @@ function PostWidget({communityList}) {
 
           <div className={styles.communityRules}>
             <div className={styles.heading}>
-              <span>R/COMMUNITYNAME</span>
+              <span>T/{community.name}</span>
               <span> RULES</span>
             </div>
             
             <div className={styles.rules}>
-
-              {rules.map((rule, index) => (
+              {community.rules.map((rule, index) => (
                 <div className={styles.ruleTab} key={index}>
                   <div
                     className={`${styles.ruleHead} ${openRule === index ? styles.open : ""}`}
@@ -126,12 +136,6 @@ function PostWidget({communityList}) {
                       <IoIosArrowDown />
                     </span>
                   </div>
-
-                  {/* {openRule === index && (
-                    <div className={styles.ruleDescription}>
-                      {rule.description}
-                    </div>
-                  )} */}
                   
                   <div
                     className={`${styles.ruleDescription} ${openRule === index ? styles.descriptionOpen : ""}`}
@@ -156,8 +160,8 @@ function PostWidget({communityList}) {
             </div>
 
             <div className={styles.tags}>
-              {tags.map(tag => (
-                <div className={styles.tag}>
+              {community.tags.map((tag, index) => (
+                <div className={styles.tag} key={index}>
                   <span>{tag}</span>
                 </div>
               ))}
@@ -171,21 +175,17 @@ function PostWidget({communityList}) {
               RELATED COMMUNITIES
             </div>
             <div className={styles.communityList}>
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
-              <CommunityCardSmall />
+              {relatedCommunities.map((community, index) => (
+                <div 
+                  className={styles.communityWrapper}
+                  onClick={() => navigate(`/communities/${community._id}`)}
+                  key={community._id}
+                >
+                  <CommunityCardSmall community={community} />
+                </div>
+              ))}
             </div>
           </div>
-
-          <hr className={styles.horizontalRule}/>    {/* ///////////////////////////////// */}
 
         </div>
 

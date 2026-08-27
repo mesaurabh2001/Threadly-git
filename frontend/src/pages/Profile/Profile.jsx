@@ -4,7 +4,7 @@ import ProfileWidget from "./ProfileWidget.jsx";
 
 // local Modules
 import {getPosts} from '../../services/postService.js';
-import { getUser } from "../../services/userService.js";
+import { getUserById } from "../../services/userService.js";
 
 ////
 import {useState, useEffect} from 'react';
@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 
 
 // icons
+import { IoIosArrowDown } from "react-icons/io";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { AiOutlineApartment } from "react-icons/ai";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
@@ -30,7 +31,7 @@ function Home() {
       try {
         if (id) {
           // /users/:id
-          const data = await getUser(id);
+          const data = await getUserById(id);
           setProfileUser(data);
         } else {
           // /profile
@@ -135,16 +136,10 @@ function Home() {
           </div>
         </div>
 
-        {/* <div className={styles.buttonGroup}>
-          <button className={`${styles.createButton}`}>
-            <FaRegSquarePlus className={styles.plusIcon}/>Create
-          </button>
-
-          <button className={styles.filterButton}>
-            <AiOutlineApartment />
-          </button>
-        </div> */}
-
+        <button className={`${styles.sortButton}`}>
+          Best <IoIosArrowDown className={styles.sortButtonIcon}/>
+        </button>
+                      
         <Feed
           postList={posts} 
         />
@@ -153,11 +148,11 @@ function Home() {
 
       {profileUser && (
 
-      <aside className={styles.widgetSection}>
-        <div className={styles.widget}>
-          <ProfileWidget profileUser={profileUser}/>
-        </div>
-      </aside> 
+        <aside className={styles.widgetSection}>
+          <div className={styles.widget}>
+            <ProfileWidget profileUser={profileUser}/>
+          </div>
+        </aside> 
 
       )}
 

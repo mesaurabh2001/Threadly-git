@@ -1,6 +1,6 @@
 import styles from "./Community.module.css";
 import Feed from '../../components/Feed/Feed.jsx';
-import CommunityWidget from "./CommunityWidget.jsx";
+import CommunityWidget from "../../components/CommunityWidget/CommunityWidget.jsx";
 
 // local Modules
 import {getCommunityPosts} from '../../services/communityService.js'
@@ -8,19 +8,23 @@ import {getPosts} from '../../services/postService.js';
 import {getCommunityById} from '../../services/communityService.js';
 
 ////
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
+import { NavLink, useParams } from "react-router-dom";
 
 // icons
+import { BsThreeDots } from "react-icons/bs";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { AiOutlineApartment } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
-import { useParams } from "react-router-dom";
 
 function Community() {
 
 
   const {id} = useParams();
   const [community, setCommunity] = useState(null);
+
+  const [showDropdownMenu, setShowDropdownMenu] = useState(false);
+  const dropdownMenuRef = useRef(null);
 
   useEffect( () => {
     const getCommunityPage = async () => {
@@ -52,6 +56,27 @@ function Community() {
 
     loadCommunityPosts();
   }, [id]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+
+      // Close profile dropdown when clicking outside
+      if (
+          dropdownMenuRef.current &&
+          !dropdownMenuRef.current.contains(event.target)
+      ) {
+          setShowDropdownMenu(false);
+      }
+
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
+
+  }, []);
 
   if(!community) {
     return (
@@ -95,20 +120,72 @@ function Community() {
               <FaRegSquarePlus className={styles.plusIcon}/>Create Post
             </button>
 
-            <button className={styles.button}>
+            <button className={`${styles.button} ${styles.joinButton}`}>
               Join
             </button>
 
-            <button className={styles.filterButton}>
-              <AiOutlineApartment />
-            </button>
+            <div className={styles.moreMenuArea} ref={dropdownMenuRef} >
+              
+              <button 
+                type='button'
+                className={`${styles.button} ${styles.moreMenu}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDropdownMenu(prev => !prev);
+                }}
+              > 
+                <BsThreeDots />
+              </button>
 
-            {/* <button 
-              className={styles.joinButton}
-              onClick={(e) => e.stopPropagation()}
-            >
-              Join
-            </button> */}
+              {showDropdownMenu && (
+                <div 
+                  className={styles.ButtonMenu}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ul>
+                    <li>
+                      <button className={styles.dropdownButton}>
+                        {/* <PiBellLight className={`${styles.dropdownIcon} ${styles.bellIcon}`}/> */}
+                        <span>Follow post</span>
+
+                        {/* <PiBellFill className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
+                        <span>Following</span> */}
+                      </button>
+                    </li>
+
+                    <li>
+                      <button className={styles.dropdownButton}>
+                        {/* <IoBookmarkOutline  className={styles.dropdownIcon}/> */}
+                        <span>Save</span>
+
+                        {/* <IoBookmark className={styles.dropdownIcon}/>
+                        <span>Saved</span> */}
+                      </button>
+                    </li>
+
+                    <li>
+                      <button className={styles.dropdownButton}>
+                        {/* <BiHide className={styles.dropdownIcon}/> */}
+                        <span>Hide</span>
+
+                        {/* <BiSolidHide className={styles.dropdownIcon}/>
+                        <span>Hidden</span> */}
+                      </button>
+                    </li>
+
+                    <li>
+                      <button className={styles.dropdownButton}>
+                        {/* <RiFlagLine className={styles.dropdownIcon}/> */}
+                        <span>Report</span>
+
+                        {/* <RiFlagFill  className={styles.dropdownIcon}/>
+                        <span>Reported</span> */}
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
 
           </div>
 
@@ -124,28 +201,30 @@ function Community() {
 
           <div className={styles.postSectionButtonGroup}>
 
-            <button className={`${styles.button}`}>
-              Feed
-            </button>
+            <div className={styles.navigationButtons}>
+              <button className={`${styles.button}`}>
+                Feed
+              </button>
 
-            <button className={styles.button}>
-              About
-            </button>
-
-            <div className={styles.gapButton}>
+              <button className={styles.button}>
+                About
+              </button>
             </div>
           
-            <button className={`${styles.sortButton}`}>
-              Best <IoIosArrowDown className={styles.sortButtonIcon}/>
-            </button>
+            <div className={styles.sortButtons}>
+              <button className={`${styles.sortButton}`}>
+                Best <IoIosArrowDown className={styles.sortButtonIcon}/>
+              </button>
 
-            <button className={styles.filterButton}>
-              <AiOutlineApartment /> <IoIosArrowDown className={styles.sortButtonIcon}/>
-            </button>
+              <button className={styles.filterButton}>
+                <AiOutlineApartment /> <IoIosArrowDown className={styles.sortButtonIcon}/>
+              </button>
+            </div>
           </div>
 
           <Feed
-            postList={posts} 
+            postList={posts}
+            currentPage={'community'}
           />
           
         </section>
@@ -153,7 +232,12 @@ function Community() {
         {community && (
 
         <aside className={styles.widgetSection}>
-          <CommunityWidget community={community}/>
+          <div className={styles.widget}>
+            <CommunityWidget 
+              community={community}
+              currentPage={'community'}
+            />
+          </div>
         </aside>
 
         )}

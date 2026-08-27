@@ -15,7 +15,7 @@ import { RiLoginCircleLine } from "react-icons/ri";
 
 // Logged In Button Group Icons
 import { FaRegSquarePlus } from "react-icons/fa6";
-import { IoIosNotificationsOutline } from "react-icons/io";
+import { FaRegBell } from "react-icons/fa6";
 
 
 function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
@@ -47,7 +47,7 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.mainContainer}>
 
       <nav
         className={`${styles.navbar}`}
@@ -72,6 +72,7 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
           />
         </div>
 
+        {/* Searchbar ============================ */}
         <div className={styles.searchbarContainer}>
           <div className={styles.searchbar}>
             <div className={styles.searchbarLogo}>
@@ -145,21 +146,27 @@ function Navbar({onAuthClick, onSidebarToggle, setIsSidebarOpen}) {
             to='/create-post'
             className={`${styles.createButton}`} 
           >
-            <FaRegSquarePlus  className={`${styles.createButtonIcon}`}/> {/*========= createPost Icon =========*/}
+            <FaRegSquarePlus  className={`${styles.createButtonIcon}`}/> Create{/*========= createPost Icon =========*/}
           </Link>
 
-          <button className={`${styles.notificationButton}`} >
-            <IoIosNotificationsOutline className={`${styles.notificationButtonIcon}`}/> {/*========= Notification Icon =========*/}
-          </button>
+          <Link 
+            to='/'
+            className={`${styles.notificationButton}`} 
+          >
+            <FaRegBell className={`${styles.notificationButtonIcon}`}/> {/*========= Notification Icon =========*/}
+          </Link>
 
           <div className={styles.profileMenuArea} ref={dropdownMenuRef} >
 
-            <button
-              className={styles.profileButton}
-              onClick={() => setShowDropdownMenu(prev => !prev)}
-            >
-              <img src={`${user.avatar}?auto=format&fit=max&w=40&q=75`} alt="" />
-            </button>
+            <div className={styles.profileButtonWrapper}>
+              <button
+                className={styles.profileButton}
+                onClick={() => setShowDropdownMenu(prev => !prev)}
+              >
+                <div className={styles.greenIcon} />
+                <img src={`${user.avatar}?auto=format&fit=max&w=40&q=75`} alt="" />
+              </button>
+            </div>
 
             {showDropdownMenu && (
               <div className={styles.buttonMenu}>

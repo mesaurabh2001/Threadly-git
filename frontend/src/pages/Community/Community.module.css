@@ -2,29 +2,26 @@
 .mainContainer {
   /* border: 2px solid red; */
   width: 100%;
-  height: 100%;
-
-  margin-top: 8px;
+  background: #0E1113;
 
   display: flex;
-  gap: 6px;
+  gap: 14px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 .header {
-  /* border: 2px solid green; */
+  /* border: 1px solid green; */
   max-width: 1072px;
   width: 100%;
-  height: 176px;
+  height: 180px;
+  margin-top: 8px;
 
   flex-shrink: 0;
 
   display: flex;
   flex-direction: column;
-  
-  overflow: hidden;
   position: relative;
 }
 
@@ -41,11 +38,14 @@
   height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
-  border-radius: 14px;
+  border-radius: 8px;
 }
 
 .headerContent {
-  /* border: 2px solid red; */
+  /* border: 1px solid red; */
+  padding: 0 16px;
+  height: fit-content;
+  min-height: 0;
 
   position: absolute;
   left: 0;
@@ -56,13 +56,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  
   z-index: 1;
 }
 
 .info {
-  /* border: 2px solid black; */
-  margin: 0px 0px 0px 20px;
+  /* border: 2px solid red; */
   
   display: flex;
   align-items: center;
@@ -73,7 +72,7 @@
 
 .communityAvatarframe {
   box-sizing: border-box;
-  border: 4px solid white;
+  border: 4px solid #0E1113;
   border-radius: 999px;
 
   height: 88px;
@@ -107,132 +106,217 @@
 
 .communityName {
   /* border: 1px solid red; */
-  font-size: 2rem;
+  font-size: 32px;
   line-height: 2.25rem;
   font-weight:700;
 
-  height: 86px;
+  height: 88px;
   
-  color:#1c1c1c;
+  color:#f1f4f6;
+  text-decoration: none;
 
   display: flex;
   align-items: flex-end;
 }
 
 .headerButtonGroup {
-  /* border: 2px solid black; */
-  
+  /* border: 2px solid red; */
   display: flex;
   align-items: flex-end;
-  
-  gap: 6px;
-  height: 82px;
+  gap: 12px;
+  height: 88px;
 }
 
 .headerButtonGroup .button {
-  border: 1px solid rgb(189, 189, 189);
-  /* border: 1px solid black; */
+  /* border: 1px solid red; */
+  border: 1px solid #87898a;
   background: none;
   border-radius: 999px;
-  height: 36px;
+  height: 38px;
   padding: 0px 12px;
   line-height: 1;
   cursor: pointer;
 
-  color: rgb(71, 71, 71);
+  color:#f1f4f6;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
 
   display: flex;
   gap: 6px;
   justify-content: center;
   align-items: center;
 }
+.headerButtonGroup .button:hover {
+  border: 1px solid #f1f4f6;
+}
+.headerButtonGroup .button:active{
+  background-color: #333638;
+}
 
-.headerButtonGroup .filterButton {
-  border: 1px solid rgb(189, 189, 189);
-  border-radius: 999px;
-  background: none;
+.headerButtonGroup .joinButton {
+  border: none;
+  color: #000014;
+  background-color: #fff;
+  padding: 6px 12px;
 
-  height: 32px;
+  cursor:pointer;
+}
+.headerButtonGroup .joinButton:hover{
+  border: none;
+}
+.headerButtonGroup .joinButton:active{
+  background:#F1F4F6;
+}
+
+.headerButtonGroup .moreMenuArea {
+  /* border: 1px solid red; */
+  position: relative;
+}
+.headerButtonGroup .moreMenu {
+  padding: 0;
   aspect-ratio: 1;
   font-size: 16px;
-  color: rgb(71, 71, 71);
-
+  
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ============= Dropdown Menu ============= */
+
+.ButtonMenu {
+  position: absolute;
+
+  top: 110%;
+  right: 0;
+  z-index: 99;
+
+  background: #181C1F;
+  border: 1px solid #2b3236;
+  border-radius: 8px;
+
+  min-width: 176px;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,.10);
+}
+
+.ButtonMenu ul{
+  /* border: 1px solid #ddd; */
+  margin: 8px 0px;
+  list-style: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ButtonMenu li{
+  /* border: 1px solid #ddd; */
+  padding: 8px 8px 8px 16px;
+  cursor: pointer;
+}
+.ButtonMenu li:active {
+  background-color: #3A3E40;
+}
+
+.ButtonMenu .dropdownButton {
+  /* border: 1px solid blue; */
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #dbe4e9;
+  text-decoration: none;
+  
+  font-size: 14px;
+  font-weight: 400;
+  font-family: inherit;
+}
+
+.ButtonMenu li:hover .dropdownButton {
+  color: white;
+}
+
+.ButtonMenu .dropdownIcon {
+  font-size: 20px;
 }
 
 /* /////////////////////////////////////////////////////////////////////////// */
 
 .community {
-  /* border: 2px solid blue; */
+  /* border: 1px solid blue; */
   width: 100%;
-  height: 100%;
 
   display: flex;
   gap: 1.5rem;
   justify-content: center;
-
-  overflow: hidden;
 }
 
 .postSection {
-  /* border: 2px solid red; */
+  /* border: 1px solid red; */
+  margin-top: 4px;
   max-width: 732px;
   width: 100%;
   min-width: 0;
   flex-shrink: 1;
+
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   display: flex;
   flex-direction: column;
 }
 
 .postSectionButtonGroup {
-  /* border: 1px solid black; */
+  /* border: 1px solid blue; */
+  font-size: 14px;
+  font-weight: 400;
+
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: space-between;
+}
+
+.postSectionButtonGroup .navigationButtons {
+  display: none;
+}
+.postSectionButtonGroup .sortButtons {
+  display: flex;
 }
 
 .postSectionButtonGroup .button {
-  border: 1px solid rgb(189, 189, 189);
-  /* border: 1px solid black; */
-  background-color: rgb(223, 203, 203);
+  /* border: 1px solid rgb(206, 13, 13); */
+  border: none;
+  background-color: #333D42;
   border-radius: 999px;
-  height: 36px;
-  padding: 0px 12px;
-  line-height: 1;
+
+  height: 40px;
+  padding: 0px 16px;
   cursor: pointer;
+  
+  color: #f1f4f6;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1;
 
-  color: rgb(71, 71, 71);
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-
-  display: none;
-  gap: 6px;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .postSectionButtonGroup .sortButton {
-  /* border: 1px solid rgb(189, 189, 189); */
   border: none;
-  /* border: 1px solid black; */
+  /* border: 1px solid red; */
   background: none;
   border-radius: 999px;
+
   height: 32px;
-  padding: 0px 12px;
-  line-height: 1;
+  padding: 0px 9px;
   cursor: pointer;
 
-  color: rgb(71, 71, 71);
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #84949e;
+  font-family: inherit;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
 
   display: flex;
   gap: 6px;
@@ -241,15 +325,19 @@
 }
 
 .postSectionButtonGroup .filterButton {
-  /* border: 1px solid rgb(189, 189, 189); */
   border: none;
-  border-radius: 999px;
+  /* border: 1px solid red; */
   background: none;
+  border-radius: 999px;
 
   height: 32px;
-  aspect-ratio: 1;
+  padding: 0px 9px;
+  cursor: pointer;
+  
+  color: #84949e;
+  font-family: inherit;
   font-size: 12px;
-  color: rgb(71, 71, 71);
+  font-weight: 600;
 
   display: flex;
   gap: 6px;
@@ -257,73 +345,66 @@
   justify-content: center;
 }
 
+.sortButton:hover,
+.filterButton:hover
+{
+  background-color: #2A3034;
+}
+
+.sortButton:active,
+.filterButton:active
+{
+  background-color: #333D42;
+}
+
+
 
 /* /////////////////////////////////////////////////////////////////////////////////// */
 
 .widgetSection {
-  /* border: 2px solid red; */
+  /* border: 2px solid blue; */
   border-radius: 8px;
-  max-width: 306px;
+
+  max-width: 316px;
   width: 100%;
+  min-height: 0;
+  height: calc(100vh - 58px);
+
   flex-shrink: 0;
 
-  display: flex;
-  flex-direction:column;
+  position: sticky;
+  top: 58px;
+  align-self: flex-start;
 
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.widgetSection:hover {
+  scrollbar-color: #3E4142 transparent;
+}
+
+.widget {
+  /* border: 1px solid red; */
+  border-radius: 8px;
+  height: fit-content;
   overflow: hidden;
-
-  /* overflow-y: scroll;
-  scrollbar-width: thin; */
-  /* scrollbar-color: transparent transparent; */
 }
 
-.headerButtonGroup .joinButton {
-  border: none;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight:600;
-  color: #3c3c3c;
-  background-color: #e5ebee;
-  cursor:pointer;
-
-  padding: 7px 16px;
-}
-
-.headerButtonGroup .joinButton:hover{
-    background:#d9dfe2;
-}
-.headerButtonGroup .joinButton:active{
-    background:#e5ebee;
-}
-
-.headerButtonGroup .joinedButton {
-  border: none;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight:600;
-  color: #f1f1f1;
-  background-color: #FF5C00;
-  cursor:pointer;
-
-  padding: 7px 16px;
-}
-
-.headerButtonGroup .joinedButton:hover{
-    background:rgb(233, 85, 0);
-}
-.headerButtonGroup .joinedButton:active{
-    background-color: #FF5C00;
-}
 
 @media (max-width: 959px) {
 
-  .mainContainer {
-    /* border: 2px solid red; */
-    width: 100%;
-    height: 100%;
+  .header {
+    height: 148px;
+  }
 
-    display: flex;
-    gap: 16px;
+  .communityPoster {
+    height: 96px;
+  }
+
+  .postSection {
+    /* border: 1px solid red; */
+    max-width: 100%;
   }
 
   .widgetSection {
@@ -331,31 +412,36 @@
   }
 
   .postSectionButtonGroup {
-    /* border: 1px solid black; */
-    justify-content: space-between;
+    /* border: 1px solid blue; */
+    padding: 0 16px;
   }
 
-  .postSectionButtonGroup .gapButton{
-    border: none;
-    background: none;
-    flex: 1;
-  }
-
-  .postSectionButtonGroup .button {
+  .postSectionButtonGroup .navigationButtons {
+    /* border: 1px solid red; */
     display: flex;
   }
 }
 
 @media (max-width: 767px) {
 
+  .mainContainer {
+    /* border: 1px solid red; */
+    gap: 0px;
+  }
+
   .header {
-    /* border: 4px solid green; */
+    /* border: 1px solid green; */
     height: auto;
   }
 
+  .header {
+    /* border: 1px solid green; */
+    height: 172px;
+    margin-top: 0px;
+  }
+
   .communityPoster {
-    /* border: 2px solid green; */
-    width: 100%;
+    /* border: 1px solid green; */
     height: 64px;
     
     overflow: hidden;
@@ -366,26 +452,25 @@
   }
 
   .headerContent {
-    /* border: 2px solid red; */
-    margin-top: 16px;
+    /* border: 1px solid red; */
+    margin-top: 12px;
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     align-items: flex-start;
 
-    z-index: 0;
+    z-index: 1;
     
     position: relative;
   }
 
   .info {
-    /* border: 2px solid black; */
-    margin: 0px 0px 0px 0px;
+    /* border: 1px solid blue; */
+    gap: 16px;
   }
 
   .communityAvatarframe {
-    border: 0px solid white;
     height: 40px;
   }
 
@@ -394,15 +479,17 @@
     font-size: 1.125rem;
     line-height: 1.5rem;
 
-    height: auto;
-    
-    color:#1c1c1c;
-    text-decoration: none;
+    height: 40px;
   }
 
   .headerButtonGroup {
-    /* border: 2px solid black; */
+    /* border: 1px solid blue; */
     height: auto;
+  }
+
+  .postSectionButtonGroup {
+    /* border: 1px solid blue; */
+    margin-bottom: 8px;
   }
 
   /* //////////////////////////////////////////////////////////// */

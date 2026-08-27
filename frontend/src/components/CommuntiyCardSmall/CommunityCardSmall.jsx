@@ -22,7 +22,7 @@ function CommunityCardSmall ({community}) {
           <div
             className={styles.communityMembers}
           >
-            <span>{community.memberCount} Members ⟿</span> 
+            <span>12,4{community.memberCount},321 Members ⟿</span> 
             <span> {community.title}</span>
           </div>
         </div>

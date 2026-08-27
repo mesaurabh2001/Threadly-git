@@ -2,7 +2,7 @@ const User = require('../models/user.js');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 
-//////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 exports.getMe = async (req, res, next) => {
   try {
     if (req.session.userId) {
@@ -20,8 +20,7 @@ exports.getMe = async (req, res, next) => {
 };
 
 
-
-//////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 exports.postLogin = async (req, res, next) => {
   const {username, password} = req.body;
   console.log('UserName: ', username, 'Password: ', password);
@@ -54,6 +53,7 @@ exports.postLogin = async (req, res, next) => {
   }
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////
 exports.postLogout = async (req, res, next) => {
   try {
     await req.session.destroy();
@@ -66,6 +66,7 @@ exports.postLogout = async (req, res, next) => {
   }
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////
 exports.postSignup = [
   
   check('name')

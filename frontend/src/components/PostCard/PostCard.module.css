@@ -5,6 +5,7 @@
 
 :root {
   --accent: #FF5C00;
+  --background-color: #0E1113;
 
   --surface: #ffffff;
   --surface-hover: #f6f7f8;
@@ -12,7 +13,7 @@
 
   --border: #d7d9dc;
 
-  --text-primary: #1c1c1c;
+  --text-primary: #EEF1F3;
   --text-secondary: #5c5c5c;
 
   --shadow:
@@ -21,16 +22,15 @@
 
 .horizontalRule {
   border: 0;
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid #2d3235;
   margin: 6px;
 }
 
 .container {
   /* border:2px solid #5080c7; */
   border-radius:16px;
-  background:#fff;
+  background: var(--background-color);
   width: 100%;
-  /* margin-bottom: 10px; */
 
   cursor: pointer;
 
@@ -39,12 +39,12 @@
 }
 
 .container:hover{
-  background-color: #f8f8f8;
+  background-color: #181C1F;
 }
 
 .postCard {
   /* border: 2px solid black; */
-  padding: 4px 14px
+  padding: 4px 16px
 }
 
 /*====================================== Header ======================================*/
@@ -58,7 +58,7 @@
 }
 
 .info {
-  /* border: 2px solid black; */
+  /* border: 1px solid red; */
   
   display: flex;
   align-items: center;
@@ -67,7 +67,7 @@
 }
 
 .info .communityPicture {
-  /* border: 1px solid black; */
+  /* border: 1px solid red; */
   border-radius: 50%;
   background:#ff5c00;
   height: 36px;
@@ -98,33 +98,32 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-
-  position: relative;
-
 }
 
 .info .communityName {
   /* border: 1px solid black; */
   font-size: 14px;
   font-weight:600;
-  color:#1c1c1c;
+  color: #b7cad4;
   text-decoration: none;
 }
 .info .userName {
   font-size: 12px;
-  color:#5c5c5c;
+  color:#b7cad4;
   text-decoration: none;
 }
 
 .info .communityName:hover,
 .userName:hover {
-  color: #315a7d;
+  color: #648efc;
 }
 
 .time {
   /* border: 1px solid black; */
   font-size: 12px;
-  color:#3c3c3c;
+  color:#8ba2ad;
+}
+.shiftTime {
   position: relative;
   bottom: 20%;
 }
@@ -142,51 +141,53 @@
 .buttonGroup .joinButton {
   border: none;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight:600;
-  color: #3c3c3c;
-  background-color: #e5ebee;
+  color: #000014;
+  background-color: #EEF1F3;
   cursor:pointer;
 
-  padding: 7px 16px;
+  padding: 6px 12px;
 }
 
 .buttonGroup .joinButton:hover{
-    background:#d9dfe2;
+  background:#fff;
 }
 .buttonGroup .joinButton:active{
-    background:#e5ebee;
+  background:#e5ebee;
 }
 
 .buttonGroup .joinedButton {
-  border: none;
+  border: 1px solid #ced4d4;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight:600;
-  color: #f1f1f1;
-  background-color: #FF5C00;
+  color: #ced4d4; 
+  background-color: #0E1113;
   cursor:pointer;
 
-  padding: 7px 16px;
+  padding: 6px 12px;
 }
 
 .buttonGroup .joinedButton:hover{
-    background:rgb(233, 85, 0);
+  border: 1px solid white;
+  color: white;
 }
 .buttonGroup .joinedButton:active{
-    background-color: #FF5C00;
+  background-color: #363838;
 }
 
-.buttonGroup .moreOptions {
+.buttonGroup .moreMenu {
   /* border: 1px solid red; */
   border: none;
-  background: transparent;
+  background: none;
   border-radius: 50%;
   
   padding: 0;
   width: 32px;
   aspect-ratio: 1;
   font-size: 16px;
+  color: #D9E0E0; 
 
   cursor:pointer;
   
@@ -195,11 +196,11 @@
   justify-content: center;
 }
 
-.buttonGroup .moreOptions:hover{
-  background-color: #e5ebee;
+.buttonGroup .moreMenu:hover{
+  background-color: #333D42;
 }
-.buttonGroup .moreOptions:active{
-  background-color: #d9dfe2;
+.buttonGroup .moreMenu:active{
+  background-color: #515A5E;
 }
 
 /* ============= Dropdown Menu ============= */
@@ -211,32 +212,29 @@
     right: 0;
     z-index: 99;
 
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+    background: #181C1F;
+    border: 1px solid #2b3236;
+    border-radius: 8px;
 
-    min-width: 180px;
+    min-width: 176px;
 
     box-shadow: 0 8px 20px rgba(0,0,0,.10);
 }
 
 .ButtonMenu ul{
   /* border: 1px solid #ddd; */
-  margin: 6px;
-  padding: 6px;
+  margin: 8px 0px;
   list-style: none;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .ButtonMenu li{
   /* border: 1px solid #ddd; */
-  padding: 8px 0px;
-  margin-left: 10px;
-
-  font-size: 14px;
-  font-weight: 400;
-
+  padding: 8px 8px 8px 16px;
   cursor: pointer;
+}
+.ButtonMenu li:active {
+  background-color: #3A3E40;
 }
 
 .ButtonMenu .dropdownLink {
@@ -245,23 +243,19 @@
   align-items: center;
   gap: 12px;
 
-  color: #1c1c1c;
+  color: #dbe4e9;
   text-decoration: none;
 
   font-size: 14px;
   font-weight: 400;
 }
 
-.ButtonMenu .dropdownLink:hover {
-  font-weight: 500;
+.ButtonMenu li:hover .dropdownLink {
+  color: white;
 }
 
 .ButtonMenu .dropdownIcon {
-  font-size: 18px;
-}
-
-.ButtonMenu .bellIcon {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 /*====================================== Content ======================================*/
@@ -273,50 +267,33 @@
 .content .title {
   /* border: 1px solid red; */
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.3;
-  color:#1c1c1c;
+  color: #EEF1F3;
   text-decoration: none;
-  display: block;
-
   margin-bottom: 4px;
+
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
 }
 
 .content .description {
   /* border: 1px solid red; */
-  position: relative;
-  min-height: 2rem;
-  max-height: 3rem;
-  display: block;
-  margin-bottom: 4px;
 
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+
+  overflow: hidden;
+
+  margin-bottom: 4px;
   text-decoration: none;
   font-size: 14px;
-  color:#2d2d2d;
-  overflow: hidden;
-}
-
-.description .descriptionContentHide {
-  /* border: 1px solid red; */
-  position: absolute;
-  bottom: 0;
-  right: 0;
-
-  width: 50%;
-  height: 1rem;
-
-  background: linear-gradient(
-    to right,
-    transparent 50%,
-    #fff 80%
-  );
-}
-.container:hover .descriptionContentHide {
-  background: linear-gradient(
-    to right,
-    transparent 50%,
-    #f8f8f8 80%
-  );
+  line-height: 1rem;
+  color: #b7cad4;
 }
 
 .content .media {
@@ -325,7 +302,7 @@
   margin-top: 10px;
   border-radius: 14px;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16/9;
   overflow: hidden;
 
   isolation: isolate;
@@ -437,15 +414,18 @@
   /* border: 1px solid red; */
   display: flex;
   gap: 10px;
+  margin-top: 8px;
 
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .footer .footerButton {
   /* border: 1px solid red; */
   border-radius: 999px;
-  background-color: #e5ebee;
-  height: 36px;
+  background-color: #2A3236;
+  color: white;
+  font-weight: 600;
+  height: 32px;
   padding: 6px 12px;
 
   cursor: pointer;
@@ -455,7 +435,7 @@
   justify-content: center;
 }
 .footer .footerButton:hover {
-  background-color: #dee4e7;
+  background-color: #333D42;
 }
 
 .footer .voteArea {
@@ -463,9 +443,14 @@
   padding: 0px 0px;
 }
 
+.footer .voteArea:hover{
+  background-color: #2A3236;
+}
+
 .voteArea .voteButton {
   height: 100%;
   aspect-ratio: 1;
+  color: white;
 
   border: none;
   border-radius: 999px;
@@ -478,22 +463,22 @@
   justify-content: center;
 }
 .voteButton:first-child:hover{
-  color:#ff5c00;
-  background:#fff1ea;
+  color:#ff4500;
+  background:#333D42;
 }
 
 .voteButton:last-child:hover{
   color:#6a5cff;
-  background:#eef1ff;
+  background:#333D42;
 }
 
 .voteButton .voteButtonIcon {
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .footer .commentCount {
   /* border: 1px solid red; */
-  gap: 2px;
+  gap: 4px;
 }
 
 .commentCount .commentIcon{
@@ -507,4 +492,36 @@
 
 .shareButton .shareIcon {
   font-size: 18px;
+}
+
+@media (max-width: 767px) {
+
+  .container {
+    border-radius: 0px;
+  }
+  .info .communityPicture {
+    height: 30px;
+  }
+  .info .communityName {
+    font-size: 12px;
+    font-weight:600;
+  }
+  .info .userName {
+    font-size: 12px;
+    font-weight: 300;
+  }
+  .buttonGroup .joinButton {
+    font-size: 11px;
+  }
+  .buttonGroup .joinedButton {
+    font-size: 11px;
+  }
+  .content .title {
+    font-size: 16px;
+    line-height: 20px;
+    -webkit-line-clamp: 2;
+  }
+  .content .media {
+    margin-top: 4px;
+  }
 }

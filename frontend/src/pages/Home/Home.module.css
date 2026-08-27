@@ -1,6 +1,7 @@
 
 .homeContainer {
-  /* border: 2px solid blue; */
+  /* border: 4px solid blue; */
+  background-color: #0E1113;
   width: 100%;
   height: 100%;
 
@@ -10,7 +11,7 @@
 }
 
 .feedSection {
-  /* border: 1px solid red; */
+  /* border: 2px solid red; */
   max-width: 722px;
   width: 100%;
 
@@ -19,9 +20,32 @@
 }
 
 .widgetSection {
+  /* border: 2px solid red; */
   max-width: 316px;
   width: 100%;
+  padding: 1.5rem 0;
+
+  position: sticky;
+  top: 58px;
+  height: calc(100vh - 58px);
   flex-shrink: 0;
+
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.widgetSection:hover {
+  scrollbar-color: #3E4142 transparent;
+}
+
+.widget {
+  background-color: #000000;
+  border-radius: 16px;
+  padding: 1rem 0;
+
+  width: 100%;
+  height: fit-content;
 }
 
 @media (max-width: 959px) {

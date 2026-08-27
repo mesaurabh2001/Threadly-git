@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from 'react';
 
 // Local Module
 import {getPostById} from '../../services/postService.js';
-import PostWidget from './PostWidget.jsx';
+import { getCommunityById } from '../../services/communityService.js';
+import CommunityWidget from '../../components/CommunityWidget/CommunityWidget.jsx';
 
 // Icons import
 import { BsThreeDots } from "react-icons/bs";
 import { IoArrowRedoOutline } from "react-icons/io5";
-import { FaLongArrowAltUp, FaLongArrowAltDown } from "react-icons/fa";
+import { TbArrowBigDown, TbArrowBigUp  } from "react-icons/tb";
 import { BsChat } from "react-icons/bs";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
@@ -23,21 +24,40 @@ const Post = () => {
   
   const {id} = useParams();
   const [post, setPost] = useState(null);
+  const [community, setCommunity] = useState(null);
 
   useEffect(() => {
-    const getPost = async () => {
+    const loadPost = async () => {
       try{
         const data = await getPostById(id);
         setPost(data);
 
       } catch (error) {
-        console.log("Error: ", error.message);
+        console.log("Error getting post: ", error.message);
       }
     }
 
-    getPost();
+    loadPost();
   }, [id]);
 
+  useEffect(() => {
+    const communityId = post?.community?._id;
+
+    if (!communityId) return;
+  
+    const loadCommunity = async () => {
+      try {
+        const data = await getCommunityById(post.community._id);
+        console.log(data);
+        setCommunity(data);
+
+      } catch (error) {
+        console.log("Error getting community: ", error.message);
+      }
+    }
+
+    loadCommunity();
+  }, [post?.community?._id])
 
   const navigate = useNavigate();
 
@@ -113,10 +133,8 @@ const Post = () => {
   // ////////////////////////////////////////////////////////////
   return (
     <>
-      <div className={styles.postContainer}>
+      <div className={styles.mainContainer}>
         
-
-
         <section className={styles.postSection}>
 
           <article className={styles.post}>
@@ -157,79 +175,68 @@ const Post = () => {
               
               <div className={styles.buttonGroup}>
 
-                <button 
-                  className={styles.joinButton}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Join
-                </button>
-
-                <button
-                  className={styles.joinedButton}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Joined
-                </button>
-
-                <button 
-                  type='button'
-                  className={styles.moreOptions} ref={dropdownMenuRef}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowDropdownMenu(prev => !prev);
-                  }}
-                > 
-                  <BsThreeDots />
-                </button>
-
-                {showDropdownMenu && (
-                  <div 
-                    className={styles.ButtonMenu}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <ul>
-                      <li>
-                        <NavLink to="" className={styles.dropdownLink}>
-                          <PiBellLight className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
-                          <span>Follow post</span>
-
-                          <PiBellFill className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
-                          <span>Following</span>
-                        </NavLink>
-                      </li>
-
-                      <li>
-                        <NavLink to="" className={styles.dropdownLink}>
-                          <IoBookmarkOutline  className={styles.dropdownIcon}/>
-                          <span>Save</span>
-
-                          <IoBookmark className={styles.dropdownIcon}/>
-                          <span>Saved</span>
-                        </NavLink>
-                      </li>
-
-                      <li>
-                        <NavLink to="" className={styles.dropdownLink}>
-                          <BiHide className={styles.dropdownIcon}/>
-                          <span>Hide</span>
-
-                          <BiSolidHide className={styles.dropdownIcon}/>
-                          <span>Hidden</span>
-                        </NavLink>
-                      </li>
-
-                      <li>
-                        <NavLink to="" className={styles.dropdownLink}>
-                          <RiFlagLine className={styles.dropdownIcon}/>
-                          <span>Report</span>
-
-                          <RiFlagFill  className={styles.dropdownIcon}/>
-                          <span>Reported</span>
-                        </NavLink>
-                      </li>
-                    </ul>
-                  </div>
-                )}
+                <div className={styles.moreMenuArea} ref={dropdownMenuRef} >
+                              
+                  <button 
+                    type='button'
+                    className={styles.moreMenu}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowDropdownMenu(prev => !prev);
+                    }}
+                  > 
+                    <BsThreeDots />
+                  </button>
+  
+                  {showDropdownMenu && (
+                    <div 
+                      className={styles.ButtonMenu}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <ul>
+                        <li>
+                          <NavLink to="" className={styles.dropdownLink}>
+                            <PiBellLight className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
+                            <span>Follow post</span>
+  
+                            {/* <PiBellFill className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
+                            <span>Following</span> */}
+                          </NavLink>
+                        </li>
+  
+                        <li>
+                          <NavLink to="" className={styles.dropdownLink}>
+                            <IoBookmarkOutline  className={styles.dropdownIcon}/>
+                            <span>Save</span>
+  
+                            {/* <IoBookmark className={styles.dropdownIcon}/>
+                            <span>Saved</span> */}
+                          </NavLink>
+                        </li>
+  
+                        <li>
+                          <NavLink to="" className={styles.dropdownLink}>
+                            <BiHide className={styles.dropdownIcon}/>
+                            <span>Hide</span>
+  
+                            {/* <BiSolidHide className={styles.dropdownIcon}/>
+                            <span>Hidden</span> */}
+                          </NavLink>
+                        </li>
+  
+                        <li>
+                          <NavLink to="" className={styles.dropdownLink}>
+                            <RiFlagLine className={styles.dropdownIcon}/>
+                            <span>Report</span>
+  
+                            {/* <RiFlagFill  className={styles.dropdownIcon}/>
+                            <span>Reported</span> */}
+                          </NavLink>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
 
             </header>
@@ -309,7 +316,7 @@ const Post = () => {
               </div>
 
               <div className={styles.description}>
-                {post.description}
+                {post.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Id maxime ratione autem. Quam quaerat quod saepe, iste accusantium laborum molestiae consequatur itaque pariatur perferendis explicabo fuga nulla minus nihil a nesciunt quia officia consequuntur eveniet veniam culpa vero maiores soluta. Eaque asperiores quos commodi maxime delectus eum et illo rem? Mollitia ab voluptate sapiente vero. Vel hic nulla deserunt est ut odit rem reprehenderit magni alias officia, ipsum debitis aliquid, eveniet numquam aperiam ullam illo. Est rerum similique quae aliquid, odit eum veniam provident magnam, odio laborum in molestiae obcaecati non quaerat voluptates tempore distinctio dolor nobis sunt repellat. Nobis nulla non assumenda voluptatum dolore aut asperiores inventore illum, mollitia dignissimos ex natus labore officiis repellendus quis, minus ullam voluptatem iure. Saepe id expedita esse rerum ad sequi obcaecati eius placeat incidunt eaque laboriosam dolor fugiat quam asperiores aperiam eligendi omnis, alias maxime fuga est pariatur inventore. Deserunt obcaecati adipisci molestiae? Voluptatibus dolores laboriosam veritatis assumenda deleniti unde modi mollitia, harum animi cupiditate obcaecati labore saepe, sint eum molestiae vero omnis provident? Ipsam at nobis suscipit omnis, sint facere, vero repellendus officiis ea rem harum animi nostrum quos ullam exercitationem aspernatur aut totam maxime non aliquam? Porro dolore, inventore eligendi mollitia natus officia, ipsa explicabo, adipisci incidunt illum numquam eos recusandae sequi ex architecto molestiae. Sequi consequatur deserunt provident facilis et illo. Ea ratione tempore libero eveniet qui, omnis similique sapiente, nihil, optio natus doloremque asperiores veritatis fugiat eos recusandae fuga totam impedit quos est laboriosam architecto nam explicabo? Sequi ex porro dignissimos iste veniam earum non mollitia odit fugit, eius temporibus, velit ratione, quasi corrupti dicta adipisci quod? Iure nemo odio inventore nostrum dolor enim omnis accusantium, itaque alias numquam, accusamus voluptatem illum, quo repellat eos impedit molestias sed et iste harum repudiandae maiores! Doloremque, rem ratione magnam illum impedit sapiente laudantium illo! Quo impedit praesentium molestias at nihil quas suscipit asperiores, nisi eum totam commodi repellat saepe, architecto, voluptas nulla corporis? Beatae natus quasi iusto magni nulla non, reprehenderit labore tempora amet odit? Autem obcaecati aspernatur voluptas labore veniam, corrupti doloribus! Consequatur quibusdam sunt ducimus autem, earum aperiam nesciunt magni quidem sapiente deleniti dolorum quod, dicta necessitatibus? Voluptates et consequatur ea ratione aspernatur illo error, tempore reiciendis dolore officia doloribus nihil explicabo? Nulla, veniam optio mollitia hic maiores sapiente nostrum porro aliquam deserunt ut corporis ratione quisquam dolorem ad! Nihil recusandae exercitationem, veritatis rerum id iure explicabo pariatur optio et quae repellendus numquam sit voluptatum facere. Ab similique quos explicabo accusantium deserunt inventore, in soluta accusamus, error veritatis, nobis ipsa harum.
               </div>
 
             </section>
@@ -321,15 +328,15 @@ const Post = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <button className={`${styles.voteButton}`}>
-                  <FaLongArrowAltUp className={styles.voteButtonIcon}/>
+                  <TbArrowBigUp className={styles.voteButtonIcon}/>
                 </button>
-
+  
                 <span className={`${styles.voteCount} `}>
-                  0
+                  532
                 </span>
-
+  
                 <button className={ `${styles.voteButton}`}>
-                  <FaLongArrowAltDown className={styles.voteButtonIcon}/>
+                  <TbArrowBigDown className={styles.voteButtonIcon}/>
                 </button>
               </div>
 
@@ -413,10 +420,16 @@ const Post = () => {
 
         </section>
 
-
-        {/* <aside className={styles.widgetSection}>
-          <PostWidget />
-        </aside> */}
+        {community && (
+          <aside className={styles.widgetSection}>
+            <div className={styles.widget}>
+              <CommunityWidget 
+                community={community}
+                currentPage={'post'}
+              />
+            </div>
+          </aside>      
+        )}
 
       </div>
     </>

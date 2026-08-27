@@ -1,33 +1,23 @@
 .mainContainer {
   /* border-radius: 16px; */
+  /* border: 3px solid blue; */
   width: 100%;
-  height: 100%;
 
-  padding: 16px 0px;
-
-  overflow: hidden;
-  background-color: rgb(180, 113, 113);
+  padding: 32px 0 10px 0;
+  background-color: #04090A;
 
   display: flex;
   flex-direction: column;
 }
+.mainContainerCommunity{
+  padding: 24px 0 10px 0;
+}
 
 .profileWidget {
-  /* border: 1px solid red; */
-
+  /* border: 3px solid blue; */
   width: 100%;
   flex: 1;
   min-height: 0;
-
-  padding: 16px 0px;
-
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-}
-
-.mainContainer:hover .profileWidget {
-  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////// */
@@ -38,15 +28,18 @@
   color: white;
 
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .communityName {
   /* border: 1px solid blue; */
   font-size: 18px;
   font-weight: 700;
+  color: #b7cad4;
 
-  margin-bottom: 10px;
-  
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -65,74 +58,75 @@
 .buttonGroup .joinButton {
   border: none;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight:600;
-  color: #3c3c3c;
-  background-color: #e5ebee;
+  color: #000014;
+  background-color: #EEF1F3;
   cursor:pointer;
 
-  padding: 7px 16px;
+  padding: 6px 12px;
 }
 
 .buttonGroup .joinButton:hover{
-    background:#d9dfe2;
+  background:#fff;
 }
 .buttonGroup .joinButton:active{
-    background:#e5ebee;
+  background:#e5ebee;
 }
 
 .buttonGroup .joinedButton {
-  border: none;
+  border: 1px solid #ced4d4;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight:600;
-  color: #f1f1f1;
-  background-color: #FF5C00;
+  color: #ced4d4; 
+  background-color: #0E1113;
   cursor:pointer;
 
-  padding: 7px 16px;
+  padding: 6px 12px;
 }
 
 .buttonGroup .joinedButton:hover{
-    background:rgb(233, 85, 0);
+  border: 1px solid white;
+  color: white;
 }
 .buttonGroup .joinedButton:active{
-    background-color: #FF5C00;
+  background-color: #363838;
 }
 
 .communityDescription {
+  /* border: 1px solid blue; */
   font-size: 0.875rem;
   font-weight: 400;
-  margin-bottom: 10px;
+  line-height: 20px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .communityDescription span:first-child {
-  font-weight: 500;
+  font-weight: 700;
+  color: #b7cad4;
   display: block;
 }
-
 .communityDescription span:last-child {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
+  color: #82959b;
 }
 
 .createdDate,
 .communityType
 {
-  /* border: 1px solid white; */
+  /* border: 1px solid blue; */
   display: flex;
   align-items: center;
   gap: 8px;
 
-  margin-top: 2px;
-  font-size: 13px;
+  color: #82959b;
 }
 .createdDate span:first-child,
 .communityType span:first-child {
   /* border: 1px solid red; */
-  font-size: 14px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,11 +142,10 @@
 .tabGroup{
   /* border: 1px solid white; */
   padding: 0px 16px;
-  margin-top: 10px;
+  margin-top: 8px;
 
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
-  font-size: 16px;
 
   display: flex;
   flex-wrap: wrap;
@@ -170,19 +163,21 @@
 }
 
 .tab span:first-child {
-  font-weight: 500;
+  font-weight: 16px;
+  font-weight: 600;
+  color: #f2f4f5;
 }
 
 .tab span:last-child {
   font-size: 12px;
+  font-weight: 400;
+  color: #82959b;
 }
 
 /* /////////////////////////////////////////////////////////////////////// */
 
 .communityRules{
   /* border: 1px solid white; */
-  padding: 0px 6px;
-  margin-top: 10px;
 
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
@@ -193,17 +188,19 @@
 }
 .communityRules .heading {
   /* border: 1px solid red; */
-  padding: 0px 10px;
+  padding: 0px 16px;
   font-size: 12px;
+  font-weight: 500;
 
   display: flex;
   gap: 4px;
   text-transform:uppercase;
 
-  color: rgba(255, 255, 255, 0.7);
+  color: #82959b;
 }
 
 .rules {
+  /* border: 1px solid white; */
   display: flex;
   flex-direction: column;
 }
@@ -217,12 +214,14 @@
 
 .ruleHead {
   /* border: 1px solid white; */
-  padding: 8px 10px;
+  padding: 8px 16px;
+  min-height: 40px;
 
   display: flex;
   align-items: center;
 
-  font-size: 14px; 
+  font-size: 14px;
+  color: #82959b;
   cursor: pointer;
 }
 
@@ -238,7 +237,14 @@
 }
 .ruleHead span:nth-child(2) {
   /* border: 1px solid white; */
+  padding-right: 8px;
   flex: 1;
+
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 .ruleHead span:last-child {
   /* border: 1px solid white; */
@@ -256,15 +262,6 @@
   transform: rotate(180deg);
 }
 
-/* .ruleDescription {
-  border: 1px solid blue;
-  padding: 0 12px 12px 42px;
-  font-size: 13px;
-  line-height: 1.5;
-
-  color: rgba(255, 255, 255, 0.75);
-} */
-
 .ruleDescription {
   display: grid;
   grid-template-rows: 0fr;
@@ -279,7 +276,7 @@
 
   font-size: 14px;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.65);
+  color: #82959b;
 }
 
 .descriptionOpen {
@@ -297,48 +294,62 @@
   padding: 0px 16px;
 
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: white;
-
+  color: #f1f4f6;
+  
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .tagGroup .heading {
   /* border: 1px solid red; */
+  color: #82959b;
+  font-weight: 500;
   font-size: 12px;
 }
 
 .tags {
+  /* border: 1px solid red; */
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 
 .tag {
   width: fit-content;
-  padding: 4px 10px;
+  padding: 5px 10px;
 
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
 
-  background: rgba(255, 255, 255, 0.06);
+  background-color: #20272b;
 
-  color: rgba(255, 255, 255, 0.85);
+  color: #b8c4c9;
   font-size: 12px;
+  font-weight: 500;
   line-height: 1.2;
 
+  cursor: pointer;
   white-space: nowrap;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.tag:hover {
+  background: #333D42;
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #f1f4f6;
 }
 
 /* //////////////////////////////////////////////////////////////// */
 
 .relatedCommunities {
   /* border: 1px solid white; */
-  padding: 0px 6px;
   max-height: 500px;
 
-  color: rgb(204, 204, 204);
+  color: white;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
 
@@ -350,20 +361,22 @@
 
 .relatedCommunities .heading{
   /* border: 1px solid white; */
-  padding: 4px;
+  color: #82959b;
+  font-weight: 500;
+  padding: 0 16px;
 }
+
 .communityList {
   /* border: 1px solid black; */
   width: 100%;
-  padding: 0px 6px;
   flex: 1;
-  /* max-height: 400px; */
-
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 }
 
-.relatedCommunities:hover {
-  /* background: rgba(169, 169, 169, 0.596); */
+.communityWrapper {
+  /* border: 1px solid blue; */
+  padding: 8px 16px 8px 16px;
+}
+
+.communityWrapper:hover {
+  background-color: #333D42;
 }

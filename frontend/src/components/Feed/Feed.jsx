@@ -1,7 +1,7 @@
 import styles from './Feed.module.css';
 import PostCard from '../PostCard/PostCard.jsx';
 
-function Feed({postList}) {
+function Feed({postList, currentPage}) {
   return (
     <>
     <div className={`${styles.feedContainer}`}>
@@ -10,6 +10,7 @@ function Feed({postList}) {
         <PostCard 
           key={post._id}
           post={post}
+          currentPage={currentPage}
         />
         
       ))}

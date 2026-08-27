@@ -1,16 +1,43 @@
 import styles from "./ProfileWidget.module.css";
 
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
+
+import { BsThreeDots } from "react-icons/bs";
+
 import CommunityCardSmall from '../../components/CommuntiyCardSmall/CommunityCardSmall';
-import { useEffect, useState } from "react";
 import { getCommunitiesSummaries } from "../../services/communityService";
-import { useNavigate } from "react-router-dom";
 
 function ProfileWidget({profileUser}) {
 
   const navigate = useNavigate();
+  
+  const [showDropdownMenu, setShowDropdownMenu] = useState(false);
+  const dropdownMenuRef = useRef(null);
 
   const [joinedCommunities, setJoinedCommunities] = useState([]);
   const [ownedCommunities, setOwnedCommunities] = useState([]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+
+      // Close profile dropdown when clicking outside
+      if (
+          dropdownMenuRef.current &&
+          !dropdownMenuRef.current.contains(event.target)
+      ) {
+          setShowDropdownMenu(false);
+      }
+
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
+
+  }, []);
 
   useEffect(() => {
     const loadJoinedCommunities = async () => {
@@ -94,9 +121,70 @@ function ProfileWidget({profileUser}) {
               <span>{profileUser.name}</span>
             </div>
 
+            <div className={styles.moreMenuArea} ref={dropdownMenuRef} >            
+              <button 
+                type='button'
+                className={styles.moreMenu}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDropdownMenu(prev => !prev);
+                }}
+              > 
+                <BsThreeDots />
+              </button>
+
+              {showDropdownMenu && (
+                <div 
+                  className={styles.ButtonMenu}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ul>
+                    <li>
+                      <button to="" className={styles.dropdownButton}>
+                        {/* <PiBellLight className={`${styles.dropdownIcon} ${styles.bellIcon}`}/> */}
+                        <span>Follow post</span>
+
+                        {/* <PiBellFill className={`${styles.dropdownIcon} ${styles.bellIcon}`}/>
+                        <span>Following</span> */}
+                      </button>
+                    </li>
+
+                    <li>
+                      <button to="" className={styles.dropdownButton}>
+                        {/* <IoBookmarkOutline  className={styles.dropdownIcon}/> */}
+                        <span>Save</span>
+
+                        {/* <IoBookmark className={styles.dropdownIcon}/>
+                        <span>Saved</span> */}
+                      </button>
+                    </li>
+
+                    <li>
+                      <button to="" className={styles.dropdownButton}>
+                        {/* <BiHide className={styles.dropdownIcon}/> */}
+                        <span>Hide</span>
+
+                        {/* <BiSolidHide className={styles.dropdownIcon}/>
+                        <span>Hidden</span> */}
+                      </button>
+                    </li>
+
+                    <li>
+                      <button to="" className={styles.dropdownButton}>
+                        {/* <RiFlagLine className={styles.dropdownIcon}/> */}
+                        <span>Report</span>
+
+                        {/* <RiFlagFill  className={styles.dropdownIcon}/>
+                        <span>Reported</span> */}
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+
           </div>
 
-          <hr className={styles.horizontalRule}/>
 
           <div className={styles.tabGroup}>
             <div className={styles.tab}>
@@ -119,6 +207,27 @@ function ProfileWidget({profileUser}) {
               <span>communities</span>
             </div>
           </div>
+
+          {profileUser.genres.length !== 0 && (
+          <>
+            <hr className={styles.horizontalRule}/>    {/* ///////////////////////////////// */}
+            
+            <div className={styles.genreGroup}>
+              <div className={styles.heading}>
+                <span>GENRES</span>
+                <span></span>
+              </div>
+
+              <div className={styles.genres}>
+                {profileUser.genres.map((genre, index) => (
+                  <div className={styles.genre} key={index}>
+                    <span>{genre}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+          )}
 
           {ownedCommunities.length !== 0 && (
           <>

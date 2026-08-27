@@ -1,0 +1,46 @@
+.mainContainer {
+  /* border: 1px solid rgb(12, 240, 62); */
+  background-color: #000000;
+  max-height: 300px;
+
+  color: #748791;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+
+}
+
+.communityList {
+  /* border: 1px solid red; */
+  width: 100%;
+  flex: 1;
+  max-height: 100%;
+  padding: 0 16px;
+
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+.communityWrapper {
+  /* border: 1px solid blue; */
+  padding: 8px 12px;
+}
+.communityWrapper:hover {
+  /* border: 1px solid red; */
+  background: #181C1F;
+}
+
+.heading {
+  /* border: 1px solid blue; */
+  padding: 0px 16px;
+}
+
+.button {
+  /* border: 1px solid red; */
+  font-size: 12px;
+  padding: 0 16px; 
+}

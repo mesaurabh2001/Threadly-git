@@ -106,6 +106,7 @@ class Post {
 
           "user._id": 1,
           "user.username": 1,
+          "user.avatar": 1,
           
           'community._id': 1,
           'community.name': 1,
@@ -160,6 +161,7 @@ class Post {
           // User fields
           'user._id': 1,
           'user.username': 1,
+          "user.avatar": 1,
 
           // Community fields
           'community._id': 1,
@@ -216,6 +218,7 @@ class Post {
 
           "user._id": 1,
           "user.username": 1,
+          "user.avatar": 1,
           
           'community._id': 1,
           'community.name': 1,

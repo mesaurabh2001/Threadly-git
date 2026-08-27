@@ -19,7 +19,9 @@ function Sidebar({setIsSidebarOpen}) {
 
 
   return (
-    <div className={styles.container}>
+    <div 
+      className={styles.container}
+    >
       <div className={styles.subContainer}>
 
         {/* Main */}
@@ -149,7 +151,7 @@ function Sidebar({setIsSidebarOpen}) {
 
           {/* item------------------ */}
           <NavLink
-            to="/#"
+            to="/best"
             onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
@@ -161,7 +163,7 @@ function Sidebar({setIsSidebarOpen}) {
 
           {/* item------------------ */}
           <NavLink
-            to="/#"
+            to="/best-in-state"
             onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
@@ -173,7 +175,7 @@ function Sidebar({setIsSidebarOpen}) {
 
           {/* item------------------ */}
           <NavLink
-            to="/#"
+            to="/best-in-neighbour"
             onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
@@ -192,7 +194,7 @@ function Sidebar({setIsSidebarOpen}) {
 
           {/* item------------------ */}
           <NavLink
-            to="/#"
+            to="/rules"
             onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
@@ -204,7 +206,7 @@ function Sidebar({setIsSidebarOpen}) {
 
           {/* item------------------ */}
           <NavLink
-            to="/#"
+            to="/privacy-policy"
             onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
@@ -216,7 +218,7 @@ function Sidebar({setIsSidebarOpen}) {
 
           {/* item------------------ */}
           <NavLink
-            to="/#"
+            to="/user-agreement"
             onClick={() => setIsSidebarOpen(false)}
             className={({ isActive }) =>
               isActive ? `${styles.item} ${styles.active}` : styles.item
@@ -226,6 +228,7 @@ function Sidebar({setIsSidebarOpen}) {
             <span>User Agreement</span>
           </NavLink>
         </div>
+
       </div>
     </div>
   );

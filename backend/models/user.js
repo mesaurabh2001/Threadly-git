@@ -101,6 +101,7 @@ module.exports = class User {
           email: 1,
           avatar: 1,
           poster: 1,
+          genres: 1,
           createdAt: 1,
           updatedAt: 1
         }
@@ -122,6 +123,7 @@ module.exports = class User {
           name: 1,
           username: 1,
           email: 1,
+          password: 1,
           avatar: 1,
           poster: 1,
           createdAt: 1,

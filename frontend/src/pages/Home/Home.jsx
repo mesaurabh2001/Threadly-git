@@ -1,6 +1,7 @@
 import styles from "./Home.module.css";
 import Feed from '../../components/Feed/Feed.jsx';
-import CommunitiesWidget from "../../components/CommunitiesWidget/CommunitiesWidget.jsx";
+import PopularCommunitiesWidget from "../../components/PopularCommunitiesWidget/PopularCommunitiesWidget.jsx";
+import {getCommunitiesSummaries} from '../../services/communityService.js';
 
 // local Modules
 import {getPosts} from '../../services/postService.js';
@@ -11,6 +12,7 @@ import {useState, useEffect} from 'react';
 function Home() {
 
   const [posts, setPosts] = useState([]);
+  const [popularCommunities, setPopularCommunities] = useState([]);
 
   useEffect(() => {
       const getHomePosts = async () => {
@@ -26,13 +28,25 @@ function Home() {
       getHomePosts();
 
   }, []);
+
+  useEffect(() => {
+    const loadPopularCommunities = async () => {
+      try {
+        const pCommunities = await getCommunitiesSummaries()
+        setPopularCommunities(pCommunities);
+
+      } catch (error){
+        console.log(error.message);
+      }
+    }
+
+    loadPopularCommunities();
+  }, [])
   
   return (
     <div className={styles.homeContainer}>
 
       <section className={styles.feedSection}>
-        <h1>Threadly</h1>
-        <p>All discussions will appear here</p>
 
         <Feed
           postList={posts} 
@@ -40,7 +54,12 @@ function Home() {
       </section>
       
       <aside className={styles.widgetSection}>
-        <CommunitiesWidget communityList={[]}/>
+        <div className={styles.widget}>
+          <PopularCommunitiesWidget
+            communityList={popularCommunities} 
+            heading={'popular communities'} 
+          />
+        </div>
       </aside>
 
     </div>
