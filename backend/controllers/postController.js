@@ -41,9 +41,29 @@ exports.addPost = async (req, res, next) => {
   }
 
   try {
-    const {communityId, title, description, genre, tags, images} = req.body;
+    const {communityId, title, description, genre, mediaDimension} = req.body;
+    const tags = JSON.parse(req.body.tags);
+
+    const imageObjectArray = req.files?.images || [];
+    const videoObject = req.files?.video?.[0] || null;
+
+    const images = imageObjectArray.map(file => (
+      `http://localhost:3000/images/${file.filename}`
+    ));
+
+    const video = videoObject
+      ? `http://localhost:3000/videos/${videoObject.filename}`
+      : null;
+
+    if(images.length > 0 && video) {
+      return res.status(422).json({
+        message: 'A post cannot contain both images and a video.'
+      });
+    }
+
     const userId = req.session.userId;
-    const post = new Post(communityId, userId, title, description, genre, tags, images);
+    const post = new Post(communityId, userId, title, description, genre, tags, mediaDimension, images, video);
+    console.log(post);
     
     const response = await post.save();
     post._id = response.insertedId;

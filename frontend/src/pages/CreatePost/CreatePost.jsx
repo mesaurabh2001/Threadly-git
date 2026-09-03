@@ -10,7 +10,12 @@ import CreatePostWidget from './CreatePostWidget.jsx';
 
 // React Icons
 import { CgArrowsExchangeAltV } from "react-icons/cg";
-
+import { IoLinkSharp } from "react-icons/io5";
+import { TbPhoto } from "react-icons/tb";
+import { LuSquarePlay } from "react-icons/lu";
+import { IoTabletLandscape } from "react-icons/io5";
+import { IoTabletPortrait } from "react-icons/io5";
+import { FaRegSquare } from "react-icons/fa";
 
 
 function CreatePost () {
@@ -24,7 +29,9 @@ function CreatePost () {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
-  const [image, setImage] = useState("");
+  const [mediaDimension, setMediaDimension] = useState('square');
+  const [images, setImages] = useState([]);
+  const [video, setVideo] = useState(null);
   const [communities, setCommunities] = useState([]);
 
   useEffect(() => {
@@ -40,6 +47,25 @@ function CreatePost () {
     fetchCommunities();
   }, [selectedCommunity]);
 
+  const handleTitleChange = (e) => {
+    const textarea = e.target;
+
+    textarea.style.height = "48px";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+
+    setTitle(textarea.value);
+  };
+
+  const handleTagsChange = (e) => {
+    const textarea = e.target;
+
+    textarea.style.height = "24px";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+
+    setTags(textarea.value);
+  };
+
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,11 +76,12 @@ function CreatePost () {
       description: description,
       genre: selectedCommunity.genre,
       tags: tags.split(' '),
-      images: {
-        dimension: 'portrait',
-        images: [image]
-      }
+      mediaDimension: mediaDimension,
+      images: images,
+      video: video,
     }
+
+    console.log(postObj);
 
     try{
       const response = await addPost(postObj);
@@ -71,16 +98,10 @@ function CreatePost () {
       
       <form className={styles.form} onSubmit={handleOnSubmit}>
 
-        <h1 className={styles.title}>Create a post</h1>
-        <p className={styles.subtitle}>
-          Share something with your community.
-        </p>
-
-
         <div className={styles.communitySelector}>
 
           <button
-            className={styles.communitySelectorButton}
+            className={`${styles.communitySelectorButton} ${selectedCommunity ? styles.communitySelectorButtonActive: ''}`}
             type="button"
             onClick={() => setShowCommunities(prev => !prev)}
           >
@@ -103,9 +124,10 @@ function CreatePost () {
               </span>
             )}
 
-            <span className={styles.selectorIcon}>
+            <span className={`${styles.selectorIcon} ${selectedCommunity ? styles.selectorIconActive: ''}`}>
               <CgArrowsExchangeAltV />
             </span>
+
           </button>
 
           {showCommunities && (
@@ -113,12 +135,13 @@ function CreatePost () {
               {communities.map((community) => (
                 <div
                   key={community._id}
-                  className={styles.communityOption}
+                  className={styles.communityWrapper}
                   onClick={() => {
                     setSelectedCommunity(community);
                     setShowCommunities(false);
                   }}
                 >
+                  <span className={styles.communityWrapperSpan}>joined</span>
                   <CommunityCardSmall community={community} />
                 </div>
               ))}
@@ -127,45 +150,158 @@ function CreatePost () {
 
         </div>
 
-        <input
-          type="text"
-          placeholder="Title"
+        <textarea
+          className={styles.titleText}
+          placeholder="Title *"
+          maxLength='300'
+          required
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleTitleChange}
         />
 
         <textarea
-          placeholder="Description"
+          className={styles.descriptionText}
+          placeholder="Body text (optional)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <input
-          type="text"
-          placeholder="Tasgs here, space separated values"
+        <textarea
+          className={styles.tagsText}
+          placeholder="Tags  #𝘔𝘰𝘶𝘯𝘵𝘢𝘪𝘯𝘛𝘳𝘦𝘬"
           value={tags}
-          onChange={(e) => setTags(e.target.value)}
+          onChange={handleTagsChange}
         />
 
+{/* Image Input field and its preview */}
         <input
-          type="text"
-          placeholder="Image URL"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
+          id='imageInput'
+          className={`${styles.imageInput}`}
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={(e) => setImages([...e.target.files])}
         />
+
+        {images.length > 0 && (
+          <div className={styles.imagePreviewContainer}>
+            {images.map((image, index) => (
+              <img 
+                key={index}
+                src={URL.createObjectURL(image)}
+                alt={`Selected ${index + 1}`}
+                className={styles.imagePreview}
+              />
+            ))}
+          </div>
+        )}
+
+{/* Video Input field and its preview */}
+
+        <input
+          id='videoInput'
+          className={`${styles.videoInput}`}
+          type="file" 
+          accept="video/mp4, video/webm, video/quicktime"
+          onChange={(e) => setVideo(e.target.files[0])}
+        />
+
+        {video && (
+          <div className={`${styles.videoPreviewContainer}`}>
+            <video
+              src={URL.createObjectURL(video)}
+              controls
+              muted
+              className={styles.videoPreview}
+            />
+          </div>
+        )}
         
 
+        <div className={styles.iconGroup}>
+          <span className={`${styles.icon} ${styles.linkIcon}`}>
+            <IoLinkSharp />
+          </span>
+
+          <label 
+            htmlFor='imageInput'
+            className={`${styles.icon} ${styles.photoIcon}`}
+          >
+            <TbPhoto />
+          </label>
+
+          <label
+            htmlFor='videoInput'
+            className={`${styles.icon} ${styles.videoIcon}`}
+          >
+            <LuSquarePlay  />
+          </label>
+
+          <span className={styles.dividerIcon}></span>
+
+          <span
+            onClick={() => setMediaDimension('landscape')}
+            className={`
+              ${styles.icon} 
+              ${styles.landscapeIcon} 
+              ${mediaDimension ==='landscape' ? styles.mediaDimensionActive:''}
+            `}
+          >
+            <IoTabletLandscape />
+            {mediaDimension ==='landscape' && (
+              <span>Landscape</span>
+            )}
+          </span>
+
+          <span
+            onClick={() => setMediaDimension('square')}
+            className={`
+              ${styles.icon} 
+              ${styles.squareIcon}
+              ${mediaDimension ==='square' ? styles.mediaDimensionActive:''}
+            `}
+          >
+            <FaRegSquare />
+            {mediaDimension ==='square' && (
+              <span>Square</span>
+            )}
+          </span>
+
+          <span
+            onClick={() => setMediaDimension('portrait')}
+            className={`
+              ${styles.icon}
+              ${styles.portraitIcon}
+              ${mediaDimension ==='portrait' ? styles.mediaDimensionActive:''}
+            `}
+          >
+            <IoTabletPortrait />
+            {mediaDimension ==='portrait' && (
+              <span>Portrait</span>
+            )}
+          </span>
+
+        </div>
+        
+        <div className={styles.submitButtonContainer}>
         <button className={styles.submitButton} type="submit">
-          Create Post
+          Post
         </button>
+        </div>
 
       </form>
 
-      {selectedCommunity && (
+
         <aside className={styles.widgetSection}>
-          <CreatePostWidget community={selectedCommunity}/>
+          
+          {selectedCommunity && (
+            <div className={styles.widget}>
+              <CreatePostWidget community={selectedCommunity}/>
+            </div>
+          )}
+          
         </aside>
-      )}
+
 
       
     </div>

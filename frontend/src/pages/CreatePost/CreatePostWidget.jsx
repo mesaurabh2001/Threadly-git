@@ -11,6 +11,15 @@ import { IoIosArrowDown } from "react-icons/io";
 function CreatePostWidget({community}) {
 
   const [openRule, setOpenRule] = useState(null);
+
+  const date = new Date(community.createdAt);
+
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  
   
   return (
     <div className={`${styles.mainContainer}`}>
@@ -26,6 +35,11 @@ function CreatePostWidget({community}) {
             <span>{community.description}</span>
           </div>
 
+          <div className={styles.createdDate}>
+            <span><IoFolderOpenOutline /></span>
+            <span>Created {formattedDate}</span>
+          </div>
+
           <div className={styles.communityType}>
             <span><BsGlobe2 /></span>
             <span>Public</span>
@@ -34,13 +48,21 @@ function CreatePostWidget({community}) {
         </div>
 
         <div className={styles.tabGroup}>
-          
-          <div className={styles.tab}>
-            <span>{community.genre}</span>
-            <span>Genre</span>
+            <div className={styles.tab}>
+              <span>298K</span>
+              <span>Weekly visitors</span>
+            </div>
+
+            <div className={styles.tab}>
+              <span>328</span>
+              <span>Weekly contributions</span>
+            </div>
+
+            <div className={styles.tab}>
+              <span>328</span>
+              <span>Posts</span>
+            </div>
           </div>
-          
-        </div>
       </div>
       
       {community.rules && (

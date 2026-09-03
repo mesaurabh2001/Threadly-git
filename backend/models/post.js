@@ -7,7 +7,7 @@ const {ObjectId} = require('mongodb');
 
 class Post {
 
-  constructor (communityId, userId, title, description, genre, tags, images, _id) {
+  constructor (communityId, userId, title, description, genre, tags, mediaDimension, images, video, _id) {
 
     this.communityId = new ObjectId(communityId);
     this.userId = new ObjectId(userId);
@@ -15,7 +15,9 @@ class Post {
     this.description = description;
     this.genre = genre;
     this.tags = tags;
+    this.mediaDimension = mediaDimension;
     this.images = images;
+    this.video = video;
 
     this.followedBy = [];
     this.upvotes = [];
@@ -28,28 +30,28 @@ class Post {
 
   save () {
     const db = getDB();
-    if (this._id) {
-      const updatedPost = {
-        communityId : this.communityId,
-        userId : this.userId,
-        title : this.title,
-        description : this.description,
-        images : this.images,
-        genre: this.genre,
+    // if (this._id) {
+    //   const updatedPost = {
+    //     communityId : this.communityId,
+    //     userId : this.userId,
+    //     title : this.title,
+    //     description : this.description,
+    //     images : this.images,
+    //     genre: this.genre,
 
-        createdAt : this.createdAt,
-        updatedAt : new Date(),
-        followedBy : this.followedBy,
-        upvotes : this.upvotes,
-        downvotes : this.downvotes,
-        comments : this.comments,
-      }
-      return db.collection('posts').updateOne(
-        {_id : new ObjectId(this._id)}, 
-        {$set: updatedPost}
-      );
-      
-    }
+    //     createdAt : this.createdAt,
+    //     updatedAt : new Date(),
+    //     followedBy : this.followedBy,
+    //     upvotes : this.upvotes,
+    //     downvotes : this.downvotes,
+    //     comments : this.comments,
+    //   }
+
+    //   return db.collection('posts').updateOne(
+    //     {_id : new ObjectId(this._id)}, 
+    //     {$set: updatedPost}
+    //   );
+    // }
     
     return db.collection('posts').insertOne({
       ...this,
@@ -94,7 +96,9 @@ class Post {
           _id: 1,
           title: 1,
           description: 1,
+          mediaDimension: 1,
           images: 1,
+          video: 1,
           upvotedCount: {
             $size: '$upvotes',
           },
@@ -154,7 +158,9 @@ class Post {
           description: 1,
           genre: 1,
           tags: 1,
+          mediaDimension: 1,
           images: 1,
+          video: 1,
           createdAt: 1,
           updatedAt: 1,
 
@@ -212,7 +218,9 @@ class Post {
           _id: 1,
           title: 1,
           description: 1,
+          mediaDimension: 1,
           images: 1,
+          video: 1,
           createdAt: 1,
           updatedAt: 1,
 

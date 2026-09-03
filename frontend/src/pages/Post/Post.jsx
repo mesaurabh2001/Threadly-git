@@ -59,8 +59,6 @@ const Post = () => {
     loadCommunity();
   }, [post?.community?._id])
 
-  const navigate = useNavigate();
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showDropdownMenu, setShowDropdownMenu] = useState(false);
   const dropdownMenuRef = useRef(null);
@@ -88,8 +86,8 @@ const Post = () => {
     return <div>Loading...</div>;
   }
   
-  const imageDimension = post.images.dimension;
-  const images = post.images.images || [];
+  const mediaDimension = post.mediaDimension;
+  const images = post.images || [];
   const currentImage = images[currentImageIndex];
 
   function getTimeAgo(createdAt) {
@@ -250,70 +248,94 @@ const Post = () => {
                   {post.title}
               </div>
 
-              <div 
-                className={`${styles.media} ${imageDimension === 'portrait' ? styles.portrait : ''}`}
-                onClick={(e) => e.stopPropagation()}
-              >
-
-                <img
-                  className={styles.backgroundImage}
-                  src={`${currentImage}?fm=jpg&fit=max&w=20&q=40`}
-                  alt={post.title}
-                />
-
-                <a href={`${currentImage}?fm=jpg&fit=max&w=1200&q=75`} target="_blank" rel="noopener noreferrer">
-                  <img
-                    className={styles.foregroundImage}
-                    src={`${currentImage}?fm=jpg&fit=max&w=800&q=75`}
-                    alt={post.title}
-                  />
-                </a>
-
-                { images.length > 1 && (
-                  <button
-                    className={`${styles.previousButton}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentImageIndex((prev) => prev - 1);
-                    }}
-                    disabled={currentImageIndex === 0}
-                  >
-                    <IoChevronBack />
-                  </button>
-                )}
-                
-                { images.length > 1 && (
-                  <button
-                    className={`${styles.nextButton}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentImageIndex((prev) => prev + 1);
-                    }}
-                    disabled={currentImageIndex === images.length - 1}
-                  >
-                    <IoChevronForward />
-                  </button>
-                )}
-
-                { images.length > 1 && (
-                  <div className={styles.imageIndicators}>
-                    <div
-                      className={styles.activeDot}
-                      style={{
-                        transform: `translateX(${currentImageIndex * 9}px)`
-                      }}
-                    />
-
-                    {images.map((_, index) => (
-                      <span
-                        key={index}
-                        className={styles.dot}
+              {(images.length > 0 || post.video) && (
+              
+                <div 
+                  className={`
+                    ${styles.media} 
+                    ${mediaDimension === 'landscape' ? styles.landscapeDimension: ''}
+                    ${mediaDimension === 'square' ? styles.squareDimension: ''}
+                    ${mediaDimension === 'portrait' ? styles.portraitDimension : ''}
+                  `}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  
+                  {images.length > 0 && (
+                    <>
+                      <img
+                        className={styles.backgroundImage}
+                        src={`${currentImage}?fm=jpg&fit=max&w=20&q=40`}
+                        loading="lazy"
+                        alt=""
                       />
-                    ))}
-                  </div>
-                )}
-
-              </div>
+  
+                      <a href={`${currentImage}?fm=jpg&fit=max&w=600&h=600&q=75`} target="_blank" rel="noopener noreferrer">
+                        <img
+                          className={styles.foregroundImage}
+                          src={`${currentImage}?fm=jpg&fit=max&w=600&h=600&q=75`}
+                          alt={post.title}
+                          loading="lazy"
+                        />
+                      </a>
+  
+                      { images.length > 1 && (
+                        <button
+                          className={`${styles.previousButton}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex((prev) => prev - 1);
+                          }}
+                          disabled={currentImageIndex === 0}
+                        >
+                          <IoChevronBack />
+                        </button>
+                      )}
+                      
+                      { images.length > 1 && (
+                        <button
+                          className={`${styles.nextButton}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex((prev) => prev + 1);
+                          }}
+                          disabled={currentImageIndex === images.length - 1}
+                        >
+                          <IoChevronForward />
+                        </button>
+                      )}
+  
+                      { images.length > 1 && (
+                        <div className={styles.imageIndicators}>
+                          <div
+                            className={styles.activeDot}
+                            style={{
+                              transform: `translateX(${currentImageIndex * 9}px)`
+                            }}
+                          />
+  
+                          {images.map((_, index) => (
+                            <span
+                              key={index}
+                              className={styles.dot}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+  
+                  {post.video && (
+                    <video
+                      className={styles.video}
+                      src={post.video}
+                      controls
+                      muted
+                      preload='metadata'
+                    />
+                  )}
+  
+                </div>
+              )}
 
               <div className={styles.description}>
                 {post.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Id maxime ratione autem. Quam quaerat quod saepe, iste accusantium laborum molestiae consequatur itaque pariatur perferendis explicabo fuga nulla minus nihil a nesciunt quia officia consequuntur eveniet veniam culpa vero maiores soluta. Eaque asperiores quos commodi maxime delectus eum et illo rem? Mollitia ab voluptate sapiente vero. Vel hic nulla deserunt est ut odit rem reprehenderit magni alias officia, ipsum debitis aliquid, eveniet numquam aperiam ullam illo. Est rerum similique quae aliquid, odit eum veniam provident magnam, odio laborum in molestiae obcaecati non quaerat voluptates tempore distinctio dolor nobis sunt repellat. Nobis nulla non assumenda voluptatum dolore aut asperiores inventore illum, mollitia dignissimos ex natus labore officiis repellendus quis, minus ullam voluptatem iure. Saepe id expedita esse rerum ad sequi obcaecati eius placeat incidunt eaque laboriosam dolor fugiat quam asperiores aperiam eligendi omnis, alias maxime fuga est pariatur inventore. Deserunt obcaecati adipisci molestiae? Voluptatibus dolores laboriosam veritatis assumenda deleniti unde modi mollitia, harum animi cupiditate obcaecati labore saepe, sint eum molestiae vero omnis provident? Ipsam at nobis suscipit omnis, sint facere, vero repellendus officiis ea rem harum animi nostrum quos ullam exercitationem aspernatur aut totam maxime non aliquam? Porro dolore, inventore eligendi mollitia natus officia, ipsa explicabo, adipisci incidunt illum numquam eos recusandae sequi ex architecto molestiae. Sequi consequatur deserunt provident facilis et illo. Ea ratione tempore libero eveniet qui, omnis similique sapiente, nihil, optio natus doloremque asperiores veritatis fugiat eos recusandae fuga totam impedit quos est laboriosam architecto nam explicabo? Sequi ex porro dignissimos iste veniam earum non mollitia odit fugit, eius temporibus, velit ratione, quasi corrupti dicta adipisci quod? Iure nemo odio inventore nostrum dolor enim omnis accusantium, itaque alias numquam, accusamus voluptatem illum, quo repellat eos impedit molestias sed et iste harum repudiandae maiores! Doloremque, rem ratione magnam illum impedit sapiente laudantium illo! Quo impedit praesentium molestias at nihil quas suscipit asperiores, nisi eum totam commodi repellat saepe, architecto, voluptas nulla corporis? Beatae natus quasi iusto magni nulla non, reprehenderit labore tempora amet odit? Autem obcaecati aspernatur voluptas labore veniam, corrupti doloribus! Consequatur quibusdam sunt ducimus autem, earum aperiam nesciunt magni quidem sapiente deleniti dolorum quod, dicta necessitatibus? Voluptates et consequatur ea ratione aspernatur illo error, tempore reiciendis dolore officia doloribus nihil explicabo? Nulla, veniam optio mollitia hic maiores sapiente nostrum porro aliquam deserunt ut corporis ratione quisquam dolorem ad! Nihil recusandae exercitationem, veritatis rerum id iure explicabo pariatur optio et quae repellendus numquam sit voluptatum facere. Ab similique quos explicabo accusantium deserunt inventore, in soluta accusamus, error veritatis, nobis ipsa harum.

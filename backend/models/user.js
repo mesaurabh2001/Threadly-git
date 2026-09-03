@@ -126,6 +126,7 @@ module.exports = class User {
           password: 1,
           avatar: 1,
           poster: 1,
+          genres: 1,
           createdAt: 1,
           updatedAt: 1
         }

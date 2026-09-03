@@ -206,19 +206,19 @@
 /* ============= Dropdown Menu ============= */
 
 .ButtonMenu {
-    position: absolute;
+  position: absolute;
 
-    top: 100%;
-    right: 0;
-    z-index: 99;
+  top: 100%;
+  right: 0;
+  z-index: 99;
 
-    background: #181C1F;
-    border: 1px solid #2b3236;
-    border-radius: 8px;
+  background: #181C1F;
+  border: 1px solid #2b3236;
+  border-radius: 8px;
 
-    min-width: 176px;
+  min-width: 176px;
 
-    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+  box-shadow: 0 8px 20px rgba(0,0,0,.10);
 }
 
 .ButtonMenu ul{
@@ -268,7 +268,7 @@
   /* border: 1px solid red; */
   font-size: 18px;
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.5;
   color: #EEF1F3;
   text-decoration: none;
   margin-bottom: 4px;
@@ -289,7 +289,7 @@
 
   overflow: hidden;
 
-  margin-bottom: 4px;
+  margin-bottom: 16px;
   text-decoration: none;
   font-size: 14px;
   line-height: 1rem;
@@ -302,14 +302,53 @@
   margin-top: 10px;
   border-radius: 14px;
   width: 100%;
-  aspect-ratio: 16/9;
   overflow: hidden;
-
-  isolation: isolate;
+  /* isolation: isolate; */
+}
+.media.landscapeDimension {
+  aspect-ratio: 16/9;
+}
+.media.squareDimension {
+  aspect-ratio: 4/3;
+}
+.media.portraitDimension {
+  aspect-ratio: 1;
 }
 
-.media.portrait {
-  aspect-ratio: 4/3;
+.imageExpanded {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+
+  aspect-ratio: auto !important;
+  z-index: 9999 !important;
+  cursor: auto !important;
+
+  margin: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+.closeExpandedImageButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+
+  border: none;
+  border-radius: 50%;
+  width: 52px;
+  aspect-ratio: 1;
+
+  font-size: 24px;
+  color: white;
+  background-color: #151111;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .media .backgroundImage {
@@ -407,6 +446,160 @@
   background: white;
 
   transition: transform 0.25s ease;
+}
+
+/* video element */
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: black;
+}
+
+.videoControlContainer {
+  /* border: 1px solid blue; */
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+}
+
+.playButton {
+
+  width: 52px;
+  height: 52px;
+  border: none;
+
+  background: none;
+  /* border: 1px solid red; */
+  color: rgb(255, 255, 255);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.progressBar {
+  /* border: 1px solid red; */
+  height: 52px;
+  flex: 1;
+  margin-left: 16px;
+  margin-right: 16px;
+  cursor: pointer;
+
+  touch-action: none;
+
+  display: flex;
+  align-items: center;
+}
+
+.progressContainer {
+  /* border: 2px solid rgb(12, 207, 12); */
+  background: rgba(255, 255, 255, 0.35);
+  height: 4px;
+
+  flex: 1;
+}
+
+.progress {
+  /* border: 1px solid red; */
+  height: 100%;
+  background: white;
+  position: relative;
+}
+.progress span {
+  /* border: 1px solid red; */
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+
+  width: 18px;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  background-color: white;
+}
+
+.videoTime {
+  /* border: 1px solid red; */
+  color: white;
+  font-size: 14px;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+.fullscreenButton {
+  width: 52px;
+  height: 52px;
+  border: none;
+  background: none;
+  /* border:1px solid red; */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.volumeContainer {
+  /* border: 1px solid red; */
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.volumeButton {
+  /* border: 1px solid red; */
+  width: 52px;
+  height: 52px;
+  border: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.volumeSlider {
+  display: none;
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-90deg);
+  width: 120px;
+  height: 3px;
+  cursor: pointer;
+  accent-color: white;
+}
+
+.volumeContainer::before {
+  /* border: 1px solid red; */
+  content: '';
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  width: 40px;
+  height: 150px;
+  transform: translateX(-50%);
+}
+
+.volumeContainer:hover .volumeSlider {
+  display: block;
 }
 
 /*====================================== footer ======================================*/

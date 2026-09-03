@@ -214,7 +214,7 @@ function ProfileWidget({profileUser}) {
             
             <div className={styles.genreGroup}>
               <div className={styles.heading}>
-                <span>GENRES</span>
+                <span>FAVOURITE GENRES</span>
                 <span></span>
               </div>
 

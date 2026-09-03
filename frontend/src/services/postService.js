@@ -24,13 +24,28 @@ export const getPostById = async (id) => {
 }
 
 export const addPost = async (post) => {
+  
+  const formData = new FormData();
+  
+  formData.append('communityId', post.communityId);
+  formData.append('title', post.title);
+  formData.append('description', post.description);
+  formData.append('genre', post.genre);
+  formData.append('mediaDimension', post.mediaDimension);
+  formData.append('tags', JSON.stringify(post.tags));
+
+  post.images.forEach((image) => {
+    formData.append('images', image);
+  })
+
+  if(post.video) {
+    formData.append('video', post.video);
+  }
+  
   const response = await fetch('http://localhost:3000/posts', {
     method: 'POST',
     credentials: "include",
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(post)
+    body: formData
   })
 
   if (!response.ok) {

@@ -29,9 +29,12 @@ store.on('error', (error) => {
   console.log('Session store error: ', error);
 })
 
+
 // Utility Routes - 
 app.use(express.static(path.join(rootDir, 'public')));
 app.use(express.urlencoded({extended: true}));
+
+
 app.use(express.json());
 app.use(cors({
   origin: 'http://localhost:5173',

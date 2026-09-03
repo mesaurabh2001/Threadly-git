@@ -8,6 +8,11 @@ import { IoArrowRedoOutline } from "react-icons/io5";
 import { TbArrowBigDown, TbArrowBigUp  } from "react-icons/tb";
 import { BsChat } from "react-icons/bs";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
+import { FaPlay, FaPause } from "react-icons/fa";
+import { FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6";
+import { LuFullscreen } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
+import { FaRedoAlt } from "react-icons/fa";
 
 // dropdown menu icons
 import { PiBellFill, PiBellLight } from "react-icons/pi";
@@ -19,13 +24,26 @@ function PostCard ({post, currentPage}) {
 
   const navigate = useNavigate();
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const imageDimension = post.images.dimension;
-  const images = post.images.images || [];
-  const currentImage = images[currentImageIndex];
-
+  const mediaRef = useRef(null);
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
+  
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [isSeeking, setIsSeeking] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [showVolume, setShowVolume] = useState(false);
+  const [volume, setVolume] = useState(1);
+  
   const [showDropdownMenu, setShowDropdownMenu] = useState(false);
   const dropdownMenuRef = useRef(null);
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const mediaDimension = post.mediaDimension;
+  const images = post.images || [];
+  const currentImage = images[currentImageIndex];
+
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -47,6 +65,135 @@ function PostCard ({post, currentPage}) {
     };
 
   }, []);
+
+  useEffect(() => {
+    document.documentElement.style.overflowY = isImageExpanded ? 'hidden' : 'scroll';
+
+    return () => {
+      document.documentElement.style.overflowY = 'scroll';
+    };
+  }, [isImageExpanded]);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+      requestAnimationFrame(updateProgress);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+  const updateProgress = () => {
+    const video = videoRef.current;
+
+    if (!video) return;
+
+    setCurrentTime(video.currentTime);
+
+    if (video.duration) {
+      setProgress((video.currentTime / video.duration) * 100);
+    }
+
+    if (!video.paused) {
+      requestAnimationFrame(updateProgress);
+    }
+  };
+
+  const handleSeek = (e) => {
+    const video = videoRef.current;
+    const progressBar = e.currentTarget;
+
+    const rect = progressBar.getBoundingClientRect();
+    const position = e.clientX - rect.left;
+    const percentage = Math.max(0, Math.min(1, position / rect.width));
+
+    video.currentTime = percentage * video.duration;
+    setProgress(percentage * 100);
+  };
+
+  const handlePointerDown = (e) => {
+    setIsSeeking(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+    handleSeek(e);
+  };
+  const handlePointerMove = (e) => {
+    if (isSeeking) {
+      handleSeek(e);
+    }
+  };
+  const handlePointerUp = () => {
+    setIsSeeking(false);
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  };
+
+  useEffect(() => {
+    const handleWindowMouseMove = (e) => {
+      if (isSeeking) {
+        const progressBar = document.querySelector(`.${styles.progressBar}`);
+
+        if (progressBar) {
+          const rect = progressBar.getBoundingClientRect();
+          const position = e.clientX - rect.left;
+          const percentage = Math.max(0, Math.min(1, position / rect.width));
+
+          videoRef.current.currentTime =
+            percentage * videoRef.current.duration;
+
+          setProgress(percentage * 100);
+        }
+      }
+    };
+
+    const handleWindowMouseUp = () => {
+      setIsSeeking(false);
+    };
+
+    window.addEventListener('mousemove', handleWindowMouseMove);
+    window.addEventListener('mouseup', handleWindowMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleWindowMouseMove);
+      window.removeEventListener('mouseup', handleWindowMouseUp);
+    };
+  }, [isSeeking]);
+
+  const handleLoadedMetadata = () => {
+    setDuration(videoRef.current.duration);
+  };
+
+  const formatTime = (time) => {
+    if (!time || isNaN(time)) return '0:00';
+
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  const toggleVideoFullscreen = () => {
+    const media = mediaRef.current;
+
+    if (!media) return;
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      media.requestFullscreen();
+    }
+  };
+
+  const handleVolumeChange = (e) => {
+    const value = Number(e.target.value);
+
+    setVolume(value);
+
+    if (videoRef.current) {
+      videoRef.current.volume = value;
+    }
+  };
 
   function getTimeAgo(createdAt) {
     const seconds = Math.floor(
@@ -148,19 +295,23 @@ function PostCard ({post, currentPage}) {
             
             <div className={styles.buttonGroup}>
 
-              <button 
-                className={styles.joinButton}
-                onClick={(e) => e.stopPropagation()}
-              >
-                Join
-              </button>
+              {currentPage !== 'community' && (
+                <>
+                  <button 
+                    className={styles.joinButton}
+                    onClick={(e) => e.stopPropagation()}
+                    >
+                    Join
+                  </button>
 
-              <button
-                className={styles.joinedButton}
-                onClick={(e) => e.stopPropagation()}
-              >
-                Joined
-              </button>
+                  <button
+                  className={styles.joinedButton}
+                  onClick={(e) => e.stopPropagation()}
+                  >
+                    Joined
+                  </button>
+                </>
+              )}
 
               <div className={styles.moreMenuArea} ref={dropdownMenuRef} >
               
@@ -248,74 +399,172 @@ function PostCard ({post, currentPage}) {
               </Link>
             )}
 
-            <div 
-              className={`${styles.media} ${imageDimension === 'portrait' ? styles.portrait : ''}`}
-              onClick={(e) => e.stopPropagation()}
-            >
+            {(images.length > 0 || post.video) && (
 
-              <img
-                className={styles.backgroundImage}
-                src={`${currentImage}?fm=jpg&fit=max&w=20&q=40`}
-                loading="lazy"
-                alt=""
-              />
-
-              <a href={`${currentImage}?fm=jpg&fit=max&w=600&h=600&q=75`} target="_blank" rel="noopener noreferrer">
-                <img
-                  className={styles.foregroundImage}
-                  src={`${currentImage}?fm=jpg&fit=max&w=600&h=600&q=75`}
-                  alt={post.title}
-                  loading="lazy"
-                />
-              </a>
-
-              { images.length > 1 && (
-                <button
-                  className={`${styles.previousButton}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentImageIndex((prev) => prev - 1);
-                  }}
-                  disabled={currentImageIndex === 0}
-                >
-                  <IoChevronBack />
-                </button>
-              )}
-              
-              { images.length > 1 && (
-                <button
-                  className={`${styles.nextButton}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentImageIndex((prev) => prev + 1);
-                  }}
-                  disabled={currentImageIndex === images.length - 1}
-                >
-                  <IoChevronForward />
-                </button>
-              )}
-
-              { images.length > 1 && (
-                <div className={styles.imageIndicators}>
-                  <div
-                    className={styles.activeDot}
-                    style={{
-                      transform: `translateX(${currentImageIndex * 9}px)`
-                    }}
-                  />
-
-                  {images.map((_, index) => (
-                    <span
-                      key={index}
-                      className={styles.dot}
+              <div 
+                ref={mediaRef}
+                className={`
+                  ${styles.media} 
+                  ${mediaDimension === 'landscape' ? styles.landscapeDimension: ''}
+                  ${mediaDimension === 'square' ? styles.squareDimension: ''}
+                  ${mediaDimension === 'portrait' ? styles.portraitDimension : ''}
+                  ${isImageExpanded ? styles.imageExpanded : ''}
+                `}
+                onClick={(e) => e.stopPropagation()}
+              >
+                
+                {images.length > 0 && (
+                  <>
+                    <img
+                      className={styles.backgroundImage}
+                      src={`${currentImage}?fm=jpg&fit=max&w=20&q=40`}
+                      loading="lazy"
+                      alt=""
                     />
-                  ))}
-                </div>
-              )}
 
-              
+                    <img
+                      onClick={() => setIsImageExpanded(true)}
+                      className={styles.foregroundImage}
+                      src={`${currentImage}?fm=jpg&fit=max&w=600&h=600&q=75`}
+                      alt={post.title}
+                      loading="lazy"
+                    />
 
-            </div>
+                    {isImageExpanded && (
+                      <button
+                        className={styles.closeExpandedImageButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsImageExpanded(false);
+                        }}
+                      >
+                        <IoClose />
+                      </button>
+                    )}
+
+                    { images.length > 1 && (
+                      <button
+                        className={`${styles.previousButton}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImageIndex((prev) => prev - 1);
+                        }}
+                        disabled={currentImageIndex === 0}
+                      >
+                        <IoChevronBack />
+                      </button>
+                    )}
+                    
+                    { images.length > 1 && (
+                      <button
+                        className={`${styles.nextButton}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImageIndex((prev) => prev + 1);
+                        }}
+                        disabled={currentImageIndex === images.length - 1}
+                      >
+                        <IoChevronForward />
+                      </button>
+                    )}
+
+                    { images.length > 1 && (
+                      <div className={styles.imageIndicators}>
+                        <div
+                          className={styles.activeDot}
+                          style={{
+                            transform: `translateX(${currentImageIndex * 9}px)`
+                          }}
+                        />
+
+                        {images.map((_, index) => (
+                          <span
+                            key={index}
+                            className={styles.dot}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {post.video && (
+                  <>
+                    <video
+                      onClick={togglePlay}
+                      onDoubleClick={toggleVideoFullscreen}
+                      ref={videoRef}
+                      className={styles.video}
+                      src={post.video}
+                      preload='metadata'
+                      onLoadedMetadata={handleLoadedMetadata}
+                    />
+
+                    <div className={styles.videoControlContainer}>
+
+                      <button
+                        className={styles.playButton}
+                        onClick={togglePlay}
+                        >
+                          {progress === 100 ?
+                          (<FaRedoAlt />) : isPlaying ? 
+                          (<FaPause />) : (<FaPlay />)}
+                      </button>
+                      
+                      <div
+                        className={styles.progressBar}
+                        onPointerDown={handlePointerDown}
+                        onPointerMove={handlePointerMove}
+                        onPointerUp={handlePointerUp}
+                      >
+                        <div className={styles.progressContainer}>
+                          <div
+                            className={styles.progress}
+                            style={{ width: `${progress}%` }}
+                          >
+                            <span></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <span className={styles.videoTime}>
+                        {formatTime(currentTime)} / {formatTime(duration)}
+                      </span>
+
+                      <button
+                        className={styles.fullscreenButton}
+                        onClick={toggleVideoFullscreen}
+                      >
+                        <LuFullscreen />
+                      </button>
+
+                      <div className={styles.volumeContainer}>
+                        {showVolume && (
+                          <input
+                            className={styles.volumeSlider}
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={volume}
+                            onChange={handleVolumeChange}
+                          />
+                        )}
+
+                        <button
+                          className={styles.volumeButton}
+                          onClick={() => setShowVolume(prev => !prev)}
+                        >
+                          {volume !== 0 ? <FaVolumeHigh /> : <FaVolumeXmark /> }
+                        </button>
+                      </div>
+
+                    </div>
+                  </>
+                )}
+
+              </div>
+            )}
 
           </section>
           
